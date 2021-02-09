@@ -23,9 +23,14 @@ PYBIND11_MODULE(mt2, m) {
            get_mT2
     )pbdoc";
 
-    m.def("disableCopyrightMessage", &asymm_mt2_lester_bisect::disableCopyrightMessage, R"pbdoc(
-        Wrapper around asymm_mt2_lester_bisect::disableCopyrightMessage.
-    )pbdoc");
+    m.def(
+        "disableCopyrightMessage",
+        &asymm_mt2_lester_bisect::disableCopyrightMessage,
+        py::arg("printIfFirst") = false,
+        R"pbdoc(
+            Wrapper around asymm_mt2_lester_bisect::disableCopyrightMessage.
+        )pbdoc"
+    );
 
     m.def("get_mT2", py::vectorize(asymm_mt2_lester_bisect::get_mT2), R"pbdoc(
         Wrapper around asymm_mt2_lester_bisect::get_mT2.
