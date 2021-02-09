@@ -6,14 +6,8 @@ mt2
 .. image:: https://img.shields.io/pypi/v/mt2.svg
         :target: https://pypi.python.org/pypi/mt2
 
-.. image:: https://img.shields.io/travis/tpgillam/mt2.svg
-        :target: https://travis-ci.com/tpgillam/mt2
-
-.. image:: https://readthedocs.org/projects/mt2/badge/?version=latest
-        :target: https://mt2.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
-
-
+.. image:: https://travis-ci.org/tpgillam/mt2.svg?branch=master
+        :target: https://travis-ci.org/github/tpgillam/mt2
 
 
 Stransverse mass computation as a numpy ufunc.
