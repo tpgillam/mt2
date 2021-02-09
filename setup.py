@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 # Available at setup time due to pyproject.toml
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 
-__version__ = '0.1.2'
+__version__ = '0.1.4'
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -55,5 +55,10 @@ setup(
     # Currently, build_ext only provides an optional "highest supported C++
     # level" feature, but in the future it may provide more features.
     cmdclass={"build_ext": build_ext},
+
+    # We need to include this file in order to build the extension.
+    # Apparently this (seemingly hacky) workaround is the best google has to offer
+    # right now...
+    package_data={'': ["src/lester_mt2_bisect_v4.h"]},
     zip_safe=False,
 )
