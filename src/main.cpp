@@ -32,9 +32,25 @@ PYBIND11_MODULE(mt2, m) {
         )pbdoc"
     );
 
-    m.def("get_mT2", py::vectorize(asymm_mt2_lester_bisect::get_mT2), R"pbdoc(
-        Wrapper around asymm_mt2_lester_bisect::get_mT2.
-    )pbdoc");
+    m.def(
+        "get_mT2",
+        py::vectorize(asymm_mt2_lester_bisect::get_mT2),
+        py::arg("mVis1"),
+        py::arg("pxVis1"),
+        py::arg("pyVis1"),
+        py::arg("mVis2"),
+        py::arg("pxVis2"),
+        py::arg("pyVis2"),
+        py::arg("pxMiss"),
+        py::arg("pyMiss"),
+        py::arg("mInvis1"),
+        py::arg("mInvis2"),
+        py::arg("desiredPrecisionOnMT2") = 0.0,
+        py::arg("useDeciSectionsInitially") = true,
+        R"pbdoc(
+            Wrapper around asymm_mt2_lester_bisect::get_mT2.
+        )pbdoc"
+    );
 
 
 #ifdef VERSION_INFO
