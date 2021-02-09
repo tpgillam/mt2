@@ -1,7 +1,7 @@
 """Main module."""
 
 
-def get_mT2(mVisA, pxA, pyA,
+def get_mt2(mVisA, pxA, pyA,
             mVisB, pxB, pyB,
             pxMiss, pyMiss,
             chiA, chiB,
