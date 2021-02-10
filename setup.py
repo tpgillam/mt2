@@ -1,7 +1,6 @@
-from setuptools import setup, find_packages
+from setuptools import setup, Extension
 
-# Available at setup time due to pyproject.toml
-from pybind11.setup_helpers import Pybind11Extension, build_ext
+import numpy
 
 __version__ = '0.1.5'
 
@@ -12,8 +11,8 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 ext_modules = [
-    Pybind11Extension(
-        "mt2",
+    Extension(
+        "_mt2",
         ["src/main.cpp"],
         # Pass in the version info so we can expose it in the extension.
         # Also, for reasons explained in lester_mt2_bisect_v7.h, we need to manually enable some inlining optimisations.
@@ -21,11 +20,12 @@ ext_modules = [
         define_macros=[
             ('VERSION_INFO', __version__),
             ('ENABLE_INLINING', 1),
-            ('DISABLE_COPYRIGHT_PRINTING', 1)
+            ('DISABLE_COPYRIGHT_PRINTING', 1),
         ],
+        include_dirs=[numpy.get_include()],
+        language='c++'
     ),
 ]
-
 
 setup_requirements = ['pytest-runner', ]
 test_requirements = ['pytest>=3', ]
@@ -52,14 +52,12 @@ setup(
     include_package_data=True,
     keywords='mt2',
     name='mt2',
+    packages=['mt2'],
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/tpgillam/mt2',
     version=__version__,
     ext_modules=ext_modules,
-    # Currently, build_ext only provides an optional "highest supported C++
-    # level" feature, but in the future it may provide more features.
-    cmdclass={"build_ext": build_ext},
     zip_safe=False,
 )
