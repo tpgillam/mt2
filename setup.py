@@ -15,8 +15,14 @@ ext_modules = [
     Pybind11Extension(
         "mt2",
         ["src/main.cpp"],
-        # Example: passing in the version to the compiled code
-        define_macros=[('VERSION_INFO', __version__)],
+        # Pass in the version info so we can expose it in the extension.
+        # Also, for reasons explained in lester_mt2_bisect_v7.h, we need to manually enable some inlining optimisations.
+        # Copyright printing is disabled here, since we include the necessary citation information elsewhere.
+        define_macros=[
+            ('VERSION_INFO', __version__),
+            ('ENABLE_INLINING', 1),
+            ('DISABLE_COPYRIGHT_PRINTING', 1)
+        ],
     ),
 ]
 
@@ -55,10 +61,5 @@ setup(
     # Currently, build_ext only provides an optional "highest supported C++
     # level" feature, but in the future it may provide more features.
     cmdclass={"build_ext": build_ext},
-
-    # We need to include this file in order to build the extension.
-    # Apparently this (seemingly hacky) workaround is the best google has to offer
-    # right now...
-    package_data={'': ["src/lester_mt2_bisect_v4.h"]},
     zip_safe=False,
 )
