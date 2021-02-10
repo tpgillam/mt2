@@ -2,6 +2,12 @@
 History
 =======
 
+0.1.5 ()
+------------------
+
+* Migrate to preliminary v7 of C file
+* Disable copyright message printing on run
+
 0.1.4 (2021-02-09)
 ------------------
 
