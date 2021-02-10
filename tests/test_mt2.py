@@ -4,7 +4,7 @@
 
 import pytest
 
-from mt2 import get_mT2
+from mt2 import mt2
 
 def test_simple_lester():
     mVisA = 100
@@ -21,6 +21,6 @@ def test_simple_lester():
     chiA = 100
     chiB = 100
 
-    computed_val = get_mT2(mVisA, pxA, pyA, mVisB, pxB, pyB, pxMiss, pyMiss, chiA, chiB)
+    computed_val = mt2(mVisA, pxA, pyA, mVisB, pxB, pyB, pxMiss, pyMiss, chiA, chiB)
 
     assert computed_val == pytest.approx(412.628)
