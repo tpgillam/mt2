@@ -1,20 +1,19 @@
-
 /*
- *  Copyright 2014, Christopher Lester, Univeristy of Cambridge
+ *  Copyright 2014, Christopher Lester, University of Cambridge
  *
  *  version 7: arXiv:1411.4312v7
- *    * Allowed users who define ENABLE_INLINING to put the inlines back 
+ *    * Allowed users who define ENABLE_INLINING to put the inlines back
  *      that were removed in version 5.
- *    * Allowed users who define DISABLE_COPYRIGHT_PRINTING to disable 
+ *    * Allowed users who define DISABLE_COPYRIGHT_PRINTING to disable
  *      the copyright message.
- *      This feature is to allow people who wrap the calculator in 
+ *      This feature is to allow people who wrap the calculator in
  *      another library to use other ways of communicating the copyright
- *      information to end users that are more appropriate in their 
+ *      information to end users that are more appropriate in their
  *      system. It is expected that developers doing so will ensure
  *      that *somehow* a message pointing users back to make citations
- *      to the original MT2 papers will be presented at some stage to 
+ *      to the original MT2 papers will be presented at some stage to
  *      each end user.
- *    * Both of the above changes are made to support 
+ *    * Both of the above changes are made to support
  *               https://pypi.org/project/mt2/
  *
  *  version 6: arXiv:1411.4312v6
@@ -24,7 +23,7 @@
  *    * made more portable by removal of use of __FILE__ and __LINE__ macros in debug statement
  *    * made fewer demands on poor C++ compilers (ROOT5/CINT) by removal of certain inline statements
  *    * added this changelog!
- * 
+ *
  *  version 4: arXiv:1411.4312v4
  *    * added copyright information
  *
@@ -52,14 +51,14 @@
  *
  *   You might also need to cite:
  *
- *   http://arxiv.org/abs/hep-ph/9906349 
+ *   http://arxiv.org/abs/hep-ph/9906349
  *   Journal reference: Phys.Lett.B463:99-103,1999
  *   DOI: 10.1016/S0370-2693(99)00945-4
  *
- *   as the paper defining MT2. 
+ *   as the paper defining MT2.
  *
  * Here is an example of it's use:
- 
+
 
 double mVisA = 10; // mass of visible object on side A.  Must be >=0.
 double pxA = 20; // x momentum of visible object on side A.
@@ -132,7 +131,7 @@ pointed out to me by Gary B. Huges and Mohcine Chraibi authors of
  *   A = [ axy ayy ay  ]
  *       [ ax  ay  a   ].
  *
- * Therfore the ellipse equation would look like:
+ * Therefore the ellipse equation would look like:
  *
  * axx x^2 + 2 axy x y + ayy y^2 + 2 ax x + 2 ay y + a = 0.
  *
@@ -140,7 +139,7 @@ pointed out to me by Gary B. Huges and Mohcine Chraibi authors of
  * Etayo et al's implementation REQUIRES that axx and ayy be strictly positive.
  * The implementation herein doesn't quite enforce that. The implementation herein allows axx or ayy to be non-negative .... and it is left to the user to ensure that axx and ayy are not exactly zero.
  * Note also that (1) is general enough to contain all conic sections, so it is left to the user to ensure that only values of A consistent
- * with (non-singluar) ellipses are fed into the program below.  For our purposes, an ellipse is "singular" iff coeffLamPow3 (see below) is zero.
+ * with (non-singular) ellipses are fed into the program below.  For our purposes, an ellipse is "singular" iff coeffLamPow3 (see below) is zero.
  */
 
 namespace Lester {
@@ -183,7 +182,7 @@ struct EllipseParams {
   void setDet() {
     det = (2.0*c_x*c_xy*c_y + c*c_xx*c_yy - c_yy*c_x*c_x - c*c_xy*c_xy - c_xx*c_y*c_y) ;
   }
-  // Consstructor for degenerate ellipse (i.e. a "dot" at (x0,y0) ).
+  // Constructor for degenerate ellipse (i.e. a "dot" at (x0,y0) ).
   EllipseParams(
     const double x0,
     const double y0) :
@@ -230,7 +229,7 @@ bool ellipsesAreDisjoint(const EllipseParams & e1, const EllipseParams & e2);
 bool __private_ellipsesAreDisjoint(const double coeffLamPow3, const double coeffLamPow2, const double coeffLamPow1, const double coeffLamPow0);
 
 bool ellipsesAreDisjoint(const EllipseParams & e1, const EllipseParams & e2) {
-  /* We want to construct the polynomial "Det(lamdba A + B)" where A and B are the 3x3 matrices associated with e1 and e2, and we want to get that
+  /* We want to construct the polynomial "Det(lambda A + B)" where A and B are the 3x3 matrices associated with e1 and e2, and we want to get that
   polynomial in the form lambda^3 + a lambda^2 + b lambda + c.
 
 
@@ -247,7 +246,7 @@ bool ellipsesAreDisjoint(const EllipseParams & e1, const EllipseParams & e2) {
   const double coeffLamPow1 = e2.lesterFactor(e1);
   const double coeffLamPow0 = e2.det; // Note that this is the determinant of the symmetric matrix associated with e2.
 
-  // Since question is "symmetric" and since we need to dovide by coeffLamPow3 ... do this the way round that involves dividing by the largest number:
+  // Since question is "symmetric" and since we need to divide by coeffLamPow3 ... do this the way round that involves dividing by the largest number:
 
   if (fabs(coeffLamPow3) >= fabs(coeffLamPow0)) {
     return __private_ellipsesAreDisjoint(coeffLamPow3, coeffLamPow2, coeffLamPow1, coeffLamPow0); // normal order
@@ -275,13 +274,13 @@ bool __private_ellipsesAreDisjoint(const double coeffLamPow3, const double coeff
   {
     const double thing1 = -3.0*b + a*a;
     const double thing2 = -27.0*c*c + 18.0*c*a*b + a*a*b*b - 4.0*a*a*a*c - 4.0*b*b*b;
-    std::cout 
+    std::cout
       << (thing1>0) << " && " << (thing2>0) << " && [[ " << (a>=0) << " " << (3.0*a*c + b*a*a - 4.0*b*b<0)  << " ] or "
       << "[ " << (a< 0)   << " ] =("<< ((a >= 0 /*&& thing1 > 0*/ && 3.0*a*c + b*a*a - 4.0*b*b< 0 /*&& thing2 > 0*/) ||
                                  (a <  0 /*&& thing1 > 0*/                                 /*&& thing2 > 0*/)) << ")] " << (
           ( (a >= 0 && thing1 > 0 && 3.0*a*c + b*a*a - 4.0*b*b< 0 && thing2 > 0) ||
                                  (a <  0 && thing1 > 0                                 && thing2 > 0))
-          
+
           ) << std::endl;
   }
 #endif
@@ -345,11 +344,11 @@ class asymm_mt2_lester_bisect {
     }
     return sqrt(mT2_Sq);
   }
-  
+
   static void disableCopyrightMessage(const bool printIfFirst=false) {
     static bool first = true;
     if (first && printIfFirst) {
-    std::cout 
+    std::cout
       << "\n\n"
       << "#=========================================================\n"
       << "# To disable this message, place a call to \n"
@@ -579,12 +578,12 @@ double MT(double px1, double px2, double py1, double py2, double m1 , double m2)
 
 std::pair <double,double>  ben_findsols(double MT2, double px, double py, double visM, double Ma, double pxb, double pyb, double metx, double mety, double visMb, double Mb){
 
-  //Visible particle (px,py,visM)                                                                                                                  
+  //Visible particle (px,py,visM)
   std::pair <double,double> sols;
 
-  ///////                                                                                                                                          
-  //Find the minimizing points given MT2                                                                                                           
-  //////                      
+  ///////
+  //Find the minimizing points given MT2
+  //////
 
   double Pt = sqrt(px*px+py*py);
   double E = sqrt(Pt*Pt+visM*visM);
@@ -606,11 +605,11 @@ std::pair <double,double>  ben_findsols(double MT2, double px, double py, double
   double TermSqy1 = -4.*E4*py+4.*E2*M2*py-4.*E2*Ma2*py+4.*E2*px2*py+4.*E2*py3;
   double TermSqy2 = -4.*E4+4.*E2*px2+4.*E2*py2;
 
-  //First, determine the range.                                                                                                                   
+  //First, determine the range.
   double myx = 0.;
   double myy = 0.;
   if (TermSqy1*TermSqy1-4.*TermSqy0*TermSqy2 < 0){
-    //unbalanced                                                                                                                                 
+    //unbalanced
   }
   else{
     double sol1 = (-TermSqy1 - sqrt(TermSqy1*TermSqy1-4.*TermSqy0*TermSqy2))/(2.*TermSqy2);
@@ -653,31 +652,3 @@ std::pair <double,double>  ben_findsols(double MT2, double px, double py, double
 }
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
