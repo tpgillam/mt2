@@ -14,7 +14,6 @@ Stransverse mass computation as a numpy ufunc.
 
 
 * Free software: MIT license
-* Documentation: https://mt2.readthedocs.io.
 
 
 Features
@@ -23,7 +22,7 @@ Features
 Example usage ::
 
     import mt2
-  
+
     pxA =   410
     pyA =    20
     mVisA = 100
@@ -38,9 +37,9 @@ Example usage ::
     pyMiss =  280
 
     val = mt2.get_mT2(mVisA, pxA, pyA, mVisB, pxB, pyB, pxMiss, pyMiss, chiA, chiB)
-    
+
     print("Expected mT2 = 412.628.  Computed mT2 = "+str(val))
-    
+
 
 Credits
 -------
