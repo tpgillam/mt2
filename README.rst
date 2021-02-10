@@ -27,10 +27,10 @@ Please cite:
 * http://arxiv.org/abs/1411.4312 if you use this particular calculator.
 
 
-Features
---------
+Example Usage
+-------------
 
-Example usage ::
+Symmetric MT2 without numpy:  ::
 
     import mt2
   
@@ -51,4 +51,6 @@ Example usage ::
     
     print("Expected mT2 = 412.628.  Computed mT2 = "+str(val))
     
+An example using numpy:  ::
 
+    to appear soon ....
