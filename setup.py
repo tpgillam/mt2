@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 # Available at setup time due to pyproject.toml
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
