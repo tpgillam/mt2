@@ -20,7 +20,27 @@ Stransverse mass computation as a numpy ufunc.
 Features
 --------
 
-* TODO
+Example usage ::
+
+    import mt2
+  
+    pxA =   410
+    pyA =    20
+    mVisA = 100
+    chiA =  100
+
+    pxB =  -210
+    pyB =  -300
+    mVisB = 150
+    chiB =  100
+
+    pxMiss = -200
+    pyMiss =  280
+
+    val = mt2.get_mT2(mVisA, pxA, pyA, mVisB, pxB, pyB, pxMiss, pyMiss, chiA, chiB)
+    
+    print("Expected mT2 = 412.628.  Computed mT2 = "+str(val))
+    
 
 Credits
 -------
