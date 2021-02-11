@@ -7,7 +7,7 @@ from _mt2 import mt2_ufunc
 
 __author__ = 'Thomas Gillam'
 __email__ = 'tpgillam@googlemail.com'
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 
 # TODO This should be exposed in and imported from C++
 MT2_ERROR = -1
