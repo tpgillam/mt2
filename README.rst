@@ -2,7 +2,6 @@
 mt2
 ===
 
-
 .. image:: https://img.shields.io/pypi/v/mt2.svg
         :target: https://pypi.python.org/pypi/mt2
 
@@ -18,16 +17,6 @@ Specifically, it provides a `numpy ufunc <https://numpy.org/doc/stable/reference
 The variable MT2 itself is described `here <http://arxiv.org/abs/hep-ph/9906349>`__.
 Related information may be found in papers relating to MT2 linked from `here <https://www.hep.phy.cam.ac.uk/~lester/mt2/index.html>`__.
 
-License
--------
-
-Please cite:
-
-* http://arxiv.org/abs/hep-ph/9906349, if you use MT2 in an academic paper, and
-* http://arxiv.org/abs/1411.4312 if you use this particular calculator.
-
-All files other than ``src/lester_mt2_bisect_v7.h`` are released under the MIT license.
-
 Example Usage
 -------------
 
@@ -37,6 +26,7 @@ Single calculation of MT2:
 
     from mt2 import mt2
 
+    # The units of all quantities are the same, e.g. GeV
     val = mt2(
         100, 410, 20,  # Visible 1: mass, px, py
         150, -210, -300,  # Visible 2: mass, px, py
@@ -49,3 +39,14 @@ An example using broadcasting:
 .. code-block:: python
 
     # to appear soon ....
+
+License
+-------
+
+Please cite:
+
+* http://arxiv.org/abs/hep-ph/9906349, if you use MT2 in an academic paper, and
+* http://arxiv.org/abs/1411.4312 if you use this particular calculator.
+
+All files other than ``src/lester_mt2_bisect_v7.h`` are released under the MIT license.
+
