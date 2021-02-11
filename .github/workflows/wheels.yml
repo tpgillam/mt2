@@ -49,14 +49,14 @@ jobs:
                 uses: actions/setup-python@v2
 
             -   name: Install cibuildwheel
-                run: python -m pip install autowheel
+                run: python -m pip install cibuildwheel==1.9.0
 
             -   name: Build wheels
                 env:
                     CIBW_BUILD: cp${{ matrix.python }}-${{ matrix.platform_id }}
                     CIBW_MANYLINUX_X86_64_IMAGE: ${{ matrix.manylinux_image }}
                     CIBW_MANYLINUX_I686_IMAGE: ${{ matrix.manylinux_image }}
-                run: python -m autowheel platform --output-dir wheelhouse
+                run: python -m cibuildwheel --output-dir wheelhouse
 
             -   uses: actions/upload-artifact@v2
                 with:
