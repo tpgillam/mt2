@@ -49,7 +49,7 @@ def mt2(
             If set to a positive value, MT2 (note that is MT2, not its square) will be calculated to
             within +- desiredPrecisionOnMT2.
             Note that by requesting precision of +- 0.01 GeV on an MT2 value of 100 GeV can result in speedups of
-            a factor of ...
+            a factor of two to three.
         use_deci_sections_initially: If true, interval is cut at the 10% point until first acceptance, which gives
             factor 3 increase in speed calculating kinematic min, but 3% slowdown for events in the bulk.
             Is on (true) by default, but can be turned off by setting to false.
