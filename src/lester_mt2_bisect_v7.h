@@ -15,6 +15,7 @@
  *      each end user.
  *    * Both of the above changes are made to support
  *               https://pypi.org/project/mt2/
+ *    * Minor changes to spelling/typos in comments and whitespace formatting.
  *
  *  version 6: arXiv:1411.4312v6
  *    * identical to v5
@@ -74,7 +75,8 @@ double pyMiss = -5; // y component of missing transverse momentum.
 double chiA = 4; // hypothesised mass of invisible on side A.  Must be >=0.
 double chiB = 7; // hypothesised mass of invisible on side B.  Must be >=0.
 
-double desiredPrecisionOnMt2 = 0; // Must be >=0.  If 0 alg aims for machine precision.  if >0, MT2 computed to supplied absolute precision.
+double desiredPrecisionOnMt2 = 0; // Must be >=0.  If 0 alg aims for machine precision.
+                                  // If >0, MT2 computed to supplied absolute precision.
 
 // asymm_mt2_lester_bisect::disableCopyrightMessage();
 
@@ -328,7 +330,7 @@ class asymm_mt2_lester_bisect {
     const double mVis2, const double pxVis2, const double pyVis2,
     const double pxMiss, const double pyMiss,
     const double mInvis1, const double mInvis2,
-    const double desiredPrecisionOnMT2=0, // This must be non-negative.  If set to zero (default) MT2 will be calculated to the highest precision available on the machine (or as close to that as the algorithm permits).  If set to a positive value, MT2 (note that is MT2, not its square) will be calculated to within +- desiredPrecisionOnMT2. Note that by requesting precision of +- 0.01 GeV on an MT2 value of 100 GeV can result in speedups of a factor of ...
+    const double desiredPrecisionOnMT2=0, // This must be non-negative.  If set to zero (default) MT2 will be calculated to the highest precision available on the machine (or as close to that as the algorithm permits).  If set to a positive value, MT2 (note that is MT2, not its square) will be calculated to within +- desiredPrecisionOnMT2. Note that by requesting precision of +- 0.01 GeV on an MT2 value of 100 GeV can result in speedups of a factor of two or three.
     const bool useDeciSectionsInitially=true // If true, interval is cut at the 10% point until first acceptance, which gives factor 3 increase in speed calculating kinematic min, but 3% slowdown for events in the bulk.  Is on (true) by default, but can be turned off by setting to false.
   ) {
 
