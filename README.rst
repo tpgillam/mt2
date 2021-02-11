@@ -27,10 +27,10 @@ Please cite:
 * http://arxiv.org/abs/1411.4312 if you use this particular calculator.
 
 
-Features
---------
+Example Usage
+-------------
 
-Example usage ::
+Single calculation of MT2:  ::
 
     from mt2 import mt2
 
@@ -48,6 +48,8 @@ Example usage ::
     pyMiss =  280
 
     val = mt2(mVisA, pxA, pyA, mVisB, pxB, pyB, pxMiss, pyMiss, chiA, chiB)
-
     print("Expected mT2 = 412.628.  Computed mT2 = ", val)
 
+An example using broadcasting:  ::
+
+    to appear soon ....
