@@ -45,4 +45,4 @@ def test_near_massless_lester():
 
     computed_val = mt2(mVisA, pxA, pyA, mVisB, pxB, pyB, pxMiss, pyMiss, chiA, chiB)
 
-    assert computed_val == pytest.approx(0.09719, rel=1e-4)
+    assert computed_val == pytest.approx(0.09719971)
