@@ -45,12 +45,13 @@ def ran_four_mom(mass_squared, mag):
 def boost(bx, by, bz, four_vec):
     bsq = bx**2 + by**2 + bz**2
     gam = 1.0/math.sqrt(1.0-bsq)
+    thing = gam**2 / (1+gam)  # This is the same as (gam-1)/bsq but is safe in the limit bsq->0.
     v0, v1, v2, v3 = four_vec[0], four_vec[1], four_vec[2], four_vec[3]
     return (
-            gam*v0 + bx*gam*v1 + by*gam*v2 + bz*gam*v3, 
-            bx*gam*v0 + (1 + (bx**2*(-1 + gam))/bsq)*v1 + (bx*by*(-1 + gam)*v2)/bsq + (bx*bz*(-1 + gam)*v3)/bsq,
-            by*gam*v0 + (bx*by*(-1 + gam)*v1)/bsq + (1 + (by**2*(-1 + gam))/bsq)*v2 + (by*bz*(-1 + gam)*v3)/bsq,
-            bz*gam*v0 + (bx*bz*(-1 + gam)*v1)/bsq + (by*bz*(-1 + gam)*v2)/bsq + (1 + (bz**2*(-1 + gam))/bsq)*v3,
+            gam   *v0 +            bx*gam*v1 +            by*gam*v2 +            bz*gam*v3,
+            bx*gam*v0 + (1 + bx*bx*thing)*v1 + (0 + bx*by*thing)*v2 + (0 + bx*bz*thing)*v3,
+            by*gam*v0 + (0 + by*bx*thing)*v1 + (1 + by*by*thing)*v2 + (0 + by*bz*thing)*v3,
+            bz*gam*v0 + (0 + bz*bx*thing)*v1 + (0 + bz*by*thing)*v2 + (1 + bz*bz*thing)*v3,
            )
 
 def decay(parent_four_mom, m_parent, mv, mi):
