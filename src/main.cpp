@@ -1,4 +1,7 @@
 #include <Python.h>
+
+#define NPY_NO_DEPRECATED_API  NPY_1_7_API_VERSION
+
 #include <numpy/ndarraytypes.h>
 #include <numpy/ufuncobject.h>
 #include <numpy/npy_3kcompat.h>
@@ -10,8 +13,14 @@
 
 static void mt2_ufunc(
     char** args,
+// const-correctness was introduced in numpy 1.19, but retain backward compatibility.
+#ifdef NPY_1_19_API_VERSION
     npy_intp const* dimensions,
     npy_intp const* steps,
+#else
+    npy_intp* dimensions,
+    npy_intp* steps,
+#endif
     void* data)
 {
     npy_intp n = dimensions[0];
