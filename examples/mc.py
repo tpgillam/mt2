@@ -5,8 +5,8 @@ This script generates a kink plot similar to those seen in http://arxiv.org/abs/
 
 It is intended to illustrate the way that the mass of the invisible daughters of particles
 which have been pair-produced can (in principle) be determined by identifying the location
-of kink in the boundary of the region of (chi,mt2)-space in which which is accessible by
-events.  I.e. the resulting plot the script generates is seen to have a `kink' at the 
+of kink in the boundary of the region of (chi,mt2)-space in which is accessible by events.
+Specifically: the plot which the script generates is seen to have a `kink' at the 
 location (chi=50, mt2=100), showing that the generated invisible daughter particles had
 a mass of 50 and that the generated parent particles had mass of 100.
 
