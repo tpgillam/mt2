@@ -5,5 +5,5 @@ requires = [
 
     # Use the oldest possible version of numpy for building. This ensures maximal
     # compatibility.
-    "oldest-supported-numpy"", 
+    "oldest-supported-numpy", 
 ]
