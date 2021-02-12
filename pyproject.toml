@@ -1,2 +1,9 @@
 [build-system]
-requires = ["numpy>=1.9.2", "setuptools", "wheel"]
+requires = [
+    "setuptools", 
+    "wheel",
+
+    # Use the oldest possible version of numpy for building. This ensures maximal
+    # compatibility.
+    "oldest-supported-numpy"", 
+]
