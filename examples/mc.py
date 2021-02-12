@@ -1,9 +1,25 @@
 #!/usr/bin/evn python3
 
 """
-This script generates a kink plot similar to those seen in http://arxiv.org/abs/0711.4008
+This script generates a kink plot similar to those seen in http://arxiv.org/abs/0711.4008 .
 
-It can be run like this:
+It is intended to illustrate the way that the mass of the invisible daughters of particles
+which have been pair-produced can (in principle) be determined by identifying the location
+of kink in the boundary of the region of (chi,mt2)-space which is accessible by events.
+Specifically: the upper boundary of the filled region of the plot which the script generates
+is seen to have a `kink' at the location (chi=50, mt2=100), showing that the generated
+invisible daughter particles had a mass of 50 and that the generated parent particles had 
+a mass of 100.
+
+It should be noted that the actual kinematics modelled in the program below are not intended
+to represent physical reality. For example: the factor 0.01 in the ran_three_direc() function
+breaks isotropy in a purely ad-hoc way and here is used to (very crudely) approximate the
+bias toward central production seen in supersymmetric events.  The event generation process
+used is therefore not Lorentz Invariant and should therefore not be used for any serious
+purpose other than, as here, the pedagocial illustration of a kinematic property of
+the mt2 variable.
+
+The script can be run like this:
 
     python3 mc.py | \
         head -10000000 | \
