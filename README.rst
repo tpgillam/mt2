@@ -40,7 +40,7 @@ An example using broadcasting:
 
     # to appear soon ....
 
-A more interesting example using a toy Monte-Carlo simulation can be viewed in `this notebook <examples/mc.ipynb>`
+A more interesting example using a toy Monte-Carlo simulation can be viewed in `this notebook <https://github.com/tpgillam/mt2/blob/master/examples/mc.ipynb>`__
 
 License
 -------
