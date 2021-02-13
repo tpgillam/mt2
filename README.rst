@@ -40,6 +40,8 @@ An example using broadcasting:
 
     # to appear soon ....
 
+A more interesting example using a toy Monte-Carlo simulation can be viewed in `this notebook <examples/mc.ipynb>`
+
 License
 -------
 
