@@ -5,8 +5,8 @@ mt2
 .. image:: https://img.shields.io/pypi/v/mt2.svg
         :target: https://pypi.python.org/pypi/mt2
 
-.. image:: https://travis-ci.org/tpgillam/mt2.svg?branch=master
-        :target: https://travis-ci.org/github/tpgillam/mt2
+.. image:: https://github.com/tpgillam/mt2/workflows/Build/badge.svg?branch=master
+        :target: https://github.com/tpgillam/mt2/actions?query=workflow%3ABuild
 
 MT2, Asymmetric MT2, and the Stransverse Mass
 ---------------------------------------------
