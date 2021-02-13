@@ -2,8 +2,8 @@
 History
 =======
 
-Unreleased
-----------
+0.2.0 (2021-02-13)
+------------------
 
 * Fix numpy build dependencies to use oldest possible version, so that wheels are maximally compatible.
 * Don't support Python 3.5
