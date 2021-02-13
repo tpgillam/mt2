@@ -1,6 +1,7 @@
 def test_3():
     # Test lots of collinear endpoint cases.
     import random, math, pytest
+    from mt2 import mt2
     random.seed(0) # If the test fails, we want to be able to repeat the test!
     for i in range(10000):
         m_visA = random.uniform(0,10)
