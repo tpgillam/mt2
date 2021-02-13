@@ -6,6 +6,7 @@ Unreleased
 ----------
 
 * Fix numpy build dependencies to use oldest possible version, so that wheels are maximally compatible.
+* Don't support Python 3.5
 
 0.1.6 (2021-02-11)
 ------------------
