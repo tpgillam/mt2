@@ -60,7 +60,7 @@ def mt2(
         out: If specified, an array into which the output will be placed. Would to have dtype numpy.float64.
 
     Returns:
-        MT2 calculated for all imports. If an array, will have shape that is the result of broadcasting all inputs.
+        MT2 calculated for all inputs. If an array, will have shape that is the result of broadcasting all inputs.
     """
     return mt2_ufunc(
         m_vis_1,
