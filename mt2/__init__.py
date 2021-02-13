@@ -5,9 +5,9 @@ import numpy
 # noinspection PyUnresolvedReferences
 from _mt2 import mt2_ufunc
 
-__author__ = 'Thomas Gillam'
-__email__ = 'tpgillam@googlemail.com'
-__version__ = '0.2.0'
+__author__ = "Thomas Gillam"
+__email__ = "tpgillam@googlemail.com"
+__version__ = "0.2.0"
 
 # TODO This should be exposed in and imported from C++
 MT2_ERROR = -1
@@ -75,5 +75,5 @@ def mt2(
         m_invis_2,
         desired_precision_on_mt2,
         use_deci_sections_initially,
-        out
+        out,
     )
