@@ -10,7 +10,7 @@ mt2
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black
-    
+
 This package may be used to evaluate MT2 in all its variants.
 This includes both symmetric and asymmetric MT2.
 MT2 is also known as the "stransverse mass".
@@ -65,9 +65,16 @@ For example, one could scan over a grid of invisible particle masses like so:
         -200, 280,  # Missing transverse momentum: x, y
         mass_1, mass_2)  # Invisible 1 mass, invisible 2 mass
 
+Note on performance
+^^^^^^^^^^^^^^^^^^^
 
-Note that the main reason to use vectorisation as above is convenience.
-The speed penalty for writing as a python ``for`` loop is often low, due to the amount of time spent inside the C++ MT2 calculation.
+With full precision, the main reason to use vectorisation as above is convenience.
+The time spent in the C++ MT2 calculation is somewhat larger than the overhead introduced by a Python ``for`` loop.
+Some benefits will be derived, but it will runtime reductions of O(30%), rather than orders of magnitude.
+
+`However`, the benefit can be more significant when using a lower precision.
+This corresponds to a larger value for the ``desired_precision_on_mt2`` argument.
+This is because less time is spent in C++, so proportionally the Python overhead of a ``for`` loop is more significant.
 
 Toy MC
 ******
