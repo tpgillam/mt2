@@ -8,7 +8,7 @@ def test_3():
         m_visB = random.uniform(0,10)
         m_invisA = random.uniform(0,10)
         m_invisB = random.uniform(0,10)
-        m_parent = max(m_visA+m_invisA, m_visB+m_invisB) + random.uniform(0.1,10) # 0.1 prevents possibility of division by zero at MOOO
+        m_parent = max(m_visA+m_invisA, m_visB+m_invisB) + random.uniform(0.1,10) # 0.1 prevents possibility of division by zero at MOO
         p_parentA = random.uniform(0,10)
         p_parentB = random.uniform(0,10)
         E_parentA = math.sqrt(p_parentA**2 + m_parent**2)
@@ -42,5 +42,5 @@ def test_3():
                   m_invisA, m_invisB)
         is_ok = (val == pytest.approx(m_parent, rel=1e-13))    # passes with rel=1e-12 but fails with rel=1e-13
         if (not is_ok):
-            print(f"WARNING! Expected {m_parent} from collinear event but instead got {m_parent} for mt2({m_visA},{ax},{ay}, {m_visB},{bx},{by}, {pxmiss},{pymiss}, {m_invisA},{m_invisB}) in test case {i}.")
+            print(f"WARNING! Expected {m_parent} from collinear event but instead got {val} for mt2({m_visA},{ax},{ay}, {m_visB},{bx},{by}, {pxmiss},{pymiss}, {m_invisA},{m_invisB}) in test case {i}.")
         assert is_ok
