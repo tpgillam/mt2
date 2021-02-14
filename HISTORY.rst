@@ -2,6 +2,10 @@
 History
 =======
 
+1.0.0 (2021-02-13)
+------------------
+
+* First non-beta release
 * Minor formatting alterations
 * Improved README
 
