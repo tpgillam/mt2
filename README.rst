@@ -12,7 +12,8 @@ mt2
     :target: https://github.com/psf/black
     
 This package may be used to evaluate MT2 in all its variants.
-This includes both symmetric and asymmetric MT2, and is also known as the "stransverse mass".
+This includes both symmetric and asymmetric MT2.
+MT2 is also known as the "stransverse mass".
 
 This package provides an interface to the bisection algorithm and C++ implementation of http://arxiv.org/abs/1411.4312.
 The variable MT2 itself is described `here <http://arxiv.org/abs/hep-ph/9906349>`__.
