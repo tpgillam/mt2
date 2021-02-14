@@ -24,10 +24,6 @@ Install from pip:
 
     pip install mt2
 
-This will, by default, use a precompiled wheel for your platform.
-If you wish to compile from source for your platform, you can pass the ``--no-binary`` option to ``pip``.
-This may give
-
 One can then compute MT2 as follows; here for the "symmetric" case, where both invisible particles have the same mass:
 
 .. code-block:: python
@@ -74,8 +70,8 @@ Toy MC
 
 A fun example using a toy Monte-Carlo simulation can be viewed in `this notebook <https://github.com/tpgillam/mt2/blob/master/examples/mc.ipynb>`__
 
-More information
-****************
+Other notes
+-----------
 
 For further information, see the documentation:
 
@@ -83,8 +79,23 @@ For further information, see the documentation:
 
     help(mt2)
 
-Under the hood, an implementation is provided as a `numpy ufunc <https://numpy.org/doc/stable/reference/ufuncs.html>`_.
-This is exported as ``mt2_ufunc``, and may be useful if wanting to use the ``where`` argument.
+Also exported is ``mt2_ufunc``.
+This is the raw implementation as a `numpy ufunc <https://numpy.org/doc/stable/reference/ufuncs.html>`_.
+Usage is the same as for ``mt2``, but it supports some additional arguments, like ``where``.
+The reader should refer to the numpy documentation for a description of these.
+
+Performance
+***********
+
+The default installation method via pip uses a precompiled wheel for your platform.
+If you wish to compile from source for your platform, you could instead install like so:
+
+.. code-block:: bash
+
+    pip install mt2 --no-binary :all:
+
+Since this can allow use of newer compilers, and code more optimised for your architecture, this can give a `small` speedup.
+On the author's computer, there was 1% runtime reduction as measured with ``examples/benchmark.py``.
 
 
 License
