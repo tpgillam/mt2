@@ -112,3 +112,12 @@ Please cite:
 
 All files other than ``src/lester_mt2_bisect_v7.h`` are released under the MIT license.
 
+
+Other implementations
+---------------------
+
+A list of alternative implementations of the MT2 calculation can be found here:
+
+https://www.hep.phy.cam.ac.uk/~lester/mt2/#Alternatives
+
+In Python, the other wrapper of the same algorithm known to the authors is by Nikolai Hartmann, here: https://gitlab.cern.ch/nihartma/pymt2
