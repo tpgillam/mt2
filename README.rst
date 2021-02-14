@@ -68,9 +68,9 @@ For example, one could scan over a grid of invisible particle masses like so:
 Note on performance
 ^^^^^^^^^^^^^^^^^^^
 
-With full precision, the main reason to use vectorisation as above is convenience.
+With `full precision`, the main reason to use vectorisation as above is convenience.
 The time spent in the C++ MT2 calculation is somewhat larger than the overhead introduced by a Python ``for`` loop.
-Some benefits will be derived, but it will runtime reductions of O(30%), rather than orders of magnitude.
+Vectorising can give a runtime reduction of ⪅30% in this case.
 
 `However`, the benefit can be more significant when using a lower precision.
 This corresponds to a larger value for the ``desired_precision_on_mt2`` argument.
