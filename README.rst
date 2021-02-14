@@ -42,10 +42,13 @@ One can then compute MT2 as follows; here for the "symmetric" case, where both i
         100, 100)  # Invisible 1 mass, invisible 2 mass
     print("Expected mT2 = 412.628.  Computed mT2 = ", val)
 
-More examples
--------------
+Examples
+--------
 
-The ``mt2`` function supports broadcasting over all arguments.
+Vectorisation
+*************
+
+The ``mt2`` function supports broadcasting over its arguments if they are array-like.
 For example, one could scan over a grid of invisible particle masses like so:
 
 .. code-block:: python
@@ -66,7 +69,13 @@ For example, one could scan over a grid of invisible particle masses like so:
 Note that the main reason to use vectorisation as above is convenience.
 The speed penalty for writing as a python ``for`` loop is often low, due to the amount of time spent inside the C++ MT2 calculation.
 
+Toy MC
+******
+
 A fun example using a toy Monte-Carlo simulation can be viewed in `this notebook <https://github.com/tpgillam/mt2/blob/master/examples/mc.ipynb>`__
+
+More information
+****************
 
 For further information, see the documentation:
 
