@@ -7,7 +7,7 @@ from _mt2 import mt2_ufunc
 
 __author__ = "Thomas Gillam"
 __email__ = "tpgillam@googlemail.com"
-__version__ = "0.2.0"
+__version__ = "1.0.0"
 
 __all__ = ['MT2_ERROR', 'mt2', 'mt2_ufunc']
 
