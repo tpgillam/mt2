@@ -86,9 +86,9 @@ struct CubicCoeffs
 };
 
 // Define the key functions used by the algorithm - first one is self-evident, second one contains the Regula Falsi root-finding method, the third function is the check to see we have the right form of the lambda function
-double NewtonRootFinder(double, double, DiscriminantCoeffs, CubicCoeffs, double);
-double NewDeltaFinder(double, double, int, int, DiscriminantCoeffs, CubicCoeffs, double);
-int lambdaSgnchanges(double, CubicCoeffs);
+double NewtonRootFinder(double, double, const DiscriminantCoeffs &, const CubicCoeffs &, double);
+double NewDeltaFinder(double, double, int, int, const DiscriminantCoeffs &, const CubicCoeffs &, double);
+int lambdaSgnchanges(double, const CubicCoeffs &);
 
 double mt2_lally(
 
@@ -106,8 +106,7 @@ double mt2_lally(
     double mna, // side a invisible mass input/guess
     double mnb, // side b invisible mass input/guess
 
-    const double desiredPrecisionOnMt2
-)
+    const double desiredPrecisionOnMt2)
 {
     ma = fabs(ma); // just in case input masses are negative - assume negative signs are erroneous
     mb = fabs(mb);
@@ -282,7 +281,7 @@ double mt2_lally(
     }
     bool quasiUnbalanced = false;
     if ((ma + mb + mna + mnb) < 0.01)
-    {   // to capture "quasi-unbalanced" cases as well - these are likely to be very small MT2 values
+    { // to capture "quasi-unbalanced" cases as well - these are likely to be very small MT2 values
         //  Do "usual" check for unbalanced massless events (see Lester, C.G. MT2 Special Cases paper, arXiv:1103.5682, for more detail)
         const double eap = (-pax * pmissy + pay * pmissx);
         const double ebp = (-pbx * pmissy + pby * pmissx);
@@ -382,7 +381,7 @@ double mt2_lally(
     return MT2;
 }
 
-double NewtonRootFinder(double LB, double UB, DiscriminantCoeffs discCoeffs, CubicCoeffs cubeCoeffs, double accuracy)
+double NewtonRootFinder(double LB, double UB, const DiscriminantCoeffs &discCoeffs, const CubicCoeffs &cubeCoeffs, double accuracy)
 {
     int maxIterations = 45; // for vast majority of events should find the root well before this, typically reach required accuracy after 10 iterations  - 45 has been found to be a reasonable number of iterations before N-R method should be abandoned.
     bool solutionFound = false;
@@ -484,10 +483,10 @@ double NewtonRootFinder(double LB, double UB, DiscriminantCoeffs discCoeffs, Cub
     return x1;
 }
 
-double NewDeltaFinder(double l_delta0, double l_delta, int bisectDivisor, int bisectMaxLoops, DiscriminantCoeffs discPolynomial, CubicCoeffs cubicPolynomial, double accuracy)
+double NewDeltaFinder(double l_delta0, double l_delta, int bisectDivisor, int bisectMaxLoops, const DiscriminantCoeffs &discPolynomial, const CubicCoeffs &cubicPolynomial, double accuracy)
 {
-    double FunctionVal(double, DiscriminantCoeffs);                  // simple function to evaluate f(LB)*f(UB) if negative we know there is a root inbetween
-    double RFRootFinder(double, double, DiscriminantCoeffs, double); // Regula Falsi function
+    double FunctionVal(double, const DiscriminantCoeffs &);                  // simple function to evaluate f(LB)*f(UB) if negative we know there is a root inbetween
+    double RFRootFinder(double, double, const DiscriminantCoeffs &, double); // Regula Falsi function
 
     // We will search for a root that will leave the lambda function with only one positive root
     double delta2 = l_delta;
@@ -649,7 +648,7 @@ double NewDeltaFinder(double l_delta0, double l_delta, int bisectDivisor, int bi
 }
 
 // Regula Falsi Method for root finding - used if original (NR) interation did not find correct root
-double RFRootFinder(double LB, double UB, DiscriminantCoeffs discCoeffs, double accuracy)
+double RFRootFinder(double LB, double UB, const DiscriminantCoeffs &discCoeffs, double accuracy)
 {
     double x0 = UB;             // starting guess for root value in RF method (using the kinematic lower bound)
     int maxIterationsRF = 1000; // second time around we definitely have bounds solvable by RF, so give it whatever time it needs (within reason!)
@@ -714,7 +713,7 @@ double RFRootFinder(double LB, double UB, DiscriminantCoeffs discCoeffs, double 
     return x0;
 }
 
-int lambdaSgnchanges(double deltaFunc, CubicCoeffs cubeCoeffs)
+int lambdaSgnchanges(double deltaFunc, const CubicCoeffs &cubeCoeffs)
 {
     const double l3 = cubeCoeffs.Coeffa2 * deltaFunc * deltaFunc + cubeCoeffs.Coeffa1 * deltaFunc + cubeCoeffs.Coeffa0;
     const double l2 = cubeCoeffs.Coeffb2 * deltaFunc * deltaFunc + cubeCoeffs.Coeffb1 * deltaFunc + cubeCoeffs.Coeffb0;
@@ -731,7 +730,7 @@ int lambdaSgnchanges(double deltaFunc, CubicCoeffs cubeCoeffs)
     return nsc;
 }
 
-double FunctionVal(double LB, DiscriminantCoeffs discCoeffs)
+double FunctionVal(double LB, const DiscriminantCoeffs &discCoeffs)
 {
     const double LBsq = LB * LB;
     const double LBsqsq = LBsq * LBsq;
