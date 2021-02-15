@@ -1,6 +1,6 @@
 #include <Python.h>
 
-#define NPY_NO_DEPRECATED_API  NPY_1_7_API_VERSION
+#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 
 #include <numpy/ndarraytypes.h>
 #include <numpy/ufuncobject.h>
@@ -12,32 +12,32 @@
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
 
 static void mt2_ufunc(
-    char** args,
+    char **args,
 // const-correctness was introduced in numpy 1.19, but retain backward compatibility.
 #ifdef NPY_1_19_API_VERSION
-    npy_intp const* dimensions,
-    npy_intp const* steps,
+    npy_intp const *dimensions,
+    npy_intp const *steps,
 #else
-    npy_intp* dimensions,
-    npy_intp* steps,
+    npy_intp *dimensions,
+    npy_intp *steps,
 #endif
-    void* data)
+    void *data)
 {
     npy_intp n = dimensions[0];
 
-    char* mVis1 = args[0];
-    char* pxVis1 = args[1];
-    char* pyVis1 = args[2];
-    char* mVis2 = args[3];
-    char* pxVis2 = args[4];
-    char* pyVis2 = args[5];
-    char* pxMiss = args[6];
-    char* pyMiss = args[7];
-    char* mInvis1 = args[8];
-    char* mInvis2 = args[9];
-    char* desiredPrecisionOnMT2 = args[10];
-    char* useDeciSectionsInitially = args[11];
-    char* out = args[12];
+    char *mVis1 = args[0];
+    char *pxVis1 = args[1];
+    char *pyVis1 = args[2];
+    char *mVis2 = args[3];
+    char *pxVis2 = args[4];
+    char *pyVis2 = args[5];
+    char *pxMiss = args[6];
+    char *pyMiss = args[7];
+    char *mInvis1 = args[8];
+    char *mInvis2 = args[9];
+    char *desiredPrecisionOnMT2 = args[10];
+    char *useDeciSectionsInitially = args[11];
+    char *out = args[12];
 
     npy_intp mVis1_step = steps[0];
     npy_intp pxVis1_step = steps[1];
@@ -53,7 +53,8 @@ static void mt2_ufunc(
     npy_intp useDeciSectionsInitially_step = steps[10];
     npy_intp out_step = steps[12];
 
-    for (npy_intp i = 0; i < n; ++i) {
+    for (npy_intp i = 0; i < n; ++i)
+    {
         *((double *)out) = asymm_mt2_lester_bisect::get_mT2(
             *(double *)mVis1,
             *(double *)pxVis1,
@@ -66,8 +67,7 @@ static void mt2_ufunc(
             *(double *)mInvis1,
             *(double *)mInvis2,
             *(double *)desiredPrecisionOnMT2,
-            *(npy_bool *)useDeciSectionsInitially
-        );
+            *(npy_bool *)useDeciSectionsInitially);
 
         mVis1 += mVis1_step;
         pxVis1 += pxVis1_step;
@@ -101,16 +101,14 @@ static char types[13] = {
     NPY_DOUBLE, // double mInvis1,
     NPY_DOUBLE, // double mInvis2,
     NPY_DOUBLE, // double desiredPrecisionOnMT2 = 0
-    NPY_BOOL,  // bool useDeciSectionsInitially=true
+    NPY_BOOL,   // bool useDeciSectionsInitially=true
     NPY_DOUBLE  // <result>
 };
-
 
 PyDoc_STRVAR(mt2_module_doc, "Provides the mt2 stransverse mass ufunc.");
 
 static PyMethodDef methods[] = {
-    {NULL, NULL, 0, NULL}
-};
+    {NULL, NULL, 0, NULL}};
 
 static struct PyModuleDef moduledef = {
     PyModuleDef_HEAD_INIT,
@@ -121,15 +119,15 @@ static struct PyModuleDef moduledef = {
     NULL,
     NULL,
     NULL,
-    NULL
-};
+    NULL};
 
 static void *data[1] = {NULL};
 
 PyMODINIT_FUNC PyInit__mt2(void)
 {
     PyObject *module = PyModule_Create(&moduledef);
-    if (!module) {
+    if (!module)
+    {
         return NULL;
     }
 
@@ -137,24 +135,23 @@ PyMODINIT_FUNC PyInit__mt2(void)
     import_ufunc();
     import_umath();
 
-    PyObject* mt2_ufunc = PyUFunc_FromFuncAndData(
-        ufuncs,  // func
-        data,  // data. The documentation claims we can pass NULL here, but then it segfaults!
-        types,  // types
-        1,  // ntypes
-        12,  // nin
-        1,  // nout
-        PyUFunc_None,  // identity
-        "mt2_ufunc",  // name
-        "Numpy ufunc to compute mt2",  // doc
-        0  // unused
+    PyObject *mt2_ufunc = PyUFunc_FromFuncAndData(
+        ufuncs,                       // func
+        data,                         // data. The documentation claims we can pass NULL here, but then it segfaults!
+        types,                        // types
+        1,                            // ntypes
+        12,                           // nin
+        1,                            // nout
+        PyUFunc_None,                 // identity
+        "mt2_ufunc",                  // name
+        "Numpy ufunc to compute mt2", // doc
+        0                             // unused
     );
 
-    PyObject* module_dict = PyModule_GetDict(module);
+    PyObject *module_dict = PyModule_GetDict(module);
     PyDict_SetItemString(module_dict, "mt2_ufunc", mt2_ufunc);
     PyDict_SetItemString(module_dict, "__version__", PyUnicode_FromString(MACRO_STRINGIFY(VERSION_INFO)));
     Py_DECREF(mt2_ufunc);
 
     return module;
 }
-
