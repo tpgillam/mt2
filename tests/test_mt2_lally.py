@@ -1,8 +1,9 @@
 """Tests for the variant of MT2 by Colin Lally."""
 
+import numpy
 import pytest
 
-from mt2 import mt2_lally
+from mt2 import mt2, mt2_lally
 
 
 def test_simple_example():
@@ -30,3 +31,45 @@ def test_near_massless():
         m_vis_a, px_a, py_a, m_vis_b, px_b, py_b, px_miss, py_miss, chi_a, chi_b
     )
     assert computed_val == pytest.approx(0.09719971)
+
+
+@pytest.mark.skip(reason="Currently failing due to inconsistencies")
+def test_fuzz():
+    batch_size = 100
+    num_tests = 1000
+
+    numpy.random.seed(42)
+
+    def _random_batch(min_, max_):
+        return numpy.random.uniform(min_, max_, (batch_size,))
+
+    for _ in range(num_tests):
+        m_vis_1 = _random_batch(0, 100)
+        px_vis_1 = _random_batch(-100, 100)
+        py_vis_1 = _random_batch(-100, 100)
+        m_vis_2 = _random_batch(0, 100)
+        px_vis_2 = _random_batch(-100, 100)
+        py_vis_2 = _random_batch(-100, 100)
+        px_miss = _random_batch(-100, 100)
+        py_miss = _random_batch(-100, 100)
+        m_invis_1 = _random_batch(0, 100)
+        m_invis_2 = _random_batch(0, 100)
+
+        args = (
+            m_vis_1,
+            px_vis_1,
+            py_vis_1,
+            m_vis_2,
+            px_vis_2,
+            py_vis_2,
+            px_miss,
+            py_miss,
+            m_invis_1,
+            m_invis_2,
+        )
+
+        result_lester = mt2(*args)
+        result_lally = mt2_lally(*args)
+
+        numpy.testing.assert_allclose(result_lester, result_lally, rtol=1e-12)
+        
