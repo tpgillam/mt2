@@ -465,7 +465,7 @@ double NewtonRootFinder(double LB, double UB, const DiscriminantCoeffs &discCoef
     }
     if ((solutionFound == false) || (x1 < 0))
     {
-        if (xNR = x1)
+        if (xNR == x1)
         {
             xNR = xNR + stuckInLoopArray[0];
         }
