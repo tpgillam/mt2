@@ -67,7 +67,7 @@ class EllipseParams:
             (self.c_xy * self.c_x - self.c_xx * self.c_y) / self.det_A33,
         )
 
-    def get_points_on_ellipse(self, n_points: int) -> numpy.ndarray:
+    def get_points(self, n_points: int) -> numpy.ndarray:
         """Return an array of shape (n_points, 2) of points on the ellipse."""
         centred_K = -self.det_Aq / self.det_A33
         transformed_A33 = self.A33 / centred_K
