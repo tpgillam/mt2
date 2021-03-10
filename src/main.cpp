@@ -8,6 +8,7 @@
 
 #include "lester_mt2_bisect_v7.h"
 #include "mt2_Lallyver2.h"
+#include "mt2_bisect.h"
 
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
@@ -159,6 +160,78 @@ static void mt2_lally_ufunc(
 }
 
 
+static void mt2_tombs_ufunc(
+    char **args,
+// const-correctness was introduced in numpy 1.19, but retain backward compatibility.
+#ifdef NPY_1_19_API_VERSION
+    npy_intp const *dimensions,
+    npy_intp const *steps,
+#else
+    npy_intp *dimensions,
+    npy_intp *steps,
+#endif
+    void *data)
+{
+    npy_intp n = dimensions[0];
+
+    char *mVis1 = args[0];
+    char *pxVis1 = args[1];
+    char *pyVis1 = args[2];
+    char *mVis2 = args[3];
+    char *pxVis2 = args[4];
+    char *pyVis2 = args[5];
+    char *pxMiss = args[6];
+    char *pyMiss = args[7];
+    char *mInvis1 = args[8];
+    char *mInvis2 = args[9];
+    char *desiredPrecisionOnMT2 = args[10];
+    char *out = args[11];
+
+    npy_intp mVis1_step = steps[0];
+    npy_intp pxVis1_step = steps[1];
+    npy_intp pyVis1_step = steps[2];
+    npy_intp mVis2_step = steps[3];
+    npy_intp pxVis2_step = steps[4];
+    npy_intp pyVis2_step = steps[5];
+    npy_intp pxMiss_step = steps[6];
+    npy_intp pyMiss_step = steps[7];
+    npy_intp mInvis1_step = steps[8];
+    npy_intp mInvis2_step = steps[9];
+    npy_intp desiredPrecisionOnMT2_step = steps[10];
+    npy_intp out_step = steps[11];
+
+    for (npy_intp i = 0; i < n; ++i)
+    {
+        *((double *)out) = mt2_bisect_impl(
+            *(double *)mVis1,
+            *(double *)pxVis1,
+            *(double *)pyVis1,
+            *(double *)mVis2,
+            *(double *)pxVis2,
+            *(double *)pyVis2,
+            *(double *)pxMiss,
+            *(double *)pyMiss,
+            *(double *)mInvis1,
+            *(double *)mInvis2,
+            *(double *)desiredPrecisionOnMT2
+            );
+
+        mVis1 += mVis1_step;
+        pxVis1 += pxVis1_step;
+        pyVis1 += pyVis1_step;
+        mVis2 += mVis2_step;
+        pxVis2 += pxVis2_step;
+        pyVis2 += pyVis2_step;
+        pxMiss += pxMiss_step;
+        pyMiss += pyMiss_step;
+        mInvis1 += mInvis1_step;
+        mInvis2 += mInvis2_step;
+        desiredPrecisionOnMT2 += desiredPrecisionOnMT2_step;
+        out += out_step;
+    }
+}
+
+
 /* This a pointer to mt2_ufunc */
 PyUFuncGenericFunction mt2_ufuncs[1] = {&mt2_ufunc};
 
@@ -186,6 +259,26 @@ PyUFuncGenericFunction mt2_lally_ufuncs[1] = {&mt2_lally_ufunc};
 
 /* These are the input and return dtypes of mt2_lally_ufunc.*/
 static char mt2_lally_types[12] = {
+    NPY_DOUBLE, // double mVis1,
+    NPY_DOUBLE, // double pxVis1,
+    NPY_DOUBLE, // double pyVis1,
+    NPY_DOUBLE, // double mVis2,
+    NPY_DOUBLE, // double pxVis2,
+    NPY_DOUBLE, // double pyVis2,
+    NPY_DOUBLE, // double pxMiss,
+    NPY_DOUBLE, // double pyMiss,
+    NPY_DOUBLE, // double mInvis1,
+    NPY_DOUBLE, // double mInvis2,
+    NPY_DOUBLE, // double desiredPrecisionOnMT2 = 0
+    NPY_DOUBLE  // <result>
+};
+
+
+/* This a pointer to mt2_tombs_ufunc */
+PyUFuncGenericFunction mt2_tombs_ufuncs[1] = {&mt2_tombs_ufunc};
+
+/* These are the input and return dtypes of mt2_tombs_ufunc.*/
+static char mt2_tombs_types[12] = {
     NPY_DOUBLE, // double mVis1,
     NPY_DOUBLE, // double pxVis1,
     NPY_DOUBLE, // double pyVis1,
@@ -256,12 +349,27 @@ PyMODINIT_FUNC PyInit__mt2(void)
         0                             // unused
     );
 
+    PyObject *mt2_tombs_ufunc = PyUFunc_FromFuncAndData(
+        mt2_tombs_ufuncs,             // func
+        data,                         // data. The documentation claims we can pass NULL here, but then it segfaults!
+        mt2_tombs_types,              // types
+        1,                            // ntypes
+        11,                           // nin
+        1,                            // nout
+        PyUFunc_None,                 // identity
+        "mt2_tombs_ufunc",            // name
+        "Numpy ufunc to compute mt2 (LN algo, implemented by Rupert Tombs)", // doc
+        0                             // unused
+    );
+
     PyObject *module_dict = PyModule_GetDict(module);
     PyDict_SetItemString(module_dict, "mt2_ufunc", mt2_ufunc);
     PyDict_SetItemString(module_dict, "mt2_lally_ufunc", mt2_lally_ufunc);
+    PyDict_SetItemString(module_dict, "mt2_tombs_ufunc", mt2_tombs_ufunc);
     PyDict_SetItemString(module_dict, "__version__", PyUnicode_FromString(MACRO_STRINGIFY(VERSION_INFO)));
     Py_DECREF(mt2_ufunc);
     Py_DECREF(mt2_lally_ufunc);
+    Py_DECREF(mt2_tombs_ufunc);
 
     return module;
 }
