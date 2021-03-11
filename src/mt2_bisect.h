@@ -44,7 +44,7 @@ struct mt2_trio {
 };
 
 
-/* Function declarations */
+/* Template declarations */
 template <typename T>
 static struct mt2_conic<T> mt2_ellipse(T m, T px, T py, T ssm, T sspx, T sspy);
 
@@ -238,7 +238,7 @@ mt2_ellipse_rest(T m, T px, T py, T ssm)
 /*
  * Return the quadratic for the determinant of a parametrized conic.
  *
- * The quadratic part of the c parameter equals -1.
+ * The quadratic part of the c parameter is -1.
  */
 template <typename T>
 static struct mt2_trio<T>
@@ -330,7 +330,7 @@ mt2_lester(const struct mt2_conic<T> *a, const struct mt2_conic<T> *b)
 /*
  * Are our ellipses disjoint?
  *
- * Ellipse properties are specified as quadratics in mass `m'.
+ * Ellipse properties are specified as quadratics in mass `m' squared.
  */
 template <typename T>
 static bool
