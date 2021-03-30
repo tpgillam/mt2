@@ -71,4 +71,23 @@ def test_fuzz():
         result_tombs = mt2_tombs(*args)
 
         numpy.testing.assert_allclose(result_lester, result_tombs, rtol=1e-12)
-        
+
+
+def test_scale_invariance():
+    example_args = numpy.array(
+        (100, 410, 20, 150, -210, -300, -200, 280, 100, 100))
+    example_val = mt2_tombs(*example_args)
+
+    # mt2 scales with its arguments; check over some orders of magnitude.
+    for i in range(-100, 100, 10):
+        scale = 10. ** i
+        computed_val = mt2_tombs(*(example_args * scale))
+        assert computed_val == pytest.approx(example_val * scale)
+
+
+def test_negative_masses():
+    # Any negative mass is unphysical.
+    # These arguments use negative masses to make both initial bounds negative.
+    # Check that the result is neither positive nor an infinite loop.
+    computed_val = mt2_tombs(1, 2, 3, 4, 5, 6, 7, 8, -90, -100)
+    assert not (computed_val > 0)
