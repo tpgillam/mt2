@@ -5,25 +5,34 @@
  *
  * C++-subset version.
  */
+
+/*
+ * Includes
+ *
+ * cmath
+ *     std::sqrt, std::fabs
+ * limits
+ *     std::numeric_limits
+ */
 #include <cmath>
 #include <limits>
 
 /* Macros */
 #ifdef __GNUC__
-#define mt2_expect(expr, x) __builtin_expect((expr), (x))
+#define mt2_rare(expr) __builtin_expect((expr), 0)
 #else
-#define mt2_expect(expr, x) (expr)
+#define mt2_rare(expr) (expr)
 #endif
 
 /* Types */
 /*
  * Parametrize a conic section
  *
- *            [[cxx cxy cx  ]
- *      X.T ·  [cxy cyy cy  ]  · X == 0
- *             [cx  cy  c   ]]
+ *                [[cxx cxy cx ]    [x
+ *      [x y 1] ·  [cxy cyy cy ]  ·  y  == 0
+ *                 [cx  cy  c  ]]    1]
  *
- * where cx, cy, and c are two-variable functions of our trial mass.
+ * where cx, cy, and c depend on two variables.
  */
 template <typename T>
 struct mt2_conic {
@@ -68,8 +77,9 @@ template <typename T>
 static inline void mt2_swap(T *x, T *y);
 
 
+
 /* Global variables */
-static const double mt2_error = -1.0027064548346334;
+static const float mt2_error = -1.38570487f;
 
 
 /* Template definitions */
@@ -89,9 +99,9 @@ static const double mt2_error = -1.0027064548346334;
  *     sspx, sspy:
  *         missing transverse momentum components
  *     ssam, ssbm
- *         masses of the invisible particles associated to `a' and `b'
+ *         masses of the invisible particles associated with `a' and `b'
  *
- *     Masses must be >= 0.
+ *     Masses are assumed to be non-negative.
  *
  * Returns:
  *     An estimate of MT2, or a negative number if something goes wrong.
@@ -104,15 +114,17 @@ mt2_bisect_impl(T am, T apx, T apy,
                 T ssam, T ssbm,
                 T precision=0)
 {
-    /* This physical scale is used for initial bounding and error testing. */
-    auto scale = std::sqrt(0.125*(
+    /* This physical scale is used for initial bounding and input testing. */
+    auto scale = std::sqrt(0.125f*(
         sspx*sspx + sspy*sspy + (ssam*ssam + ssbm*ssbm)
         + ((apx*apx + apy*apy + am*am) + (bpx*bpx + bpy*bpy + bm*bm))
     ));
 
-    /* Escape if scale is zero or NaN. */
-    if (!(scale > 0))
-        return 0;
+    auto squeeze = 1 / scale;
+
+    /* If scale is 0 or NAN, then mt2 is also. */
+    if (mt2_rare(!(scale > 0)))
+        return scale;
 
     /* Sort legs by lower bounds on the parent mass. */
     if (am + ssam > bm + ssbm) {
@@ -122,9 +134,25 @@ mt2_bisect_impl(T am, T apx, T apy,
         mt2_swap(&ssam, &ssbm);
     }
 
-    /* At `lo', the ellipses will be disjoint; hi is positive. */
+    /* Squeeze towards 1 to reduce over/underflow risk. */
+    am *= squeeze;
+    apx *= squeeze;
+    apy *= squeeze;
+    bm *= squeeze;
+    bpx *= squeeze;
+    bpy *= squeeze;
+    sspx *= squeeze;
+    sspy *= squeeze;
+    ssam *= squeeze;
+    ssbm *= squeeze;
+
+    /* At `lo', the ellipses will be disjoint. */
     auto lo = bm + ssbm;
-    auto hi = lo + scale;
+    auto hi = lo + 1;
+
+    /* Negative masses can cause negative bounds; avoid that case. */
+    if (mt2_rare(!(lo > 0)))
+        return mt2_error;
 
     /* Construct the ellipses and their properties as quadratics. */
     auto a_ellipse = mt2_ellipse_rest(am, -apx, -apy, ssam);
@@ -142,7 +170,7 @@ mt2_bisect_impl(T am, T apx, T apy,
         bool error;
         auto disjoint = mt2_disjoint(quadratics, hi, &error);
 
-        if (error | (hi >= std::numeric_limits<T>::max()))
+        if (mt2_rare(error | (hi >= std::numeric_limits<T>::max())))
             return mt2_error;
 
         if (!disjoint)
@@ -151,18 +179,18 @@ mt2_bisect_impl(T am, T apx, T apy,
         lo = hi;
         hi *= 2;
     }
-    
-    /* Set termination tolerances. If precision is NaN, rel_tol is epsilon. */
+
+    /* Set termination tolerances. If precision is NAN, rel_tol is epsilon. */
     auto epsilon = std::numeric_limits<T>::epsilon();
     auto rel_tol = epsilon < precision ? precision : epsilon;
     auto abs_tol = epsilon;
 
     /* Bisect; this loop is our fiery pit of hell. */
     for (;;) {
-        auto m = 0.5*(lo + hi);
+        auto m = 0.5f*(lo + hi);
 
-        if (mt2_expect(hi <= lo*(1 + 2*rel_tol) + 2*abs_tol, 0))
-            return m;
+        if (mt2_rare(hi <= lo*(1 + 2*rel_tol) + 2*abs_tol))
+            return m * scale;
 
         bool error;
         auto disjoint = mt2_disjoint(quadratics, m, &error);
@@ -172,8 +200,8 @@ mt2_bisect_impl(T am, T apx, T apy,
         else
             hi = m;
 
-        if (error)
-            return lo;
+        if (mt2_rare(error))
+            return lo * scale;
     }
 }
 
@@ -210,8 +238,8 @@ mt2_ellipse(T m, T px, T py, T ssm, T sspx, T sspy)
 /*
  * Special case of `mt2_ellipse' with zero ssing momenta.
  *
- * Yes this does make a measurable performance improvement. No, algebra with
- * zero is not optimised away (see, e.g., the C17 standard, Appendix F.9.2.)
+ * Yes this does make a measurable performance improvement; algebra with zeros
+ * is not optimised away (see, e.g., the C17 standard, Appendix F.9.2).
  */
 template <typename T>
 static struct mt2_conic<T>
@@ -347,7 +375,7 @@ mt2_disjoint(const struct mt2_trio<T> quadratics[4], T m, bool *error)
         mt2_swap(&a_lester, &b_lester);
     }
 
-    /* Scale to `monomial form'. */
+    /* Scale to 'monomial form'. */
     auto a = a_lester / a_det;
     auto b = b_lester / a_det;
     auto c = b_det / a_det;
@@ -382,6 +410,7 @@ mt2_eval_quadratic(const struct mt2_trio<long double> *p, long double x)
     return p->c0 + x*p->c1 + x*x*p->c2;
 }
 
+/* Swap values with pointer syntax. */
 template <typename T>
 void
 mt2_swap(T *x, T *y)
@@ -392,4 +421,4 @@ mt2_swap(T *x, T *y)
 }
 
 /* Clean-up */
-#undef mt2_expect
+#undef mt2_rare
