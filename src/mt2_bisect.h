@@ -1,5 +1,5 @@
 /*
- * Asymmetric MT2 with the Lester and Nachman's bisection algorithm.
+ * Asymmetric MT2 with the Lester-Nachman bisection algorithm.
  *
  * Please cite arxiv.org/abs/1411.4312 and arxiv.org/abs/hep-ph/9906349 .
  *
@@ -17,12 +17,14 @@
 #include <cmath>
 #include <limits>
 
+
 /* Macros */
 #ifdef __GNUC__
 #define mt2_rare(expr) __builtin_expect((expr), 0)
 #else
 #define mt2_rare(expr) (expr)
 #endif
+
 
 /* Types */
 /*
@@ -77,13 +79,11 @@ template <typename T>
 static inline void mt2_swap(T *x, T *y);
 
 
-
 /* Global variables */
 static const float mt2_error = -1.38570487f;
 
 
 /* Template definitions */
-
 /*
  * Return asymmetric MT2, approximated by a bisection method.
  *
@@ -95,7 +95,7 @@ static const float mt2_error = -1.38570487f;
  *     am, apx, apy:
  *         mass and transverse momentum components of one visible child
  *     bm, bpx, bpy:
- *         mass and transverse momentum components of t'other visible child
+ *         mass and transverse momentum components of the other visible child
  *     sspx, sspy:
  *         missing transverse momentum components
  *     ssam, ssbm
@@ -402,7 +402,7 @@ mt2_eval_quadratic(const struct mt2_trio<T> *p, T x)
     return p->c0 + x*(p->c1 + x*p->c2);
 }
 
-/* Using direct style for better results without fma. */
+/* Using direct style for better results without fused-multiply-add. */
 template <>
 inline long double
 mt2_eval_quadratic(const struct mt2_trio<long double> *p, long double x)
