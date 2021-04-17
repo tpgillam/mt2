@@ -25,7 +25,7 @@ static void mt2_ufunc(
 #endif
     void *data)
 {
-    npy_intp n = dimensions[0];
+    const npy_intp n = dimensions[0];
 
     char *mVis1 = args[0];
     char *pxVis1 = args[1];
@@ -41,19 +41,19 @@ static void mt2_ufunc(
     char *useDeciSectionsInitially = args[11];
     char *out = args[12];
 
-    npy_intp mVis1_step = steps[0];
-    npy_intp pxVis1_step = steps[1];
-    npy_intp pyVis1_step = steps[2];
-    npy_intp mVis2_step = steps[3];
-    npy_intp pxVis2_step = steps[4];
-    npy_intp pyVis2_step = steps[5];
-    npy_intp pxMiss_step = steps[6];
-    npy_intp pyMiss_step = steps[7];
-    npy_intp mInvis1_step = steps[8];
-    npy_intp mInvis2_step = steps[9];
-    npy_intp desiredPrecisionOnMT2_step = steps[10];
-    npy_intp useDeciSectionsInitially_step = steps[10];
-    npy_intp out_step = steps[12];
+    const npy_intp mVis1_step = steps[0];
+    const npy_intp pxVis1_step = steps[1];
+    const npy_intp pyVis1_step = steps[2];
+    const npy_intp mVis2_step = steps[3];
+    const npy_intp pxVis2_step = steps[4];
+    const npy_intp pyVis2_step = steps[5];
+    const npy_intp pxMiss_step = steps[6];
+    const npy_intp pyMiss_step = steps[7];
+    const npy_intp mInvis1_step = steps[8];
+    const npy_intp mInvis2_step = steps[9];
+    const npy_intp desiredPrecisionOnMT2_step = steps[10];
+    const npy_intp useDeciSectionsInitially_step = steps[10];
+    const npy_intp out_step = steps[12];
 
     for (npy_intp i = 0; i < n; ++i)
     {
@@ -87,7 +87,6 @@ static void mt2_ufunc(
     }
 }
 
-
 static void mt2_lally_ufunc(
     char **args,
 // const-correctness was introduced in numpy 1.19, but retain backward compatibility.
@@ -100,7 +99,7 @@ static void mt2_lally_ufunc(
 #endif
     void *data)
 {
-    npy_intp n = dimensions[0];
+    const npy_intp n = dimensions[0];
 
     char *mVis1 = args[0];
     char *pxVis1 = args[1];
@@ -115,18 +114,18 @@ static void mt2_lally_ufunc(
     char *desiredPrecisionOnMT2 = args[10];
     char *out = args[11];
 
-    npy_intp mVis1_step = steps[0];
-    npy_intp pxVis1_step = steps[1];
-    npy_intp pyVis1_step = steps[2];
-    npy_intp mVis2_step = steps[3];
-    npy_intp pxVis2_step = steps[4];
-    npy_intp pyVis2_step = steps[5];
-    npy_intp pxMiss_step = steps[6];
-    npy_intp pyMiss_step = steps[7];
-    npy_intp mInvis1_step = steps[8];
-    npy_intp mInvis2_step = steps[9];
-    npy_intp desiredPrecisionOnMT2_step = steps[10];
-    npy_intp out_step = steps[11];
+    const npy_intp mVis1_step = steps[0];
+    const npy_intp pxVis1_step = steps[1];
+    const npy_intp pyVis1_step = steps[2];
+    const npy_intp mVis2_step = steps[3];
+    const npy_intp pxVis2_step = steps[4];
+    const npy_intp pyVis2_step = steps[5];
+    const npy_intp pxMiss_step = steps[6];
+    const npy_intp pyMiss_step = steps[7];
+    const npy_intp mInvis1_step = steps[8];
+    const npy_intp mInvis2_step = steps[9];
+    const npy_intp desiredPrecisionOnMT2_step = steps[10];
+    const npy_intp out_step = steps[11];
 
     for (npy_intp i = 0; i < n; ++i)
     {
@@ -141,8 +140,7 @@ static void mt2_lally_ufunc(
             *(double *)pyMiss,
             *(double *)mInvis1,
             *(double *)mInvis2,
-            *(double *)desiredPrecisionOnMT2
-            );
+            *(double *)desiredPrecisionOnMT2);
 
         mVis1 += mVis1_step;
         pxVis1 += pxVis1_step;
@@ -159,7 +157,6 @@ static void mt2_lally_ufunc(
     }
 }
 
-
 static void mt2_tombs_ufunc(
     char **args,
 // const-correctness was introduced in numpy 1.19, but retain backward compatibility.
@@ -172,7 +169,7 @@ static void mt2_tombs_ufunc(
 #endif
     void *data)
 {
-    npy_intp n = dimensions[0];
+    const npy_intp n = dimensions[0];
 
     char *mVis1 = args[0];
     char *pxVis1 = args[1];
@@ -187,18 +184,18 @@ static void mt2_tombs_ufunc(
     char *desiredPrecisionOnMT2 = args[10];
     char *out = args[11];
 
-    npy_intp mVis1_step = steps[0];
-    npy_intp pxVis1_step = steps[1];
-    npy_intp pyVis1_step = steps[2];
-    npy_intp mVis2_step = steps[3];
-    npy_intp pxVis2_step = steps[4];
-    npy_intp pyVis2_step = steps[5];
-    npy_intp pxMiss_step = steps[6];
-    npy_intp pyMiss_step = steps[7];
-    npy_intp mInvis1_step = steps[8];
-    npy_intp mInvis2_step = steps[9];
-    npy_intp desiredPrecisionOnMT2_step = steps[10];
-    npy_intp out_step = steps[11];
+    const npy_intp mVis1_step = steps[0];
+    const npy_intp pxVis1_step = steps[1];
+    const npy_intp pyVis1_step = steps[2];
+    const npy_intp mVis2_step = steps[3];
+    const npy_intp pxVis2_step = steps[4];
+    const npy_intp pyVis2_step = steps[5];
+    const npy_intp pxMiss_step = steps[6];
+    const npy_intp pyMiss_step = steps[7];
+    const npy_intp mInvis1_step = steps[8];
+    const npy_intp mInvis2_step = steps[9];
+    const npy_intp desiredPrecisionOnMT2_step = steps[10];
+    const npy_intp out_step = steps[11];
 
     for (npy_intp i = 0; i < n; ++i)
     {
@@ -213,8 +210,7 @@ static void mt2_tombs_ufunc(
             *(double *)pyMiss,
             *(double *)mInvis1,
             *(double *)mInvis2,
-            *(double *)desiredPrecisionOnMT2
-            );
+            *(double *)desiredPrecisionOnMT2);
 
         mVis1 += mVis1_step;
         pxVis1 += pxVis1_step;
@@ -230,7 +226,6 @@ static void mt2_tombs_ufunc(
         out += out_step;
     }
 }
-
 
 /* This a pointer to mt2_ufunc */
 PyUFuncGenericFunction mt2_ufuncs[1] = {&mt2_ufunc};
@@ -252,8 +247,6 @@ static char mt2_types[13] = {
     NPY_DOUBLE  // <result>
 };
 
-
-
 /* This a pointer to mt2_lally_ufunc */
 PyUFuncGenericFunction mt2_lally_ufuncs[1] = {&mt2_lally_ufunc};
 
@@ -272,7 +265,6 @@ static char mt2_lally_types[12] = {
     NPY_DOUBLE, // double desiredPrecisionOnMT2 = 0
     NPY_DOUBLE  // <result>
 };
-
 
 /* This a pointer to mt2_tombs_ufunc */
 PyUFuncGenericFunction mt2_tombs_ufuncs[1] = {&mt2_tombs_ufunc};
@@ -337,29 +329,29 @@ PyMODINIT_FUNC PyInit__mt2(void)
     );
 
     PyObject *mt2_lally_ufunc = PyUFunc_FromFuncAndData(
-        mt2_lally_ufuncs,             // func
-        data,                         // data. The documentation claims we can pass NULL here, but then it segfaults!
-        mt2_lally_types,              // types
-        1,                            // ntypes
-        11,                           // nin
-        1,                            // nout
-        PyUFunc_None,                 // identity
-        "mt2_lally_ufunc",            // name
+        mt2_lally_ufuncs,                              // func
+        data,                                          // data. The documentation claims we can pass NULL here, but then it segfaults!
+        mt2_lally_types,                               // types
+        1,                                             // ntypes
+        11,                                            // nin
+        1,                                             // nout
+        PyUFunc_None,                                  // identity
+        "mt2_lally_ufunc",                             // name
         "Numpy ufunc to compute mt2 (by Colin Lally)", // doc
-        0                             // unused
+        0                                              // unused
     );
 
     PyObject *mt2_tombs_ufunc = PyUFunc_FromFuncAndData(
-        mt2_tombs_ufuncs,             // func
-        data,                         // data. The documentation claims we can pass NULL here, but then it segfaults!
-        mt2_tombs_types,              // types
-        1,                            // ntypes
-        11,                           // nin
-        1,                            // nout
-        PyUFunc_None,                 // identity
-        "mt2_tombs_ufunc",            // name
+        mt2_tombs_ufuncs,                                                    // func
+        data,                                                                // data. The documentation claims we can pass NULL here, but then it segfaults!
+        mt2_tombs_types,                                                     // types
+        1,                                                                   // ntypes
+        11,                                                                  // nin
+        1,                                                                   // nout
+        PyUFunc_None,                                                        // identity
+        "mt2_tombs_ufunc",                                                   // name
         "Numpy ufunc to compute mt2 (LN algo, implemented by Rupert Tombs)", // doc
-        0                             // unused
+        0                                                                    // unused
     );
 
     PyObject *module_dict = PyModule_GetDict(module);
