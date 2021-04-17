@@ -5,25 +5,11 @@ import numpy
 from mt2 import mt2, mt2_lally, mt2_tombs
 
 
-def main():
-    n1 = 400
-    n2 = 400
-
-    # Make mass_1 vary over the first axis, and mass_2 vary over the second axis
-    mass_1 = numpy.linspace(1, 200, n1).reshape((-1, 1))
-    mass_2 = numpy.linspace(1, 200, n2).reshape((1, -1))
-
+def _run_profile(args, n1, n2):
     # Pre-allocate output so that we are just timing MT2 itself, not the allocation of
-    
-    args = (
-        100, 410, 20,  # Visible 1: mass, px, py
-        150, -210, -300,  # Visible 2: mass, px, py
-        -200, 280,  # Missing transverse momentum: x, y
-        mass_1, mass_2,  # Invisible 1 mass, invisible 2 mass
-    )
-
-    # the output buffer.
+    # the output buffers.
     out_lester = numpy.zeros((n1, n2))
+    out_lester_no_ds = numpy.zeros((n1, n2))
     out_lally = numpy.zeros((n1, n2))
     out_tombs = numpy.zeros((n1, n2))
 
@@ -31,7 +17,11 @@ def main():
     t_lester_start = time.time()
     mt2(*args, out=out_lester)
     t_lester_end = time.time()
-    
+
+    t_lester_no_ds_start = time.time()
+    mt2(*args, out=out_lester_no_ds, use_deci_sections_initially=False)
+    t_lester_no_ds_end = time.time()
+
     t_lally_start = time.time()
     mt2_lally(*args, out=out_lally)
     t_lally_end = time.time()
@@ -39,14 +29,47 @@ def main():
     t_tombs_start = time.time()
     mt2_tombs(*args, out=out_tombs)
     t_tombs_end = time.time()
-    
+
     # Check that we get the same thing.
+    numpy.testing.assert_array_almost_equal(out_lester, out_lester_no_ds)
     numpy.testing.assert_array_almost_equal(out_lester, out_lally)
     numpy.testing.assert_array_almost_equal(out_lester, out_tombs)
 
-    print("Elapsed time Lester: {} seconds".format(t_lester_end - t_lester_start))
-    print("Elapsed time Lally : {} seconds".format(t_lally_end - t_lally_start))
-    print("Elapsed time Tombs : {} seconds".format(t_tombs_end - t_tombs_start))
+    print(
+        "Elapsed time Lester        : {} seconds".format(t_lester_end - t_lester_start)
+    )
+    print(
+        "Elapsed time Lester (no DS): {} seconds".format(
+            t_lester_no_ds_end - t_lester_no_ds_start
+        )
+    )
+    print("Elapsed time Lally         : {} seconds".format(t_lally_end - t_lally_start))
+    print("Elapsed time Tombs         : {} seconds".format(t_tombs_end - t_tombs_start))
+
+
+def main():
+    n1 = 400
+    n2 = 400
+
+    # Make mass_1 vary over the first axis, and mass_2 vary over the second axis.
+    mass_1 = numpy.linspace(1, 200, n1).reshape((-1, 1))
+    mass_2 = numpy.linspace(1, 200, n2).reshape((1, -1))
+    args = (
+        100, 410, 20,  # Visible 1: mass, px, py
+        150, -210, -300,  # Visible 2: mass, px, py
+        -200, 280,  # Missing transverse momentum: x, y
+        mass_1, mass_2,  # Invisible 1 mass, invisible 2 mass
+    )
+    print("EXAMPLE FROM REAMDE:")
+    _run_profile(args, n1, n2)
+    print()
+    print()
+
+    print("EXAMPLE FROM LESTER HEADER FILE:")
+    mass_1 = numpy.full((n1, 1), 4)
+    mass_2 = numpy.full((1, n2), 7)
+    args = (10, 20, 30, 10, -20, -30, -5, -5, mass_1, mass_2)
+    _run_profile(args, n1, n2)
 
 
 if __name__ == "__main__":
