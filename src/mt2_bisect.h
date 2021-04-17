@@ -236,7 +236,7 @@ mt2_ellipse(T m, T px, T py, T ssm, T sspx, T sspy)
 }
 
 /*
- * Special case of `mt2_ellipse' with zero ssing momenta.
+ * Special case of `mt2_ellipse' with zero missing momenta.
  *
  * Yes this does make a measurable performance improvement; algebra with zeros
  * is not optimised away (see, e.g., the C17 standard, Appendix F.9.2).
@@ -383,11 +383,11 @@ mt2_disjoint(const struct mt2_trio<T> quadratics[4], T m, bool *error)
     *error = a_det == 0;
 
     /* Using some branching logic to aid early escapes. */
-    auto thing1 = a*a > b*3;
-    auto thing2 = a*c*(b*18 - a*a*4) > c*c*27 + b*b*(b*4 - a*a);
-    auto thing3 = (a < 0) || (b*b*4 > a*a*b + a*c*3);
-
-    return thing1 && thing2 & thing3;
+    return (
+        (a*a > b*3) && 
+        ((a < 0) || (b*b*4 > a*a*b + a*c*3)) &&
+        (a*c*(b*18 - a*a*4) > c*c*27 + b*b*(b*4 - a*a))
+    );
 }
 
 /*
