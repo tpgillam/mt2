@@ -115,12 +115,12 @@ mt2_bisect_impl(T am, T apx, T apy,
                 T precision=0)
 {
     /* This physical scale is used for initial bounding and input testing. */
-    auto scale = std::sqrt(0.125f*(
+    const auto scale = std::sqrt(0.125f*(
         sspx*sspx + sspy*sspy + (ssam*ssam + ssbm*ssbm)
         + ((apx*apx + apy*apy + am*am) + (bpx*bpx + bpy*bpy + bm*bm))
     ));
 
-    auto squeeze = 1 / scale;
+    const auto squeeze = 1 / scale;
 
     /* If scale is 0 or NAN, then mt2 is also. */
     if (mt2_rare(!(scale > 0)))
@@ -168,7 +168,7 @@ mt2_bisect_impl(T am, T apx, T apy,
     /* Expand to find an upper bound. */
     for (;;) {
         bool error;
-        auto disjoint = mt2_disjoint(quadratics, hi, &error);
+        const auto disjoint = mt2_disjoint(quadratics, hi, &error);
 
         if (mt2_rare(error | (hi >= std::numeric_limits<T>::max())))
             return mt2_error;
@@ -181,19 +181,19 @@ mt2_bisect_impl(T am, T apx, T apy,
     }
 
     /* Set termination tolerances. If precision is NAN, rel_tol is epsilon. */
-    auto epsilon = std::numeric_limits<T>::epsilon();
-    auto rel_tol = epsilon < precision ? precision : epsilon;
-    auto abs_tol = epsilon;
+    const auto epsilon = std::numeric_limits<T>::epsilon();
+    const auto rel_tol = epsilon < precision ? precision : epsilon;
+    const auto abs_tol = epsilon;
 
     /* Bisect; this loop is our fiery pit of hell. */
     for (;;) {
-        auto m = 0.5f*(lo + hi);
+        const auto m = 0.5f*(lo + hi);
 
         if (mt2_rare(hi <= lo*(1 + 2*rel_tol) + 2*abs_tol))
             return m * scale;
 
         bool error;
-        auto disjoint = mt2_disjoint(quadratics, m, &error);
+        const auto disjoint = mt2_disjoint(quadratics, m, &error);
 
         if (disjoint)
             lo = m;
@@ -213,12 +213,12 @@ static struct mt2_conic<T>
 mt2_ellipse(T m, T px, T py, T ssm, T sspx, T sspy)
 {
     struct mt2_conic<T> out;
-    auto tx = 2 * px;
-    auto ty = 2 * py;
-    auto m2sum = m*m + ssm*ssm;
-    auto m2dif = m*m - ssm*ssm;
-    auto gx = (m*m*4 + ty*ty)*sspx - tx*ty*sspy;
-    auto gy = (m*m*4 + tx*tx)*sspy - tx*ty*sspx;
+    const auto tx = 2 * px;
+    const auto ty = 2 * py;
+    const auto m2sum = m*m + ssm*ssm;
+    const auto m2dif = m*m - ssm*ssm;
+    const auto gx = (m*m*4 + ty*ty)*sspx - tx*ty*sspy;
+    const auto gy = (m*m*4 + tx*tx)*sspy - tx*ty*sspx;
 
     out.cxx = m*m*4 + ty*ty;
     out.cyy = m*m*4 + tx*tx;
@@ -246,10 +246,10 @@ static struct mt2_conic<T>
 mt2_ellipse_rest(T m, T px, T py, T ssm)
 {
     struct mt2_conic<T> out;
-    auto tx = 2 * px;
-    auto ty = 2 * py;
-    auto m2sum = m*m + ssm*ssm;
-    auto m2dif = m*m - ssm*ssm;
+    const auto tx = 2 * px;
+    const auto ty = 2 * py;
+    const auto m2sum = m*m + ssm*ssm;
+    const auto m2dif = m*m - ssm*ssm;
 
     out.cxx = m*m*4 + ty*ty;
     out.cyy = m*m*4 + tx*tx;
@@ -273,12 +273,12 @@ static struct mt2_trio<T>
 mt2_det(const struct mt2_conic<T> *a)
 {
     struct mt2_trio<T> out;
-    auto xx = a->cxx;
-    auto yy = a->cyy;
-    auto xy = a->cxy;
-    auto x = a->cx;
-    auto y = a->cy;
-    auto c = a->c;
+    const auto xx = a->cxx;
+    const auto yy = a->cyy;
+    const auto xy = a->cxy;
+    const auto x = a->cx;
+    const auto y = a->cy;
+    const auto c = a->c;
 
     out.c0 = (
         2*xy*x[0]*y[0]
@@ -310,18 +310,18 @@ static struct mt2_trio<T>
 mt2_lester(const struct mt2_conic<T> *a, const struct mt2_conic<T> *b)
 {
     struct mt2_trio<T> out;
-    auto axx = a->cxx;
-    auto ayy = a->cyy;
-    auto axy = a->cxy;
-    auto ax = a->cx;
-    auto ay = a->cy;
-    auto ac = a->c;
-    auto bxx = b->cxx;
-    auto byy = b->cyy;
-    auto bxy = b->cxy;
-    auto bx = b->cx;
-    auto by = b->cy;
-    auto bc = b->c;
+    const auto axx = a->cxx;
+    const auto ayy = a->cyy;
+    const auto axy = a->cxy;
+    const auto ax = a->cx;
+    const auto ay = a->cy;
+    const auto ac = a->c;
+    const auto bxx = b->cxx;
+    const auto byy = b->cyy;
+    const auto bxy = b->cxy;
+    const auto bx = b->cx;
+    const auto by = b->cy;
+    const auto bc = b->c;
 
     out.c0 = (
         bxx*(ayy*ac[0] - ay[0]*ay[0])
@@ -376,9 +376,9 @@ mt2_disjoint(const struct mt2_trio<T> quadratics[4], T m, bool *error)
     }
 
     /* Scale to 'monomial form'. */
-    auto a = a_lester / a_det;
-    auto b = b_lester / a_det;
-    auto c = b_det / a_det;
+    const auto a = a_lester / a_det;
+    const auto b = b_lester / a_det;
+    const auto c = b_det / a_det;
 
     *error = a_det == 0;
 
@@ -415,7 +415,7 @@ template <typename T>
 void
 mt2_swap(T *x, T *y)
 {
-    auto tmp = *x;
+    const auto tmp = *x;
     *x = *y;
     *y = tmp;
 }
