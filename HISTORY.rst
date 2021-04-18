@@ -2,6 +2,11 @@
 History
 =======
 
+1.1.0 (2021-04-18)
+------------------
+
+* Re-implementation of the core algorithm, giving 3x-4x speedup overall.
+
 1.0.0 (2021-02-14)
 ------------------
 
