@@ -3,7 +3,7 @@ from typing import Optional, Union
 import numpy
 
 # noinspection PyUnresolvedReferences
-from _mt2 import mt2_lester_ufunc
+from _mt2 import mt2_tombs_ufunc
 
 __author__ = "Thomas Gillam"
 __email__ = "tpgillam@googlemail.com"
@@ -56,10 +56,6 @@ def mt2(
             within ±desiredPrecisionOnMT2.
             Note that by requesting precision of ±0.01 GeV on an MT2 value of 100 GeV
             can result in speedups of a factor of two to three.
-        use_deci_sections_initially: If true, interval is cut at the 10% point until
-            first acceptance, which gives a factor 3 increase in speed calculating
-            the kinematic minimum, but 3% slowdown for events in the bulk.
-            Is on (true) by default, but can be turned off by setting to false.
         out: If specified, an array into which the output will be placed.
             Must have dtype numpy.float64.
 
@@ -71,7 +67,7 @@ def mt2(
         for example, this will occur if the arguments specify an infeasible optimisation
         problem.
     """
-    return mt2_lester_ufunc(
+    return mt2_tombs_ufunc(
         m_vis_1,
         px_vis_1,
         py_vis_1,
@@ -83,9 +79,8 @@ def mt2(
         m_invis_1,
         m_invis_2,
         desired_precision_on_mt2,
-        use_deci_sections_initially,
         out,
     )
 
 
-mt2_ufunc = mt2_lester_ufunc
+mt2_ufunc = mt2_tombs_ufunc
