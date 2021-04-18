@@ -1,9 +1,23 @@
 """Tests for the variant of MT2 by Rupert Tombs."""
 
+from typing import Optional, Union
+
 import numpy
 import pytest
 
-from mt2 import mt2, mt2_tombs
+from _mt2 import mt2_lester_ufunc, mt2_tombs_ufunc
+
+
+def mt2_lester(
+    *args, desired_precision_on_mt2=0.0, use_deci_sections_initially=True, out=None
+):
+    return mt2_lester_ufunc(
+        *args, desired_precision_on_mt2, use_deci_sections_initially, out
+    )
+
+
+def mt2_tombs(*args, desired_precision_on_mt2=0.0, out=None):
+    return mt2_tombs_ufunc(*args, desired_precision_on_mt2, out)
 
 
 def test_simple_example():
@@ -67,20 +81,19 @@ def test_fuzz():
             m_invis_2,
         )
 
-        result_lester = mt2(*args)
+        result_lester = mt2_lester(*args)
         result_tombs = mt2_tombs(*args)
 
         numpy.testing.assert_allclose(result_lester, result_tombs, rtol=1e-12)
 
 
 def test_scale_invariance():
-    example_args = numpy.array(
-        (100, 410, 20, 150, -210, -300, -200, 280, 100, 100))
+    example_args = numpy.array((100, 410, 20, 150, -210, -300, -200, 280, 100, 100))
     example_val = mt2_tombs(*example_args)
 
     # mt2 scales with its arguments; check over some orders of magnitude.
     for i in range(-100, 100, 10):
-        scale = 10. ** i
+        scale = 10.0 ** i
         computed_val = mt2_tombs(*(example_args * scale))
         assert computed_val == pytest.approx(example_val * scale)
 

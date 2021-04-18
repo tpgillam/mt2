@@ -4,7 +4,23 @@ import numpy
 
 from matplotlib import pyplot
 
-from mt2 import mt2, mt2_lally, mt2_tombs
+from _mt2 import mt2_lally_ufunc, mt2_lester_ufunc, mt2_tombs_ufunc
+
+
+def mt2_lester(
+    *args, desired_precision_on_mt2=0.0, use_deci_sections_initially=True, out=None
+):
+    return mt2_lester_ufunc(
+        *args, desired_precision_on_mt2, use_deci_sections_initially, out
+    )
+
+
+def mt2_lally(*args, desired_precision_on_mt2=0.0, out=None):
+    return mt2_lally_ufunc(*args, desired_precision_on_mt2, out)
+
+
+def mt2_tombs(*args, desired_precision_on_mt2=0.0, out=None):
+    return mt2_tombs_ufunc(*args, desired_precision_on_mt2, out)
 
 
 def _run_profile(args, shape):
@@ -17,11 +33,11 @@ def _run_profile(args, shape):
 
     # `val` has shape (n1, n2), since `mass_1` and `mass_2` broadcast.
     t_lester_start = time.time()
-    mt2(*args, out=out_lester)
+    mt2_lester(*args, out=out_lester)
     t_lester_end = time.time()
 
     t_lester_no_ds_start = time.time()
-    mt2(*args, out=out_lester_no_ds, use_deci_sections_initially=False)
+    mt2_lester(*args, out=out_lester_no_ds, use_deci_sections_initially=False)
     t_lester_no_ds_end = time.time()
 
     # t_lally_start = time.time()
@@ -100,10 +116,16 @@ def print_timing_example():
     mass_1 = numpy.linspace(1, 200, n1).reshape((-1, 1))
     mass_2 = numpy.linspace(1, 200, n2).reshape((1, -1))
     args = (
-        100, 410, 20,  # Visible 1: mass, px, py
-        150, -210, -300,  # Visible 2: mass, px, py
-        -200, 280,  # Missing transverse momentum: x, y
-        mass_1, mass_2,  # Invisible 1 mass, invisible 2 mass
+        100,
+        410,
+        20,  # Visible 1: mass, px, py
+        150,
+        -210,
+        -300,  # Visible 2: mass, px, py
+        -200,
+        280,  # Missing transverse momentum: x, y
+        mass_1,
+        mass_2,  # Invisible 1 mass, invisible 2 mass
     )
     results = _run_profile(args, (n1, n2))
     _print_profile_results(results)

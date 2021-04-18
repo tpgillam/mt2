@@ -13,7 +13,7 @@
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
 
-static void mt2_ufunc(
+static void mt2_lester_ufunc(
     char **args,
 // const-correctness was introduced in numpy 1.19, but retain backward compatibility.
 #ifdef NPY_1_19_API_VERSION
@@ -227,11 +227,11 @@ static void mt2_tombs_ufunc(
     }
 }
 
-/* This a pointer to mt2_ufunc */
-PyUFuncGenericFunction mt2_ufuncs[1] = {&mt2_ufunc};
+/* This a pointer to mt2_lester_ufunc */
+PyUFuncGenericFunction mt2_lester_ufuncs[1] = {&mt2_lester_ufunc};
 
-/* These are the input and return dtypes of mt2_ufunc.*/
-static char mt2_types[13] = {
+/* These are the input and return dtypes of mt2_lester_ufunc.*/
+static char mt2_lester_types[13] = {
     NPY_DOUBLE, // double mVis1,
     NPY_DOUBLE, // double pxVis1,
     NPY_DOUBLE, // double pyVis1,
@@ -315,17 +315,17 @@ PyMODINIT_FUNC PyInit__mt2(void)
     import_ufunc();
     import_umath();
 
-    PyObject *mt2_ufunc = PyUFunc_FromFuncAndData(
-        mt2_ufuncs,                   // func
-        data,                         // data. The documentation claims we can pass NULL here, but then it segfaults!
-        mt2_types,                    // types
-        1,                            // ntypes
-        12,                           // nin
-        1,                            // nout
-        PyUFunc_None,                 // identity
-        "mt2_ufunc",                  // name
-        "Numpy ufunc to compute mt2", // doc
-        0                             // unused
+    PyObject *mt2_lester_ufunc = PyUFunc_FromFuncAndData(
+        mt2_lester_ufuncs,                 // func
+        data,                              // data. The documentation claims we can pass NULL here, but then it segfaults!
+        mt2_lester_types,                  // types
+        1,                                 // ntypes
+        12,                                // nin
+        1,                                 // nout
+        PyUFunc_None,                      // identity
+        "mt2_lester_ufunc",                // name
+        "Numpy ufunc to compute mt2 (LN)", // doc
+        0                                  // unused
     );
 
     PyObject *mt2_lally_ufunc = PyUFunc_FromFuncAndData(
@@ -355,11 +355,11 @@ PyMODINIT_FUNC PyInit__mt2(void)
     );
 
     PyObject *module_dict = PyModule_GetDict(module);
-    PyDict_SetItemString(module_dict, "mt2_ufunc", mt2_ufunc);
+    PyDict_SetItemString(module_dict, "mt2_lester_ufunc", mt2_lester_ufunc);
     PyDict_SetItemString(module_dict, "mt2_lally_ufunc", mt2_lally_ufunc);
     PyDict_SetItemString(module_dict, "mt2_tombs_ufunc", mt2_tombs_ufunc);
     PyDict_SetItemString(module_dict, "__version__", PyUnicode_FromString(MACRO_STRINGIFY(VERSION_INFO)));
-    Py_DECREF(mt2_ufunc);
+    Py_DECREF(mt2_lester_ufunc);
     Py_DECREF(mt2_lally_ufunc);
     Py_DECREF(mt2_tombs_ufunc);
 
