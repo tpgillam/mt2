@@ -2,7 +2,7 @@ from setuptools import Extension, setup
 
 import numpy
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 with open("README.rst") as readme_file:
     readme = readme_file.read()
