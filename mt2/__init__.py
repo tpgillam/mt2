@@ -9,12 +9,7 @@ __author__ = "Thomas Gillam"
 __email__ = "tpgillam@googlemail.com"
 __version__ = "1.0.0"
 
-__all__ = ["MT2_ERROR", "mt2", "mt2_ufunc"]
-
-# TODO This should be exposed in and imported from C++
-# The value that `mt2` will return in the event that no solution exists.
-MT2_ERROR = -1.0
-
+__all__ = ["mt2", "mt2_ufunc"]
 
 def mt2(
     m_vis_1: Union[float, numpy.ndarray],
@@ -33,7 +28,7 @@ def mt2(
     out: Optional[numpy.ndarray] = None
 ) -> Union[float, numpy.ndarray]:
     """
-    Returns asymmetric mT2 (which is >=0), or MT2_ERROR if no solution exists.
+    Returns asymmetric mT2 (which is >=0), or a negative value if no solution exists.
 
     We broadcast over any arguments that are provided, following standard numpy
     conventions.
@@ -71,9 +66,9 @@ def mt2(
         MT2 calculated for all inputs. If an array, will have shape that is the result
         of broadcasting all inputs.
 
-        The value `MT2_ERROR` is returned for any element for which MT2 cannot be
-        computed; for example, this will occur if the arguments specify an infeasible
-        optimisation problem.
+        A negative value is returned for any element for which MT2 cannot be computed;
+        for example, this will occur if the arguments specify an infeasible optimisation
+        problem.
     """
     return mt2_ufunc(
         m_vis_1,
