@@ -94,7 +94,10 @@ def test_scale_invariance():
     # mt2 scales with its arguments; check over some orders of magnitude.
     for i in range(-100, 100, 10):
         scale = 10.0 ** i
-        computed_val = mt2_tombs(*(example_args * scale))
+        with numpy.errstate(over='ignore'):
+            # Suppress overflow warnings when performing the evaluation; we're happy
+            # so long as we match approximately in the test below.
+            computed_val = mt2_tombs(*(example_args * scale))
         assert computed_val == pytest.approx(example_val * scale)
 
 
