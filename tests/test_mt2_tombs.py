@@ -5,19 +5,7 @@ from typing import Optional, Union
 import numpy
 import pytest
 
-from _mt2 import mt2_lester_ufunc, mt2_tombs_ufunc
-
-
-def mt2_lester(
-    *args, desired_precision_on_mt2=0.0, use_deci_sections_initially=True, out=None
-):
-    return mt2_lester_ufunc(
-        *args, desired_precision_on_mt2, use_deci_sections_initially, out
-    )
-
-
-def mt2_tombs(*args, desired_precision_on_mt2=0.0, out=None):
-    return mt2_tombs_ufunc(*args, desired_precision_on_mt2, out)
+from .common import mt2_lester, mt2_tombs
 
 
 def test_simple_example():
@@ -94,7 +82,7 @@ def test_scale_invariance():
     # mt2 scales with its arguments; check over some orders of magnitude.
     for i in range(-100, 100, 10):
         scale = 10.0 ** i
-        with numpy.errstate(over='ignore'):
+        with numpy.errstate(over="ignore"):
             # Suppress overflow warnings when performing the evaluation; we're happy
             # so long as we match approximately in the test below.
             computed_val = mt2_tombs(*(example_args * scale))
