@@ -4,12 +4,13 @@ import random
 
 import pytest
 
-from mt2 import mt2
+from mt2 import mt2, mt2_arxiv
 
 
 def test_simple_example():
-    computed_val = mt2(100, 410, 20, 150, -210, -300, -200, 280, 100, 100)
-    assert computed_val == pytest.approx(412.628)
+    for mt2_impl in (mt2, mt2_arxiv):
+        computed_val = mt2_impl(100, 410, 20, 150, -210, -300, -200, 280, 100, 100)
+        assert computed_val == pytest.approx(412.628)
 
 
 def test_near_massless():
@@ -28,10 +29,11 @@ def test_near_massless():
     chi_a = 0
     chi_b = 0
 
-    computed_val = mt2(
-        m_vis_a, px_a, py_a, m_vis_b, px_b, py_b, px_miss, py_miss, chi_a, chi_b
-    )
-    assert computed_val == pytest.approx(0.09719971)
+    for mt2_impl in (mt2, mt2_arxiv):
+        computed_val = mt2_impl(
+            m_vis_a, px_a, py_a, m_vis_b, px_b, py_b, px_miss, py_miss, chi_a, chi_b
+        )
+        assert computed_val == pytest.approx(0.09719971)
 
 
 def test_collinear_endpoint_cases():
@@ -82,13 +84,15 @@ def test_collinear_endpoint_cases():
         px_miss, py_miss = p_miss * c, p_miss * s
         ax, ay = p_vis_a_boosted * c, p_vis_a_boosted * s
         bx, by = p_vis_b_boosted * c, p_vis_b_boosted * s
-        val = mt2(
-            m_vis_a, ax, ay, m_vis_b, bx, by, px_miss, py_miss, m_invis_a, m_invis_b
-        )
 
-        # passes with rel=1e-12 but sporadically fails with rel=1e-13
-        assert val == pytest.approx(m_parent, rel=1e-12), (
-            f"WARNING! Expected {m_parent} from collinear event but instead got "
-            f"{val} for mt2({m_vis_a},{ax},{ay}, {m_vis_b},{bx},{by}, "
-            f"{px_miss},{py_miss}, {m_invis_a},{m_invis_b}) in test case {i}."
-        )
+        for mt2_impl in (mt2, mt2_arxiv):
+            val = mt2_impl(
+                m_vis_a, ax, ay, m_vis_b, bx, by, px_miss, py_miss, m_invis_a, m_invis_b
+            )
+
+            # passes with rel=1e-12 but sporadically fails with rel=1e-13
+            assert val == pytest.approx(m_parent, rel=1e-12), (
+                f"WARNING! Expected {m_parent} from collinear event but instead got "
+                f"{val} for mt2({m_vis_a},{ax},{ay}, {m_vis_b},{bx},{by}, "
+                f"{px_miss},{py_miss}, {m_invis_a},{m_invis_b}) in test case {i}."
+            )
