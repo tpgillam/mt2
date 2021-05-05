@@ -105,7 +105,7 @@ Our version is also scale invariant, and is suitable for large ranges of input m
 
 The legacy implementation, as it appears on arXiv, is also wrapped and exposed as ``mt2_arxiv`` for those that wish to independently cross-check the re-implementation.
 If you find any discrepancies, please file a bug report!
-**We strongly encourage all users to use the primary **``mt2``** method, due to the higher performance and scale invariance.**
+**We strongly encourage all users to use the primary** ``mt2`` **method, due to the higher performance and scale invariance.**
 
 Performance
 ***********
