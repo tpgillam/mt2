@@ -2,6 +2,11 @@
 History
 =======
 
+1.2.0 (2021-05-05)
+------------------
+
+* Add `mt2_arxiv` public API for using (slower) implementation as published on arXiv, which may be wanted for independent testing.
+
 1.1.0 (2021-04-18)
 ------------------
 
