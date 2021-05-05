@@ -99,8 +99,13 @@ Implementation
 **************
 
 The underlying implementation of the Lester-Nachman algorithm used in this package is by Rupert Tombs, found in ``src/mt2_bisect.h``.
-It is found to provide results consistent with the implementation provided with http://arxiv.org/abs/1411.4312, but is significantly faster.
+It provides results consistent with the implementation provided with http://arxiv.org/abs/1411.4312, but is 3x to 4x faster.
 Note that this does *not* implement the "deci-sectioning" described in the paper, since it is found to provide a more significant performance penalty in the majority of cases.
+Our version is also scale invariant, and is suitable for large ranges of input magnitude.
+
+The legacy implementation, as it appears on arXiv, is also wrapped and exposed as ``mt2_arxiv`` for those that wish to independently cross-check the re-implementation.
+If you find any discrepancies, please file a bug report!
+`We strongly encourage all users to use the primary ``mt2`` method, due to the higher performance and scale invariance.`
 
 Performance
 ***********
