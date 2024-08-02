@@ -83,6 +83,12 @@ jobs:
               with:
                   path: dist/*.tar.gz
 
+    pass:
+      needs: [test, build_wheels, build_sdist]
+      runs-on: ubuntu-latest
+      steps:
+        - run: echo "All jobs passed"
+
     upload_pypi:
         needs: [build_wheels, build_sdist, test]
         runs-on: ubuntu-latest
