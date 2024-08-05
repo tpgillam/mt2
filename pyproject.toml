@@ -2,8 +2,5 @@
 requires = [
     "setuptools", 
     "wheel",
-
-    # Use the oldest possible version of numpy for building. This ensures maximal
-    # compatibility.
-    "oldest-supported-numpy", 
+    "numpy>=1.19.3", 
 ]
