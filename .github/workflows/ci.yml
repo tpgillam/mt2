@@ -37,10 +37,10 @@ jobs:
             fail-fast: false
             matrix:
                 os: [windows-latest, ubuntu-latest, macos-latest]
-                python: [38, 39, 310, 311, 312]
+                python: [39, 310, 311, 312]
                 arch: [auto64, auto32, universal2]
                 build: ["cp"]
-                exclude:                    
+                exclude:
                     - os: ubuntu-latest
                       arch: universal2
                     - os: windows-latest
@@ -106,7 +106,7 @@ jobs:
                   name: artifact
                   path: dist
 
-            - uses: pypa/gh-action-pypi-publish@master
+            - uses: pypa/gh-action-pypi-publish@release/v1
               with:
                   password: ${{ secrets.PYPI_API_TOKEN }}
                   # To test: repository_url: https://test.pypi.org/legacy/
