@@ -53,7 +53,7 @@ setup(
         "Programming Language :: Python :: 3.12",
     ],
     description="Stransverse mass computation as a numpy ufunc.",
-    install_requires=["numpy>=1.19.3"],
+    install_requires=["numpy>=1.17.3"],
     license="MIT license",
     long_description=readme + "\n\n" + history,
     include_package_data=True,
