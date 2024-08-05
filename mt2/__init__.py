@@ -2,12 +2,11 @@ from typing import Optional, Union
 
 import numpy
 
-# noinspection PyUnresolvedReferences
-from _mt2 import mt2_lester_ufunc, mt2_tombs_ufunc
+from _mt2 import mt2_lester_ufunc, mt2_tombs_ufunc  # pyright: ignore [reportMissingImports]
 
 __author__ = "Thomas Gillam"
 __email__ = "tpgillam@googlemail.com"
-__version__ = "1.2.0"
+__version__ = "1.2.1"
 
 __all__ = ["mt2", "mt2_arxiv", "mt2_ufunc"]
 
@@ -104,7 +103,7 @@ def mt2_arxiv(
     """
     Provide an interface to the mt2 implementation of arXiv:1411.4312v7.
 
-    This is provided for historical reference and comparison purposes only; please use 
+    This is provided for historical reference and comparison purposes only; please use
     `mt2` for an equivalent implementation that is 3-4x faster.
     """
     return mt2_lester_ufunc(
