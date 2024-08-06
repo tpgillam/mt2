@@ -67,7 +67,9 @@ jobs:
                 CIBW_BEFORE_TEST: >
                   pip install -r requirements_dev.txt &&
                   pip install tox tox-gh-actions
-                CIBW_TEST_COMMAND: tox -e latestnpy && tox -e oldestnpy
+                CIBW_TEST_COMMAND: >
+                    tox --conf {project}/tox.ini -e latestnpy &&
+                    tox --conf {project}/tox.ini -e oldestnpy
 
             - uses: actions/upload-artifact@v4
               with:
