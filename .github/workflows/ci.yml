@@ -26,7 +26,9 @@ jobs:
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
             - name: Install
-              run: uv sync --reinstall --all-extras --python ${{ matrix.python-version }} --verbose
+              # TODO: remove cache disabling. Trying to work around what might be this issue:
+              #   https://github.com/astral-sh/rye/issues/1206
+              run: uv sync --no-cache --all-extras --python ${{ matrix.python-version }} --verbose
 
             - name: Install tox
               run: uv pip install tox tox-gh-actions
