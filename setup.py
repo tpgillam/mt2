@@ -30,12 +30,6 @@ ext_modules = [
     ),
 ]
 
-setup_requirements = [
-    "pytest-runner",
-]
-test_requirements = [
-    "pytest>=3",
-]
 
 setup(
     author="Thomas Gillam",
@@ -59,9 +53,8 @@ setup(
     keywords="mt2",
     name="mt2",
     packages=["mt2"],
-    setup_requires=setup_requirements,
     test_suite="tests",
-    tests_require=test_requirements,
+    tests_require=["pytest>=3"],
     url="https://github.com/tpgillam/mt2",
     version=__version__,
     ext_modules=ext_modules,
