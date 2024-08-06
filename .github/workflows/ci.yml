@@ -64,7 +64,12 @@ jobs:
               env:
                 CIBW_BUILD: "${{ matrix.build }}${{ matrix.python }}*"
                 CIBW_ARCHS: ${{ matrix.arch }}
-                CIBW_TEST_COMMAND: tox -e latestnpy && tox -e oldestnpy
+                CIBW_TEST_COMMAND: >
+                    python -m pip install --upgrade pip &&
+                    pip install -U -r requirements_dev.txt &&
+                    pip install tox tox-gh-actions &&
+                    tox -e latestnpy &&
+                    tox -e oldestnpy
 
             - uses: actions/upload-artifact@v4
               with:
