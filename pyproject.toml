@@ -1,6 +1,36 @@
-[build-system]
-requires = [
-    "setuptools",
-    "wheel",
-    "numpy>=1.19.3",
+[project]
+name = "mt2"
+version = "1.2.1"
+description = "Stransverse mass computation as a numpy ufunc."
+authors = [
+    { name = "Tom Gillam", email = "tpgillam@googlemail.com" },
+    { name = "Rupert Tombs" },
+    { name = "Christopher Lester" },
 ]
+readme = "README.rst"
+license = { file = "LICENSE" }
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+keywords = ["mt2"]
+dependencies = ["numpy>=1.19.3"]
+requires-python = ">= 3.9"
+urls = { Homepage = "https://github.com/tpgillam/mt2" }
+
+[project.optional-dependencies]
+test = ["pytest>=5.4.1"]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel", "numpy"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-data]
+mt2 = ["*"]

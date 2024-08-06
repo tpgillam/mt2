@@ -1,4 +1,2 @@
 numpy>=1.19.3
-flake8
-tox
-pytest
+pytest>=5.4.1
