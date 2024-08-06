@@ -80,3 +80,6 @@ ENV/
 # IDE settings
 .idea/
 .vscode/
+
+# package manager lock file
+uv.lock
