@@ -35,7 +35,7 @@ jobs:
               run: tox -e oldestnpy
 
     build_wheels:
-        name: Build wheel for ${{ matrix.os }}-cp${{ matrix.python }}-${{ matrix.arch }}
+        name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}
         runs-on: ${{ matrix.os }}
         strategy:
             # Ensure that a wheel builder finishes even if another fails
@@ -67,7 +67,7 @@ jobs:
 
             - uses: actions/upload-artifact@v4
               with:
-                  name: artifact-wheels
+                  name: "artifact-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.python }}-${{ matrix.arch }}"
                   path: ./wheelhouse/*.whl
 
     build_sdist:
