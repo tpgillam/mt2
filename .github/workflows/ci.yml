@@ -64,7 +64,7 @@ jobs:
               env:
                 CIBW_BUILD: "${{ matrix.build }}${{ matrix.python }}*"
                 CIBW_ARCHS: ${{ matrix.arch }}
-                CIBW_TEST_REQUIREMENTS: "-r requirements_dev.txt tox-gh-actions"
+                CIBW_TEST_REQUIRES: "-r requirements_dev.txt tox-gh-actions"
                 CIBW_TEST_COMMAND: >
                     tox --conf {project}/tox.ini -e latestnpy &&
                     tox --conf {project}/tox.ini -e oldestnpy
