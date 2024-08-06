@@ -62,6 +62,7 @@ jobs:
 
             - uses: pypa/cibuildwheel@v2.20.0
               env:
+                CIBW_BUILD_FRONTEND: "build[uv]"
                 CIBW_BUILD: "${{ matrix.build }}${{ matrix.python }}*"
                 CIBW_ARCHS: ${{ matrix.arch }}
                 CIBW_TEST_REQUIRES: "-r requirements_dev.txt tox-gh-actions"
