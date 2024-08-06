@@ -91,7 +91,8 @@ def test_collinear_endpoint_cases():
             )
 
             # passes with rel=1e-12 but sporadically fails with rel=1e-13
-            assert val == pytest.approx(m_parent, rel=1e-12), (
+            # update 2024-08-06: fails on MacOS unless tolerance doubled to 2e-12.
+            assert val == pytest.approx(m_parent, rel=2e-12), (
                 f"WARNING! Expected {m_parent} from collinear event but instead got "
                 f"{val} for mt2({m_vis_a},{ax},{ay}, {m_vis_b},{bx},{by}, "
                 f"{px_miss},{py_miss}, {m_invis_a},{m_invis_b}) in test case {i}."
