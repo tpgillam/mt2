@@ -11,6 +11,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+
 jobs:
     test:
         runs-on: ubuntu-latest
@@ -25,7 +26,7 @@ jobs:
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
             - name: Install
-              run: uv sync --all-extras --python ${{ matrix.python-version }} --verbose
+              run: uv sync --reinstall --all-extras --python ${{ matrix.python-version }} --verbose
 
             - name: Install tox
               run: uv pip install tox tox-gh-actions
@@ -107,7 +108,7 @@ jobs:
         - run: echo "All jobs passed"
 
     upload_pypi:
-        needs: [build_wheels, build_sdist, test]
+        needs: [pass]
         runs-on: ubuntu-latest
         # upload to PyPI on every tag starting with 'v'
         if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
