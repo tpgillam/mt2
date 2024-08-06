@@ -140,3 +140,10 @@ A list of alternative implementations of the MT2 calculation can be found here:
 https://www.hep.phy.cam.ac.uk/~lester/mt2/#Alternatives
 
 In Python, the other wrapper of the same algorithm known to the authors is by Nikolai Hartmann, here: https://gitlab.cern.ch/nihartma/pymt2
+
+
+Authors
+-------
+* @kesterlester: Original C++ implementation of mT2.
+* @rupt: Current C++ implementation used in this package.
+* @tpgillam: Python packaging
