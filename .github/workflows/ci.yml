@@ -69,7 +69,6 @@ jobs:
                 CIBW_BUILD_FRONTEND: "build[uv]"
                 CIBW_BUILD: "${{ matrix.build }}${{ matrix.python }}*"
                 CIBW_ARCHS: ${{ matrix.arch }}
-                CIBW_TEST_EXTRAS: "test"
                 CIBW_TEST_COMMAND: pytest {project}
 
             - uses: actions/upload-artifact@v4
