@@ -26,17 +26,13 @@ jobs:
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
             - name: Install
-              # TODO: remove cache disabling. Trying to work around what might be this issue:
-              #   https://github.com/astral-sh/rye/issues/1206
-              run: uv sync --no-cache --all-extras --python ${{ matrix.python-version }} --verbose
+              run: uv sync --python ${{ matrix.python-version }}
 
-            - name: Install tox
-              run: uv pip install tox tox-gh-actions
+            - name: Test
+              run: make test
 
-            - name: Test with tox numpy>=2
-              run: uv run tox -e latestnpy
-            - name: Test with tox numpy<2
-              run: uv run tox -e oldestnpy
+            - name: Test with oldest-supported-numpy
+              run: uv pip install oldest-supported-numpy && make test
 
     build_wheels:
         name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}
