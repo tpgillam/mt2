@@ -26,7 +26,8 @@ jobs:
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
             - name: Install & activate
-              run: uv sync --python ${{ matrix.python-version }}
+              run: |
+                uv sync --python ${{ matrix.python-version }}
                 . .venv/bin/activate
                 echo PATH=$PATH >> $GITHUB_ENV
 
