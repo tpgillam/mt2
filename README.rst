@@ -8,8 +8,6 @@ mt2
 .. image:: https://github.com/tpgillam/mt2/workflows/Build/badge.svg?branch=master
         :target: https://github.com/tpgillam/mt2/actions?query=workflow%3ABuild
 
-.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/psf/black
 
 This package may be used to evaluate MT2 in all its variants.
 This includes both symmetric and asymmetric MT2.
