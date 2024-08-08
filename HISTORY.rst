@@ -6,6 +6,7 @@ History
 ------------------
 
 * Move support to Python 3.9-3.12. Support numpy 2. Thanks to @lgray
+* Various build system & package modernisation.
 
 1.2.0 (2021-05-05)
 ------------------

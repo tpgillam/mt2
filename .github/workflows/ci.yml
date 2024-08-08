@@ -1,10 +1,16 @@
 name: Build
 
-on: [push, pull_request]
+on:
+    pull_request:
+    push:
+        branches: [main]
+        tags: ["*"]
+
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 
 jobs:
     test:
@@ -15,22 +21,26 @@ jobs:
 
         steps:
             - uses: actions/checkout@v4
-            - name: Set up Python ${{ matrix.python-version }}
-              uses: actions/setup-python@v5
-              with:
-                  python-version: ${{ matrix.python-version }}
-            - name: Install dependencies
+
+            - name: Install uv
+              run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+            - name: Install & activate
               run: |
-                  python -m pip install --upgrade pip
-                  pip install -U -r requirements_dev.txt
-                  pip install tox tox-gh-actions
-            - name: Test with tox numpy>=2
-              run: tox -e latestnpy
-            - name: Test with tox numpy<2
-              run: tox -e oldestnpy
+                uv sync --python ${{ matrix.python-version }}
+                . .venv/bin/activate
+                echo PATH=$PATH >> $GITHUB_ENV
+
+            - name: Test
+              run: python -m unittest discover tests
+
+            - name: Test with oldest-supported-numpy
+              run: |
+                uv pip install oldest-supported-numpy 
+                python -m unittest discover tests
 
     build_wheels:
-        name: Build wheel for ${{ matrix.os }}-cp${{ matrix.python }}-${{ matrix.arch }}
+        name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}
         runs-on: ${{ matrix.os }}
         strategy:
             # Ensure that a wheel builder finishes even if another fails
@@ -51,18 +61,20 @@ jobs:
             - name: Checkout mt2
               uses: actions/checkout@v4
 
-            # Used to host cibuildwheel
-            - name: Setup Python
-              uses: actions/setup-python@v5
+            # Needed within cibuildwheel
+            - name: Install uv
+              run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
             - uses: pypa/cibuildwheel@v2.20.0
               env:
+                CIBW_BUILD_FRONTEND: "build[uv]"
                 CIBW_BUILD: "${{ matrix.build }}${{ matrix.python }}*"
                 CIBW_ARCHS: ${{ matrix.arch }}
+                CIBW_TEST_COMMAND: python -m unittest discover -t {project} -s {project}/tests
 
             - uses: actions/upload-artifact@v4
-              if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
               with:
+                  name: "artifact-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.python }}-${{ matrix.arch }}"
                   path: ./wheelhouse/*.whl
 
     build_sdist:
@@ -71,20 +83,20 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - uses: actions/setup-python@v5
-              name: Install Python
-              with:
-                  python-version: "3.12"
+            - name: Install uv
+              run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-            - name: Install numpy and setuptools
-              run: python -m pip install numpy setuptools
+            - name: Install environment & setuptools
+              run: |
+                uv sync
+                uv pip install setuptools
 
             - name: Build sdist
-              run: python setup.py sdist
+              run: uv run python setup.py sdist
 
             - uses: actions/upload-artifact@v4
-              if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
               with:
+                  name: artifact-source
                   path: dist/*.tar.gz
 
     pass:
@@ -94,7 +106,7 @@ jobs:
         - run: echo "All jobs passed"
 
     upload_pypi:
-        needs: [build_wheels, build_sdist, test]
+        needs: [pass]
         runs-on: ubuntu-latest
         # upload to PyPI on every tag starting with 'v'
         if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
@@ -103,8 +115,8 @@ jobs:
         steps:
             - uses: actions/download-artifact@v4
               with:
-                  name: artifact
                   path: dist
+                  merge-multiple: true
 
             - uses: pypa/gh-action-pypi-publish@release/v1
               with:

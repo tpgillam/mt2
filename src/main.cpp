@@ -13,6 +13,7 @@
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
 
+
 static void mt2_lester_ufunc(
     char **args,
 // const-correctness was introduced in numpy 1.19, but retain backward compatibility.
