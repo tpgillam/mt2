@@ -4,8 +4,6 @@ import numpy
 
 from _mt2 import mt2_lester_ufunc, mt2_tombs_ufunc  # pyright: ignore [reportMissingImports]
 
-__author__ = "Tom Gillam"
-__email__ = "tpgillam@googlemail.com"
 __version__ = "1.2.1"
 
 __all__ = ["mt2", "mt2_arxiv", "mt2_ufunc"]
