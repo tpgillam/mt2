@@ -25,14 +25,18 @@ jobs:
             - name: Install uv
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-            - name: Install
-              run: uv sync --python ${{ matrix.python-version }}
+            - name: Install & activate
+              run: |
+                uv sync --python ${{ matrix.python-version }}
+                . .venv/bin/activate
 
             - name: Test
-              run: uv run --locked pytest
+              run: python -m unittest discover tests
 
             - name: Test with oldest-supported-numpy
-              run: uv pip install oldest-supported-numpy && uv run --locked pytest
+              run: |
+                uv pip install oldest-supported-numpy 
+                python -m unittest discover tests
 
     build_wheels:
         name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}
@@ -69,7 +73,7 @@ jobs:
                 CIBW_BUILD_FRONTEND: "build[uv]"
                 CIBW_BUILD: "${{ matrix.build }}${{ matrix.python }}*"
                 CIBW_ARCHS: ${{ matrix.arch }}
-                CIBW_TEST_COMMAND: pytest {project}
+                CIBW_TEST_COMMAND: python -m unittest discover {project}/tests
 
             - uses: actions/upload-artifact@v4
               with:
