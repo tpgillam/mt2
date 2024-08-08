@@ -35,6 +35,9 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.package-data]
 mt2 = ["src/*.h", "src/*.cpp"]
 
+[tool.uv]
+dev-dependencies = ["mt2[test]"]
+
 [tool.pytest.ini_options]
 addopts = "--tb=short"
 
