@@ -1,17 +1,17 @@
 .PHONY: install
 install:
-	uv sync --all-extras
+	uv sync
 
 .PHONY: clean
-clean: clean-build clean-pyc clean-test
+clean: clean-build clean-pyc clean-test clean-venv
 
 .PHONY: clean-build
 clean-build:
-	rm -fr build/
-	rm -fr dist/
-	rm -fr .eggs/
-	find . -name '*.egg-info' -exec rm -fr {} +
-	find . -name '*.egg' -exec rm -f {} +
+	rm -rf build/
+	rm -rf dist/
+	rm -rf .eggs/
+	find . -name '*.egg-info' -delete
+	find . -name '*.egg' -delete
 
 .PHONY: clean-pyc
 clean-pyc:
@@ -21,9 +21,14 @@ clean-pyc:
 
 .PHONY: clean-test
 clean-test:
-	rm -fr .pytest_cache
+	rm -rf .pytest_cache
+
+.PHONY: clean-venv
+clean-venv:
+	rm -f uv.lock
+	rm -rf .venv
 
 .PHONY: test
 test: install
-	uv run pytest
+	uv run --locked pytest
 
