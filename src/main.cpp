@@ -10,6 +10,9 @@
 #include "mt2_Lallyver2.h"
 #include "mt2_bisect.h"
 
+#define STRINGIFY(x) #x
+#define MACRO_STRINGIFY(x) STRINGIFY(x)
+
 
 static void mt2_lester_ufunc(
     char **args,
@@ -356,6 +359,7 @@ PyMODINIT_FUNC PyInit__mt2(void)
     PyDict_SetItemString(module_dict, "mt2_lester_ufunc", mt2_lester_ufunc);
     PyDict_SetItemString(module_dict, "mt2_lally_ufunc", mt2_lally_ufunc);
     PyDict_SetItemString(module_dict, "mt2_tombs_ufunc", mt2_tombs_ufunc);
+    PyDict_SetItemString(module_dict, "__version__", PyUnicode_FromString(MACRO_STRINGIFY(VERSION_INFO)));
     Py_DECREF(mt2_lester_ufunc);
     Py_DECREF(mt2_lally_ufunc);
     Py_DECREF(mt2_tombs_ufunc);

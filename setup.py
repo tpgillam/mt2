@@ -2,12 +2,16 @@ from setuptools import Extension, setup
 
 import numpy
 
+__version__ = "1.2.1"
+
 setup(
     ext_modules=[
         Extension(
             "_mt2",
             ["src/main.cpp"],
             define_macros=[
+                # Pass in the version info so we can expose it in the extension.
+                ("VERSION_INFO", __version__),
                 # For reasons explained in lester_mt2_bisect_v7.h, we need to manually
                 # enable some inlining optimisations.
                 ("ENABLE_INLINING", "1"),
