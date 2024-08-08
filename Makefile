@@ -3,7 +3,7 @@ install:
 	uv sync
 
 .PHONY: clean
-clean: clean-build clean-pyc clean-test clean-venv
+clean: clean-build clean-pyc clean-venv
 
 .PHONY: clean-build
 clean-build:
@@ -19,10 +19,6 @@ clean-pyc:
 	find . -name '*.pyo' -delete
 	find . -name '__pycache__' -exec rm -fr {} +
 
-.PHONY: clean-test
-clean-test:
-	rm -rf .pytest_cache
-
 .PHONY: clean-venv
 clean-venv:
 	rm -f uv.lock
@@ -30,5 +26,4 @@ clean-venv:
 
 .PHONY: test
 test: install
-	uv run --locked pytest
-
+	uv run --locked python -m unittest discover tests
