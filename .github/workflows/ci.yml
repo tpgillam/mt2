@@ -29,10 +29,10 @@ jobs:
               run: uv sync --python ${{ matrix.python-version }}
 
             - name: Test
-              run: make test
+              run: uv run --locked pytest
 
             - name: Test with oldest-supported-numpy
-              run: uv pip install oldest-supported-numpy && make test
+              run: uv pip install oldest-supported-numpy && uv run --locked pytest
 
     build_wheels:
         name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}
