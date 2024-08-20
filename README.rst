@@ -5,11 +5,12 @@ mt2
 .. image:: https://img.shields.io/pypi/v/mt2.svg
         :target: https://pypi.python.org/pypi/mt2
 
+.. image:: https://img.shields.io/pypi/pyversions/mt2.svg
+        :target: https://pypi.python.org/pypi/mt2
+
 .. image:: https://github.com/tpgillam/mt2/workflows/Build/badge.svg?branch=master
         :target: https://github.com/tpgillam/mt2/actions?query=workflow%3ABuild
 
-.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/psf/black
 
 This package may be used to evaluate MT2 in all its variants.
 This includes both symmetric and asymmetric MT2.
@@ -140,3 +141,10 @@ A list of alternative implementations of the MT2 calculation can be found here:
 https://www.hep.phy.cam.ac.uk/~lester/mt2/#Alternatives
 
 In Python, the other wrapper of the same algorithm known to the authors is by Nikolai Hartmann, here: https://gitlab.cern.ch/nihartma/pymt2
+
+
+Authors
+-------
+* @kesterlester: Original C++ implementation of mT2.
+* @rupt: Current C++ implementation used in this package.
+* @tpgillam: Python packaging
