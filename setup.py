@@ -7,7 +7,7 @@ __version__ = "1.2.1"
 setup(
     ext_modules=[
         Extension(
-            "_mt2",
+            "mt2._mt2",
             ["src/main.cpp"],
             define_macros=[
                 # Pass in the version info so we can expose it in the extension.
@@ -19,7 +19,7 @@ setup(
                 # citation information elsewhere.
                 ("DISABLE_COPYRIGHT_PRINTING", "1"),
             ],
-            include_dirs=[numpy.get_include()],
+            include_dirs=[numpy.get_include(), "src"],
             language="c++",
             extra_compile_args=["-std=c++11"],
         ),
