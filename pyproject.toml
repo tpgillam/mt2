@@ -29,5 +29,8 @@ urls = { Homepage = "https://github.com/tpgillam/mt2" }
 requires = ["setuptools>=61.0", "wheel", "numpy"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools.packages.find]
+exclude = ["examples", "src", "tests"]
+
 [tool.setuptools.package-data]
 mt2 = ["src/*.h", "src/*.cpp"]
