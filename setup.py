@@ -7,7 +7,7 @@ __version__ = "1.2.1"
 setup(
     ext_modules=[
         Extension(
-            "mt2._mt2",
+            "_mt2",
             ["src/main.cpp"],
             define_macros=[
                 # Pass in the version info so we can expose it in the extension.
