@@ -2,6 +2,11 @@
 History
 =======
 
+1.2.2 (2024-08-28)
+------------------
+
+* Bugfix release -- wheel were not built correctly in v1.2.1
+
 1.2.1 (2024-08-05)
 ------------------
 
