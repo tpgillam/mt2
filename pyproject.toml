@@ -30,7 +30,9 @@ requires = ["setuptools>=61.0", "numpy"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
+where = ["src"]
 include = ["mt2*"]
+namespaces = false
 
 [tool.setuptools.package-data]
 mt2 = ["src/*.h", "src/*.cpp"]
