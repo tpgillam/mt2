@@ -1,2 +1,2 @@
 exclude examples/*
-include src/*.h
+include src/_mt2/*.h
