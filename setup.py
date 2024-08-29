@@ -19,7 +19,7 @@ setup(
                 # citation information elsewhere.
                 ("DISABLE_COPYRIGHT_PRINTING", "1"),
             ],
-            include_dirs=[numpy.get_include(), "src/_mt2"],
+            include_dirs=[numpy.get_include()],
             language="c++",
             extra_compile_args=["-std=c++11"],
         ),
