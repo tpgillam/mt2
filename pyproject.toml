@@ -35,4 +35,4 @@ include = ["mt2*"]
 namespaces = false
 
 [tool.setuptools.package-data]
-mt2 = ["src/*.h", "src/*.cpp"]
+mt2 = ["src/_mt2/*.h", "src/_mt2/*.cpp"]
