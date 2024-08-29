@@ -1,4 +1,4 @@
-from _mt2 import mt2_lally_ufunc, mt2_lester_ufunc, mt2_tombs_ufunc
+from mt2._mt2 import mt2_lally_ufunc, mt2_lester_ufunc, mt2_tombs_ufunc
 
 
 def mt2_lally(*args, desired_precision_on_mt2=0.0, out=None):

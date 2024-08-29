@@ -1,6 +1,6 @@
 [project]
 name = "mt2"
-version = "1.2.1"
+version = "1.2.2"
 description = "Stransverse mass computation as a numpy ufunc."
 authors = [
     { name = "Tom Gillam", email = "tpgillam@googlemail.com" },
@@ -29,8 +29,3 @@ urls = { Homepage = "https://github.com/tpgillam/mt2" }
 requires = ["setuptools>=61.0", "numpy"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.packages.find]
-include = ["mt2*"]
-
-[tool.setuptools.package-data]
-mt2 = ["src/*.h", "src/*.cpp"]

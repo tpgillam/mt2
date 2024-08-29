@@ -1,4 +1,2 @@
-include *.rst
-include Makefile
-recursive-include examples *.ipynb
-recursive-include src *.h
+exclude examples/*
+include src/_mt2/*.h
