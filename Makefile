@@ -8,6 +8,7 @@ clean: clean-build clean-pyc clean-venv
 .PHONY: clean-build
 clean-build:
 	rm -rf build/
+	rm -rf testdir/
 	rm -rf dist/
 	rm -rf .eggs/
 	rm -rf src/*.egg-info/
