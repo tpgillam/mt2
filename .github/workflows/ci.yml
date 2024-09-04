@@ -39,13 +39,17 @@ jobs:
     build_wheels:
         name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}
         runs-on: ${{ matrix.os }}
+        container: quay.io/pypa/manylinux2010_x86_64
         strategy:
             # Ensure that a wheel builder finishes even if another fails
             fail-fast: false
             matrix:
-                os: [windows-latest, ubuntu-latest, macos-latest]
-                python: [39, 310, 311, 312]
-                arch: [auto64, auto32, universal2]
+                os: [ubuntu-latest]
+                # os: [windows-latest, ubuntu-latest, macos-latest]
+                python: [312]
+                # python: [39, 310, 311, 312]
+                arch: [auto64]
+                # arch: [auto64, auto32, universal2]
                 build: ["cp"]
                 exclude:
                     - os: ubuntu-latest
@@ -67,7 +71,6 @@ jobs:
               run: |
                 uv build --wheel --python ${{ matrix.python }}
                 ls dist/
-                ls .
 
             # - uses: pypa/cibuildwheel@v2.20.0
             #   env:
