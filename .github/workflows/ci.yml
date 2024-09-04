@@ -27,16 +27,14 @@ jobs:
 
             - name: Install & activate
               run: uv sync --python ${{ matrix.python }}
-                . .venv/bin/activate
-                echo PATH=$PATH >> $GITHUB_ENV
 
             - name: Test
-              run: python -m unittest discover tests
+              run: uv run python -m unittest discover tests
 
             - name: Test with oldest-supported-numpy
               run: |
                 uv pip install oldest-supported-numpy 
-                python -m unittest discover tests
+                uv run python -m unittest discover tests
 
     build_wheels:
         name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}
