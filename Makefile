@@ -33,11 +33,7 @@ test: install
 
 .PHONY: build
 build: install
-	@# Slightly disgusting; just installing the `build` module into the working venv and
-	@# removing after we're done.
-	uv pip install build
-	uv run python -m build
-	uv pip uninstall build
+	uv build
 
 .PHONY: test_wheel
 test_wheel: clean build

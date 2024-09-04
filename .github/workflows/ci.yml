@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                python-version: ['3.9', '3.10', '3.11', '3.12']
+                python: [39, 310, 311, 312]
 
         steps:
             - uses: actions/checkout@v4
@@ -26,8 +26,7 @@ jobs:
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
             - name: Install & activate
-              run: |
-                uv sync --python ${{ matrix.python-version }}
+              run: uv sync --python ${{ matrix.python }}
                 . .venv/bin/activate
                 echo PATH=$PATH >> $GITHUB_ENV
 
@@ -61,21 +60,28 @@ jobs:
             - name: Checkout mt2
               uses: actions/checkout@v4
 
-            # Needed within cibuildwheel
             - name: Install uv
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-            - uses: pypa/cibuildwheel@v2.20.0
-              env:
-                CIBW_BUILD_FRONTEND: "build[uv]"
-                CIBW_BUILD: "${{ matrix.build }}${{ matrix.python }}*"
-                CIBW_ARCHS: ${{ matrix.arch }}
-                CIBW_TEST_COMMAND: python -m unittest discover -t {project} -s {project}/tests
+            # FIXME: not good enough; at minimum need to use manylinux image.
+            #   Also musllinux maybe?
+            - name: Build wheel
+              run: |
+                uv build --wheel --python ${{ matrix.python }}
+                ls dist/
+                ls .
 
-            - uses: actions/upload-artifact@v4
-              with:
-                  name: "artifact-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.python }}-${{ matrix.arch }}"
-                  path: ./wheelhouse/*.whl
+            # - uses: pypa/cibuildwheel@v2.20.0
+            #   env:
+            #     CIBW_BUILD_FRONTEND: "build[uv]"
+            #     CIBW_BUILD: "${{ matrix.build }}${{ matrix.python }}*"
+            #     CIBW_ARCHS: ${{ matrix.arch }}
+            #     CIBW_TEST_COMMAND: python -m unittest discover -t {project} -s {project}/tests
+
+            # - uses: actions/upload-artifact@v4
+            #   with:
+            #       name: "artifact-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.python }}-${{ matrix.arch }}"
+            #       path: ./wheelhouse/*.whl
 
     build_sdist:
         name: Build source distribution
@@ -86,13 +92,8 @@ jobs:
             - name: Install uv
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-            - name: Install environment & setuptools
-              run: |
-                uv sync
-                uv pip install setuptools
-
             - name: Build sdist
-              run: uv run python setup.py sdist
+              run: uv build --sdist
 
             - uses: actions/upload-artifact@v4
               with:
@@ -110,8 +111,6 @@ jobs:
         runs-on: ubuntu-latest
         # upload to PyPI on every tag starting with 'v'
         if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
-        # alternatively, to publish when a GitHub Release is created, use the following rule:
-        # if: github.event_name == 'release' && github.event.action == 'published'
         steps:
             - uses: actions/download-artifact@v4
               with:
