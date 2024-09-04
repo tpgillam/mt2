@@ -39,17 +39,13 @@ jobs:
     build_wheels:
         name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}
         runs-on: ${{ matrix.os }}
-        container: quay.io/pypa/manylinux2010_x86_64
         strategy:
             # Ensure that a wheel builder finishes even if another fails
             fail-fast: false
             matrix:
-                os: [ubuntu-latest]
-                # os: [windows-latest, ubuntu-latest, macos-latest]
-                python: [312]
-                # python: [39, 310, 311, 312]
-                arch: [auto64]
-                # arch: [auto64, auto32, universal2]
+                os: [windows-latest, ubuntu-latest, macos-latest]
+                python: [39, 310, 311, 312]
+                arch: [auto64, auto32, universal2]
                 build: ["cp"]
                 exclude:
                     - os: ubuntu-latest
@@ -65,24 +61,17 @@ jobs:
             - name: Install uv
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-            # FIXME: not good enough; at minimum need to use manylinux image.
-            #   Also musllinux maybe?
-            - name: Build wheel
-              run: |
-                uv build --wheel --python ${{ matrix.python }}
-                ls dist/
+            - uses: pypa/cibuildwheel@v2.20.0
+              env:
+                CIBW_BUILD_FRONTEND: "build[uv]"
+                CIBW_BUILD: "${{ matrix.build }}${{ matrix.python }}*"
+                CIBW_ARCHS: ${{ matrix.arch }}
+                CIBW_TEST_COMMAND: python -m unittest discover -t {project} -s {project}/tests
 
-            # - uses: pypa/cibuildwheel@v2.20.0
-            #   env:
-            #     CIBW_BUILD_FRONTEND: "build[uv]"
-            #     CIBW_BUILD: "${{ matrix.build }}${{ matrix.python }}*"
-            #     CIBW_ARCHS: ${{ matrix.arch }}
-            #     CIBW_TEST_COMMAND: python -m unittest discover -t {project} -s {project}/tests
-
-            # - uses: actions/upload-artifact@v4
-            #   with:
-            #       name: "artifact-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.python }}-${{ matrix.arch }}"
-            #       path: ./wheelhouse/*.whl
+            - uses: actions/upload-artifact@v4
+              with:
+                  name: "artifact-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.python }}-${{ matrix.arch }}"
+                  path: ./wheelhouse/*.whl
 
     build_sdist:
         name: Build source distribution
