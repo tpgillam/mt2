@@ -31,13 +31,11 @@ clean-venv:
 test: install
 	uv run --locked python -m unittest discover tests
 
-.PHONY: build
-build: install
-	uv build
-
 .PHONY: test_wheel
-test_wheel: clean build
-	@# Build the wheel, then install it and check that we can import it.
+test_wheel: clean
+	@# Build the wheel
+	uv build
+	@# Now install it in an isolated directory and check that we can import it.
 	rm -rf testdir && mkdir testdir
 	cd testdir && uv venv
 	cd testdir && uv pip install `find ../dist/ -name *.whl`
