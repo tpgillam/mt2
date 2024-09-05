@@ -25,11 +25,8 @@ jobs:
             - name: Install uv
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-            - name: Install & activate
-              run: uv sync --python ${{ matrix.python }}
-
             - name: Test
-              run: uv run python -m unittest discover tests
+              run: uv run --python ${{ matrix.python }} python -m unittest discover tests
 
             - name: Test with oldest-supported-numpy
               run: |
