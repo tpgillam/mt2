@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                python-version: ['3.9', '3.10', '3.11', '3.12']
+                python: [39, 310, 311, 312]
 
         steps:
             - uses: actions/checkout@v4
@@ -25,19 +25,13 @@ jobs:
             - name: Install uv
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-            - name: Install & activate
-              run: |
-                uv sync --python ${{ matrix.python-version }}
-                . .venv/bin/activate
-                echo PATH=$PATH >> $GITHUB_ENV
-
             - name: Test
-              run: python -m unittest discover tests
+              run: uv run --python ${{ matrix.python }} python -m unittest discover tests
 
             - name: Test with oldest-supported-numpy
               run: |
                 uv pip install oldest-supported-numpy 
-                python -m unittest discover tests
+                uv run python -m unittest discover tests
 
     build_wheels:
         name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}
@@ -61,7 +55,6 @@ jobs:
             - name: Checkout mt2
               uses: actions/checkout@v4
 
-            # Needed within cibuildwheel
             - name: Install uv
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
@@ -86,13 +79,8 @@ jobs:
             - name: Install uv
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-            - name: Install environment & setuptools
-              run: |
-                uv sync
-                uv pip install setuptools
-
             - name: Build sdist
-              run: uv run python setup.py sdist
+              run: uv build --sdist
 
             - uses: actions/upload-artifact@v4
               with:
@@ -110,8 +98,6 @@ jobs:
         runs-on: ubuntu-latest
         # upload to PyPI on every tag starting with 'v'
         if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
-        # alternatively, to publish when a GitHub Release is created, use the following rule:
-        # if: github.event_name == 'release' && github.event.action == 'published'
         steps:
             - uses: actions/download-artifact@v4
               with:
