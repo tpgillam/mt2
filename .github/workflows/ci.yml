@@ -104,7 +104,8 @@ jobs:
                   path: dist
                   merge-multiple: true
 
-            - uses: pypa/gh-action-pypi-publish@release/v1
-              with:
-                  password: ${{ secrets.PYPI_API_TOKEN }}
-                  # To test: repository_url: https://test.pypi.org/legacy/
+            - name: Install uv
+              run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+            - name: Publish
+              run: uv publish
