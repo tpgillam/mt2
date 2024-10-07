@@ -58,7 +58,7 @@ jobs:
             - name: Install uv
               run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-            - uses: pypa/cibuildwheel@v2.21.1
+            - uses: pypa/cibuildwheel@v2.21.2
               env:
                 CIBW_BUILD_FRONTEND: "build[uv]"
                 CIBW_BUILD: "${{ matrix.build }}${{ matrix.python }}*"
