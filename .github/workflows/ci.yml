@@ -105,7 +105,7 @@ jobs:
                   merge-multiple: true
 
             - name: Install uv
-              run: curl -LsSf https://astral.sh/uv/install.sh | sh
+              uses: astral-sh/setup-uv@v4
 
             - name: Publish
               run: uv publish
