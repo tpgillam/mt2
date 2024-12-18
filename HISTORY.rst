@@ -2,6 +2,10 @@
 History
 =======
 
+1.2.3 (2024-12-18)
+------------------
+* Release with Python 3.13 wheels
+
 1.2.2 (2024-08-29)
 ------------------
 * Fix wheel builds

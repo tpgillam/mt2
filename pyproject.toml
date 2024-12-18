@@ -1,6 +1,6 @@
 [project]
 name = "mt2"
-version = "1.2.2"
+version = "1.2.3"
 description = "Stransverse mass computation as a numpy ufunc."
 authors = [
     { name = "Tom Gillam", email = "tpgillam@googlemail.com" },
@@ -19,6 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 keywords = ["mt2"]
 dependencies = ["numpy>=1.19.3"]
