@@ -98,6 +98,10 @@ jobs:
     upload_pypi:
         needs: [pass]
         runs-on: ubuntu-latest
+        environment: moopypi
+        permissions:
+            # Required for trusted publishing; see https://docs.pypi.org/trusted-publishers/using-a-publisher/
+            id-token: write  
         # upload to PyPI on every tag starting with 'v'
         if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
         steps:
@@ -110,4 +114,4 @@ jobs:
               uses: astral-sh/setup-uv@v4
 
             - name: Publish
-              run: uv publish
+              run: uv publish --trusted-publishing always -v
