@@ -110,4 +110,4 @@ jobs:
               uses: astral-sh/setup-uv@v4
 
             - name: Publish
-              run: uv publish --trusted-publishing always
+              run: uv publish --trusted-publishing always -v
