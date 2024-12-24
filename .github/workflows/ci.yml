@@ -22,8 +22,7 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - name: Install uv
-              uses: astral-sh/setup-uv@v5
+            - uses: astral-sh/setup-uv@v5
               with:
                 python-version: ${{ matrix.python }}
 
@@ -54,12 +53,8 @@ jobs:
                     - os: macos-latest
                       arch: auto32
         steps:
-            - name: Checkout mt2
-              uses: actions/checkout@v4
-
-            - name: Install uv
-              uses: astral-sh/setup-uv@v5
-
+            - uses: actions/checkout@v4
+            - uses: astral-sh/setup-uv@v5
             - uses: pypa/cibuildwheel@v2.21.3
               env:
                 CIBW_BUILD_FRONTEND: "build[uv]"
@@ -77,13 +72,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-
-            - name: Install uv
-              uses: astral-sh/setup-uv@v5
-
-            - name: Build sdist
-              run: uv build --sdist
-
+            - uses: astral-sh/setup-uv@v5
+            - run: uv build --sdist
             - uses: actions/upload-artifact@v4
               with:
                   name: artifact-source
@@ -110,8 +100,7 @@ jobs:
                   path: dist
                   merge-multiple: true
 
-            - name: Install uv
-              uses: astral-sh/setup-uv@v5
+            - uses: astral-sh/setup-uv@v5
 
             - name: Publish
               run: uv publish --trusted-publishing always -v
