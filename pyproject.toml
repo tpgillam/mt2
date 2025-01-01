@@ -30,3 +30,8 @@ urls = { Homepage = "https://github.com/tpgillam/mt2" }
 requires = ["setuptools>=61.0", "numpy"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+# FIXME: this is a workaround; see:
+#   - https://github.com/astral-sh/uv/issues/9513
+#   - https://github.com/pypa/setuptools/issues/4759
+license-files = []
