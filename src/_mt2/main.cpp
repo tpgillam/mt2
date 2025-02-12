@@ -288,13 +288,6 @@ static char mt2_tombs_types[12] = {
 
 PyDoc_STRVAR(mt2_module_doc, "Provides the mt2 stransverse mass ufunc.");
 
-static struct PyModuleDef_Slot module_slots[] = {
-#if PY_VERSION_HEX >= 0x030D0000
-    {Py_mod_gil, Py_MOD_GIL_NOT_USED},
-#endif
-    {0, NULL}
-};
-
 static PyMethodDef methods[] = {
     {NULL, NULL, 0, NULL}};
 
@@ -304,7 +297,7 @@ static struct PyModuleDef moduledef = {
     mt2_module_doc,
     -1,
     methods,
-    module_slots,
+    NULL,
     NULL,
     NULL,
     NULL};
@@ -318,6 +311,10 @@ PyMODINIT_FUNC PyInit__mt2(void)
     {
         return NULL;
     }
+
+#ifdef Py_GIL_DISABLED
+    PyUnstable_Module_SetGIL(module, Py_MOD_GIL_NOT_USED);
+#endif
     
     import_array();
     import_ufunc();
