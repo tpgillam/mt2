@@ -52,6 +52,12 @@ jobs:
                       arch: universal2
                     - os: macos-latest
                       arch: auto32
+                    - os: ubuntu-latest
+                      python: 313
+                      arch: auto32
+                    - os: ubuntu-latest
+                      python: 313t
+                      arch: auto32
         steps:
             - uses: actions/checkout@v4
             - uses: astral-sh/setup-uv@v5
