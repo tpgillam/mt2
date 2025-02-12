@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                python: [39, 310, 311, 312, 313, '3.13t']
+                python: [39, 310, 311, 312, 313, 313t]
 
         steps:
             - uses: actions/checkout@v4
