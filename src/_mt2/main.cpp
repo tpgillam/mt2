@@ -312,6 +312,10 @@ PyMODINIT_FUNC PyInit__mt2(void)
         return NULL;
     }
 
+#ifdef Py_GIL_DISABLED
+    PyUnstable_Module_SetGIL(module, Py_MOD_GIL_NOT_USED);
+#endif
+    
     import_array();
     import_ufunc();
     import_umath();

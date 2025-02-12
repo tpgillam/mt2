@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                python: [39, 310, 311, 312, 313]
+                python: [39, 310, 311, 312, 313, 313t]
 
         steps:
             - uses: actions/checkout@v4
@@ -42,7 +42,7 @@ jobs:
             fail-fast: false
             matrix:
                 os: [windows-latest, ubuntu-latest, macos-latest]
-                python: [39, 310, 311, 312, 313]
+                python: [39, 310, 311, 312, 313, 313t]
                 arch: [auto64, auto32, universal2]
                 build: ["cp"]
                 exclude:
@@ -52,11 +52,18 @@ jobs:
                       arch: universal2
                     - os: macos-latest
                       arch: auto32
+                    - os: ubuntu-latest
+                      python: 313
+                      arch: auto32
+                    - os: ubuntu-latest
+                      python: 313t
+                      arch: auto32
         steps:
             - uses: actions/checkout@v4
             - uses: astral-sh/setup-uv@v5
-            - uses: pypa/cibuildwheel@v2.21.3
+            - uses: pypa/cibuildwheel@v2.22
               env:
+                CIBW_ENABLE: cpython-freethreading
                 CIBW_BUILD_FRONTEND: "build[uv]"
                 CIBW_BUILD: "${{ matrix.build }}${{ matrix.python }}*"
                 CIBW_ARCHS: ${{ matrix.arch }}
