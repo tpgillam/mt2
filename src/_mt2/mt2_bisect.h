@@ -10,7 +10,7 @@
  * Includes
  *
  * cmath
- *     std::sqrt, std::fabs
+ *     std::sqrt, std::fabs, std::fmax
  * limits
  *     std::numeric_limits
  */
@@ -79,10 +79,6 @@ template <typename T>
 static inline void mt2_swap(T *x, T *y);
 
 
-/* Global variables */
-static const float mt2_error = -1.38570487f;
-
-
 /* Template definitions */
 /*
  * Return asymmetric MT2, approximated by a bisection method.
@@ -90,6 +86,10 @@ static const float mt2_error = -1.38570487f;
  * If a pair of particles with equal mass M which decayed semi-invisibly to
  * `a' + something invisible and `b' + something else invisible, then MT2 is a
  * greatest lower bound on M.
+ *
+ * Beware that this MT2 implementation treats any non-positive mass argument as
+ * if it were 0. Negative masses are non-physical, and this clipping increases
+ * robustness against rounding errors in users' work.
  *
  * Arguments:
  *     am, apx, apy:
@@ -100,8 +100,6 @@ static const float mt2_error = -1.38570487f;
  *         missing transverse momentum components
  *     ssam, ssbm
  *         masses of the invisible particles associated with `a' and `b'
- *
- *     Masses are assumed to be non-negative.
  *
  * Returns:
  *     An estimate of MT2, or a negative number if something goes wrong.
@@ -114,6 +112,15 @@ mt2_bisect_impl(T am, T apx, T apy,
                 T ssam, T ssbm,
                 T precision=0)
 {
+    /* A previous version did not define behaviour for negative masses.
+     * In response to user feedback, we now define this function to treat any
+     * non-positive mass as equivalent to zero.
+     */
+    am = std::fmax(am, 0);
+    bm = std::fmax(bm, 0);
+    ssam = std::fmax(ssam, 0);
+    ssbm = std::fmax(ssbm, 0);
+
     /* This physical scale is used for initial bounding and input testing. */
     const auto scale = std::sqrt(0.125f*(
         sspx*sspx + sspy*sspy + (ssam*ssam + ssbm*ssbm)
@@ -150,10 +157,6 @@ mt2_bisect_impl(T am, T apx, T apy,
     auto lo = bm + ssbm;
     auto hi = lo + 1;
 
-    /* Negative masses can cause negative bounds; avoid that case. */
-    if (mt2_rare(!(lo > 0)))
-        return mt2_error;
-
     /* Construct the ellipses and their properties as quadratics. */
     auto a_ellipse = mt2_ellipse_rest(am, -apx, -apy, ssam);
     auto b_ellipse = mt2_ellipse(bm, bpx, bpy, ssbm, sspx, sspy);
@@ -170,8 +173,10 @@ mt2_bisect_impl(T am, T apx, T apy,
         bool error;
         const auto disjoint = mt2_disjoint(quadratics, hi, &error);
 
-        if (mt2_rare(error | (hi >= std::numeric_limits<T>::max())))
-            return mt2_error;
+        if (mt2_rare(error))
+            return std::numeric_limits<T>::quiet_NaN();
+        if (mt2_rare(hi >= std::numeric_limits<T>::max()))
+            return std::numeric_limits<T>::infinity();
 
         if (!disjoint)
             break;
@@ -384,7 +389,7 @@ mt2_disjoint(const struct mt2_trio<T> quadratics[4], T m, bool *error)
 
     /* Using some branching logic to aid early escapes. */
     return (
-        (a*a > b*3) && 
+        (a*a > b*3) &&
         ((a < 0) || (b*b*4 > a*a*b + a*c*3)) &&
         (a*c*(b*18 - a*a*4) > c*c*27 + b*b*(b*4 - a*a))
     );
