@@ -1,6 +1,6 @@
 .PHONY: install
 install:
-	uv sync
+	uv sync --resolution lowest
 
 .PHONY: clean
 clean: clean-build clean-pyc clean-venv
