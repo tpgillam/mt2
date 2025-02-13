@@ -30,6 +30,12 @@ def mt2(
     We broadcast over any arguments that are provided, following standard numpy
     conventions.
 
+    We treat all non-positive mass arguments as if they were 0. Negative masses are
+    non-physical, and this clipping adds robustness against rounding errors.
+
+    In rare cases, the value of mT2 can overflow to +infinity.
+    In rarer cases, a NaN value indicates an error in our numerical calculation.
+
     If more flexibility is required, note that the underlying mt2_ufunc can be used
     directly, which specifies additional arguments (like `where`) in keeping with other
     numpy ufuncs.
@@ -58,10 +64,6 @@ def mt2(
     Returns:
         MT2 calculated for all inputs. If an array, will have shape that is the result
         of broadcasting all inputs.
-
-        A negative value is returned for any element for which MT2 cannot be computed;
-        for example, this will occur if the arguments specify an infeasible optimisation
-        problem.
     """
     return mt2_tombs_ufunc(
         m_vis_1,
