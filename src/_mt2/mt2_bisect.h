@@ -87,9 +87,8 @@ static inline void mt2_swap(T *x, T *y);
  * `a' + something invisible and `b' + something else invisible, then MT2 is a
  * greatest lower bound on M.
  *
- * Beware that this MT2 implementation treats any non-positive mass argument as
- * if it were 0. Negative masses are non-physical, and this clipping increases
- * robustness against rounding errors in users' work.
+ * We treat all non-positive mass arguments as if they were 0. Negative masses
+ * are non-physical, and this clipping adds robustness against rounding errors.
  *
  * Arguments:
  *     am, apx, apy:
