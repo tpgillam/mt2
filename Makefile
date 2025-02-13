@@ -1,6 +1,6 @@
 .PHONY: install
 install:
-	uv sync --resolution lowest
+	uv sync
 
 .PHONY: clean
 clean: clean-build clean-pyc clean-venv
@@ -29,7 +29,7 @@ clean-venv:
 
 .PHONY: test
 test: install
-	uv run --resolution lowest --locked python -m unittest discover tests
+	uv run --locked python -m unittest discover tests
 
 .PHONY: test_wheel
 test_wheel: clean
