@@ -5,7 +5,7 @@ from mt2._mt2 import mt2_lally_ufunc
 from mt2.diagnostics import make_ellipses
 
 
-def plot_lester_v_lally(args):
+def plot_lester_v_lally(args: tuple[float, ...]) -> None:
     """Make a plot comparing Lester & Lally algorithms to MT2.
 
     `args` should be a tuple of arguments that would be given to `mt2` or `mt2_lally`.
