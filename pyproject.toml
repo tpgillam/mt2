@@ -38,7 +38,9 @@ license-files = []
 
 [dependency-groups]
 dev = [
+    "ipykernel>=6.29.5", # notebooks
     "matplotlib>=3.9.4",
+    "pyqt6>=6.8.1", # interactive plots
     "pyright==1.1.394",
     "setuptools>=75.8.0",
 ]
