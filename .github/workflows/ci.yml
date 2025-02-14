@@ -27,12 +27,10 @@ jobs:
                 python-version: ${{ matrix.python }}
 
             - name: Test
-              run: uv run python -m unittest discover tests
+              run: uv run --no-dev python -m unittest discover tests
 
             - name: Test with oldest-supported-numpy
-              run: |
-                uv pip install oldest-supported-numpy
-                uv run python -m unittest discover tests
+              run: uv run --no-dev --with oldest-supported-numpy python -m unittest discover tests
 
             - name: Static type check
               run: uv run pyright
