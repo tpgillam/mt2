@@ -8,6 +8,7 @@ __version__ = "1.2.3"
 
 __all__ = ["mt2", "mt2_arxiv", "mt2_ufunc"]
 
+
 @overload
 def mt2(
     m_vis_1: float,
