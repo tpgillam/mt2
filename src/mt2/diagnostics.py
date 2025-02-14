@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Tuple, Union
+from typing import Tuple
 
 import numpy
 
@@ -150,16 +150,16 @@ def _make_ellipse_params(
 
 def make_ellipses(
     proposed_mt2: float,
-    m_vis_1: Union[float, numpy.ndarray],
-    px_vis_1: Union[float, numpy.ndarray],
-    py_vis_1: Union[float, numpy.ndarray],
-    m_vis_2: Union[float, numpy.ndarray],
-    px_vis_2: Union[float, numpy.ndarray],
-    py_vis_2: Union[float, numpy.ndarray],
-    px_miss: Union[float, numpy.ndarray],
-    py_miss: Union[float, numpy.ndarray],
-    m_invis_1: Union[float, numpy.ndarray],
-    m_invis_2: Union[float, numpy.ndarray],
+    m_vis_1: float,
+    px_vis_1: float,
+    py_vis_1: float,
+    m_vis_2: float,
+    px_vis_2: float,
+    py_vis_2: float,
+    px_miss: float,
+    py_miss: float,
+    m_invis_1: float,
+    m_invis_2: float,
 ) -> Tuple[EllipseParams, EllipseParams]:
     """
     Make a pair of ellipses in p1x, p1y; the intersection is the feasible region.
