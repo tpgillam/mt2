@@ -36,53 +36,59 @@ def plot_lester_v_lally(args: tuple[float, ...]) -> None:
     pyplot.figure(figsize=(8, 6))
     pyplot.title(f"MT2 Lester={m_lester:.3f};   Lally={m_lally:.3f}")
 
-    pyplot.plot(*params_1_lester.get_points(100).T, c=f"C0", label="Lester 1")
+    pyplot.plot(*params_1_lester.get_points(100).T, c="C0", label="Lester 1")
     pyplot.plot(
         *params_1_lesterpp.get_points(100).T,
-        c=f"C0",
+        c="C0",
         alpha=0.5,
         label=f"Lester 1 ({perturbation})",
     )
     pyplot.plot(
-        *params_1_lestermm.get_points(100).T, c=f"C0", alpha=0.5,
+        *params_1_lestermm.get_points(100).T,
+        c="C0",
+        alpha=0.5,
     )
-    pyplot.plot(*params_2_lester.get_points(100).T, c=f"C1", label="Lester 2")
+    pyplot.plot(*params_2_lester.get_points(100).T, c="C1", label="Lester 2")
     pyplot.plot(
         *params_2_lesterpp.get_points(100).T,
-        c=f"C1",
+        c="C1",
         alpha=0.5,
         label=f"Lester 2 ({perturbation})",
     )
     pyplot.plot(
-        *params_2_lestermm.get_points(100).T, c=f"C1", alpha=0.5,
+        *params_2_lestermm.get_points(100).T,
+        c="C1",
+        alpha=0.5,
     )
 
-    pyplot.plot(
-        *params_1_lally.get_points(100).T, c=f"C0", ls="dashed", label="Lally 1"
-    )
-    pyplot.plot(
-        *params_2_lally.get_points(100).T, c=f"C1", ls="dashed", label="Lally 2"
-    )
+    pyplot.plot(*params_1_lally.get_points(100).T, c="C0", ls="dashed", label="Lally 1")
+    pyplot.plot(*params_2_lally.get_points(100).T, c="C1", ls="dashed", label="Lally 2")
     pyplot.plot(
         *params_1_lallypp.get_points(100).T,
-        c=f"C0",
+        c="C0",
         alpha=0.5,
         ls="dashed",
         label=f"Lally 1 ({perturbation})",
     )
     pyplot.plot(
-        *params_1_lallymm.get_points(100).T, c=f"C0", alpha=0.5, ls="dashed",
+        *params_1_lallymm.get_points(100).T,
+        c="C0",
+        alpha=0.5,
+        ls="dashed",
     )
-    pyplot.plot(*params_2_lally.get_points(100).T, c=f"C1", label="Lally 2")
+    pyplot.plot(*params_2_lally.get_points(100).T, c="C1", label="Lally 2")
     pyplot.plot(
         *params_2_lallypp.get_points(100).T,
-        c=f"C1",
+        c="C1",
         alpha=0.5,
         ls="dashed",
         label=f"Lally 2 ({perturbation})",
     )
     pyplot.plot(
-        *params_2_lallymm.get_points(100).T, c=f"C1", alpha=0.5, ls="dashed",
+        *params_2_lallymm.get_points(100).T,
+        c="C1",
+        alpha=0.5,
+        ls="dashed",
     )
 
     pyplot.legend()
@@ -142,8 +148,10 @@ def main():
     plot_lester_v_lally(bad_args)
     pyplot.savefig(output_dir / "bad.png")
     # TODO This doesn't work yet, as we don't support degenerate ellipses.
-    #  plot_lester_v_lally(args_event_1)
-    #  pyplot.savefig(output_dir / "event_1.png")
+    if False:
+        plot_lester_v_lally(args_event_1)
+        pyplot.savefig(output_dir / "event_1.png")
+    pyplot.show()
 
 
 if __name__ == "__main__":

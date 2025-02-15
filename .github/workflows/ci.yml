@@ -32,6 +32,11 @@ jobs:
             - name: Test with oldest-supported-numpy
               run: uv run --no-dev --with oldest-supported-numpy python -m unittest discover tests
 
+            - name: Lint
+              run: |
+                  uv run ruff check
+                  uv run ruff format --check
+
             - name: Static type check
               run: uv run pyright
 
