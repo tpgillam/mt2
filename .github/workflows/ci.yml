@@ -33,9 +33,9 @@ jobs:
               run: uv run --no-dev --with oldest-supported-numpy python -m unittest discover tests
 
             - name: Static type check
-              # We need most dev dependencies for pyright to check imported code, but
-              # exclude pyqt6 to support free-threaded python versions; see
-              #   https://github.com/tpgillam/mt2/issues/78
+              # We need most dev dependencies for pyright to check imported code in
+              # examples, but we must exclude pyqt6 to support free-threaded python
+              # versions; see https://github.com/tpgillam/mt2/issues/78
               run: uv run --no-dev --with dev-no-qt pyright
 
     build_wheels:
