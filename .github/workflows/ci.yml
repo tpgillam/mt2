@@ -33,10 +33,7 @@ jobs:
               run: uv run --no-dev --with oldest-supported-numpy python -m unittest discover tests
 
             - name: Static type check
-              # We need most dev dependencies for pyright to check imported code in
-              # examples, but we must exclude pyqt6 to support free-threaded python
-              # versions; see https://github.com/tpgillam/mt2/issues/78
-              run: uv run --no-dev --group dev-no-qt pyright
+              run: uv run pyright
 
     build_wheels:
         name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}

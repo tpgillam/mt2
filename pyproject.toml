@@ -37,13 +37,7 @@ build-backend = "setuptools.build_meta"
 license-files = []
 
 [dependency-groups]
-# TODO: recombine the dev group once pyqt6 supports free-threaded python;
-#   see https://github.com/tpgillam/mt2/issues/78
 dev = [
-    { include-group = "dev-no-qt" },
-    "pyqt6>=6.8.1",                  # for interactive windows in examples
-]
-dev-no-qt = [
     "ipykernel>=6.29.5",
     "matplotlib>=3.9.4",
     "pyright==1.1.394",
