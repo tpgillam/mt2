@@ -43,7 +43,9 @@ def plot_lester_v_lally(args: tuple[float, ...]) -> None:
         label=f"Lester 1 ({perturbation})",
     )
     pyplot.plot(
-        *params_1_lestermm.get_points(100).T, c="C0", alpha=0.5,
+        *params_1_lestermm.get_points(100).T,
+        c="C0",
+        alpha=0.5,
     )
     pyplot.plot(*params_2_lester.get_points(100).T, c="C1", label="Lester 2")
     pyplot.plot(
@@ -53,15 +55,13 @@ def plot_lester_v_lally(args: tuple[float, ...]) -> None:
         label=f"Lester 2 ({perturbation})",
     )
     pyplot.plot(
-        *params_2_lestermm.get_points(100).T, c="C1", alpha=0.5,
+        *params_2_lestermm.get_points(100).T,
+        c="C1",
+        alpha=0.5,
     )
 
-    pyplot.plot(
-        *params_1_lally.get_points(100).T, c="C0", ls="dashed", label="Lally 1"
-    )
-    pyplot.plot(
-        *params_2_lally.get_points(100).T, c="C1", ls="dashed", label="Lally 2"
-    )
+    pyplot.plot(*params_1_lally.get_points(100).T, c="C0", ls="dashed", label="Lally 1")
+    pyplot.plot(*params_2_lally.get_points(100).T, c="C1", ls="dashed", label="Lally 2")
     pyplot.plot(
         *params_1_lallypp.get_points(100).T,
         c="C0",
@@ -70,7 +70,10 @@ def plot_lester_v_lally(args: tuple[float, ...]) -> None:
         label=f"Lally 1 ({perturbation})",
     )
     pyplot.plot(
-        *params_1_lallymm.get_points(100).T, c="C0", alpha=0.5, ls="dashed",
+        *params_1_lallymm.get_points(100).T,
+        c="C0",
+        alpha=0.5,
+        ls="dashed",
     )
     pyplot.plot(*params_2_lally.get_points(100).T, c="C1", label="Lally 2")
     pyplot.plot(
@@ -81,7 +84,10 @@ def plot_lester_v_lally(args: tuple[float, ...]) -> None:
         label=f"Lally 2 ({perturbation})",
     )
     pyplot.plot(
-        *params_2_lallymm.get_points(100).T, c="C1", alpha=0.5, ls="dashed",
+        *params_2_lallymm.get_points(100).T,
+        c="C1",
+        alpha=0.5,
+        ls="dashed",
     )
 
     pyplot.legend()

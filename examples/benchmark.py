@@ -20,11 +20,18 @@ def main():
     # `val` has shape (n1, n2), since `mass_1` and `mass_2` broadcast.
     t_start = time.time()
     mt2(
-        100, 410, 20,  # Visible 1: mass, px, py
-        150, -210, -300,  # Visible 2: mass, px, py
-        -200, 280,  # Missing transverse momentum: x, y
-        mass_1, mass_2,  # Invisible 1 mass, invisible 2 mass
-        out=out)
+        100,
+        410,
+        20,  # Visible 1: mass, px, py
+        150,
+        -210,
+        -300,  # Visible 2: mass, px, py
+        -200,
+        280,  # Missing transverse momentum: x, y
+        mass_1,
+        mass_2,  # Invisible 1 mass, invisible 2 mass
+        out=out,
+    )
     t_end = time.time()
     print("Elapsed time: {} seconds".format(t_end - t_start))
 
