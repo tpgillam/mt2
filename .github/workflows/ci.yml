@@ -36,7 +36,7 @@ jobs:
               # We need most dev dependencies for pyright to check imported code in
               # examples, but we must exclude pyqt6 to support free-threaded python
               # versions; see https://github.com/tpgillam/mt2/issues/78
-              run: uv run --no-dev --with dev-no-qt pyright
+              run: uv run --no-dev --group dev-no-qt pyright
 
     build_wheels:
         name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}
