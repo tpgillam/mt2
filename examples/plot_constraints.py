@@ -1,3 +1,4 @@
+import pathlib
 from matplotlib import pyplot
 
 from mt2 import mt2
@@ -140,11 +141,16 @@ def main():
         100,
     )  # Invisible 1 mass, invisible 2 mass
 
+    output_dir = pathlib.Path.cwd() / "output" / "plot_constraints"
+    output_dir.mkdir(parents=True, exist_ok=True)
     plot_lester_v_lally(nice_args)
+    pyplot.savefig(output_dir / "nice.png")
     plot_lester_v_lally(bad_args)
+    pyplot.savefig(output_dir / "bad.png")
     # TODO This doesn't work yet, as we don't support degenerate ellipses.
     if False:
         plot_lester_v_lally(args_event_1)
+        pyplot.savefig(output_dir / "event_1.png")
     pyplot.show()
 
 
