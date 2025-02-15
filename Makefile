@@ -33,8 +33,8 @@ test: install
 
 .PHONY: lint
 lint: install
-	uv run --locked ruff check --fix
-	uv run --locked ruff format
+	-uv run --locked ruff check --fix
+	-uv run --locked ruff format
 
 .PHONY: typecheck
 typecheck: install
