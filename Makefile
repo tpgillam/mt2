@@ -31,6 +31,15 @@ clean-venv:
 test: install
 	uv run --locked python -m unittest discover tests
 
+.PHONY: lint
+lint: install
+	uv run --locked ruff check --fix
+	uv run --locked ruff format
+
+.PHONY: typecheck
+typecheck: install
+	uv run --locked pyright
+
 .PHONY: test_wheel
 test_wheel: clean
 	@# Build the wheel
