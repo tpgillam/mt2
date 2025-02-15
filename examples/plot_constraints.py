@@ -137,7 +137,8 @@ def main():
     plot_lester_v_lally(nice_args)
     plot_lester_v_lally(bad_args)
     # TODO This doesn't work yet, as we don't support degenerate ellipses.
-    #  plot_lester_v_lally(args_event_1)
+    if False:
+        plot_lester_v_lally(args_event_1)
     pyplot.show()
 
 
