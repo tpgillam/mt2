@@ -4,7 +4,7 @@ import numpy
 
 from matplotlib import pyplot
 
-from _mt2 import mt2_lally_ufunc, mt2_lester_ufunc, mt2_tombs_ufunc
+from mt2._mt2 import mt2_lally_ufunc, mt2_lester_ufunc, mt2_tombs_ufunc
 
 
 def mt2_lester(

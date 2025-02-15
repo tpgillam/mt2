@@ -27,12 +27,13 @@ jobs:
                 python-version: ${{ matrix.python }}
 
             - name: Test
-              run: uv run python -m unittest discover tests
+              run: uv run --no-dev python -m unittest discover tests
 
             - name: Test with oldest-supported-numpy
-              run: |
-                uv pip install oldest-supported-numpy 
-                uv run python -m unittest discover tests
+              run: uv run --no-dev --with oldest-supported-numpy python -m unittest discover tests
+
+            - name: Static type check
+              run: uv run pyright
 
     build_wheels:
         name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}
@@ -98,7 +99,7 @@ jobs:
         environment: moopypi
         permissions:
             # Required for trusted publishing; see https://docs.pypi.org/trusted-publishers/using-a-publisher/
-            id-token: write  
+            id-token: write
         # upload to PyPI on every tag starting with 'v'
         if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
         steps:

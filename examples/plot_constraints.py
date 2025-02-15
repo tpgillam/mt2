@@ -1,16 +1,18 @@
 from matplotlib import pyplot
 
-from mt2 import mt2, mt2_lally
+from mt2 import mt2
+from mt2._mt2 import mt2_lally_ufunc
 from mt2.diagnostics import make_ellipses
 
 
-def plot_lester_v_lally(args):
+def plot_lester_v_lally(args: tuple[float, ...]) -> None:
     """Make a plot comparing Lester & Lally algorithms to MT2.
-    
+
     `args` should be a tuple of arguments that would be given to `mt2` or `mt2_lally`.
     """
     m_lester = mt2(*args)
-    m_lally = mt2_lally(*args)
+    desired_precision_on_mt2 = 0.0
+    m_lally = mt2_lally_ufunc(*args, desired_precision_on_mt2)
 
     params_1_lester, params_2_lester = make_ellipses(m_lester, *args)
     params_1_lally, params_2_lally = make_ellipses(m_lally, *args)
