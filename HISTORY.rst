@@ -2,6 +2,10 @@
 History
 =======
 
+1.3.0 (2025-XX-XX)
+------------------
+* Support all-zero masses, and clip negative masses to zero in mt2_bisect
+
 1.2.3 (2024-12-18)
 ------------------
 * Release with Python 3.13 wheels

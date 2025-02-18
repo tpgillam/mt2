@@ -1,5 +1,6 @@
 """Tests for the variant of MT2 by Rupert Tombs."""
 
+import math
 import unittest
 
 import numpy
@@ -86,8 +87,48 @@ class TestTombs(unittest.TestCase):
             numpy.testing.assert_allclose(computed_val, example_val * scale)
 
     def test_negative_masses(self):
-        # Any negative mass is unphysical.
-        # These arguments use negative masses to make both initial bounds negative.
-        # Check that the result is neither positive nor an infinite loop.
-        computed_val = mt2_tombs(1, 2, 3, 4, 5, 6, 7, 8, -90, -100)
-        self.assertLessEqual(computed_val, 0)
+        # Any negative mass is un-physical. We clip negative values to zero,
+        # such that all non-positive mass arguments are equivalent.
+        # And by equivalent, I mean equivalent: strict floating point equality.
+        negative = mt2_tombs(1, 2, 3, 4, 5, 6, 7, 8, -90, -100)
+        zero = mt2_tombs(1, 2, 3, 4, 5, 6, 7, 8, 0, 0)
+        self.assertEqual(negative, zero)
+        negative_zero = mt2_tombs(1, 2, 3, 4, 5, 6, 7, 8, -0.0, -0.0)
+        self.assertEqual(negative_zero, zero)
+
+    def test_zero_mass(self):
+        # Zero masses are perfectly fine.
+        # Thanks to Sebastian Rutherford Colmenares for this example in:
+        #     https://github.com/tpgillam/mt2/issues/75#issuecomment-2656551786
+
+        # MT2 must be positive and finite for all-zero masses.
+        zero = mt2_tombs(
+            0.0,  # Visible 1 mass
+            -30500.0,
+            34500.0,
+            0.0,  # Visible 2 mass
+            -29100.0,
+            -55400.0,
+            58900.0,
+            20300.0,
+            0.0,  # Invisible 1 mass
+            0.0,  # Invisible 2 mass
+        )
+        self.assertGreater(zero, 0)
+        self.assertTrue(math.isfinite(zero))
+
+        # MT2 must change continuously between from zero mass to small mass.
+        small = mt2_tombs(
+            0.5,  # Visible 1 mass
+            -30500.0,
+            34500.0,
+            0.5,  # Visible 2 mass
+            -29100.0,
+            -55400.0,
+            58900.0,
+            20300.0,
+            0.5,  # Invisible 1 mass
+            0.5,  # Invisible 2 mass
+        )
+        self.assertAlmostEqual(zero, small, delta=1e-3)
+        self.assertGreater(small, zero)
