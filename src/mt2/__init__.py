@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Optional, Union, overload
 
 import numpy
 
@@ -9,6 +9,23 @@ __version__ = "1.3.0"
 __all__ = ["mt2", "mt2_arxiv", "mt2_ufunc"]
 
 
+@overload
+def mt2(
+    m_vis_1: float,
+    px_vis_1: float,
+    py_vis_1: float,
+    m_vis_2: float,
+    px_vis_2: float,
+    py_vis_2: float,
+    px_miss: float,
+    py_miss: float,
+    m_invis_1: float,
+    m_invis_2: float,
+    desired_precision_on_mt2: float = 0.0,
+    *,
+    out: None = None,
+) -> float: ...
+@overload
 def mt2(
     m_vis_1: Union[float, numpy.ndarray],
     px_vis_1: Union[float, numpy.ndarray],
@@ -22,7 +39,22 @@ def mt2(
     m_invis_2: Union[float, numpy.ndarray],
     desired_precision_on_mt2: Union[float, numpy.ndarray] = 0.0,
     *,
-    out: Optional[numpy.ndarray] = None
+    out: Optional[numpy.ndarray] = None,
+) -> Union[float, numpy.ndarray]: ...
+def mt2(
+    m_vis_1: Union[float, numpy.ndarray],
+    px_vis_1: Union[float, numpy.ndarray],
+    py_vis_1: Union[float, numpy.ndarray],
+    m_vis_2: Union[float, numpy.ndarray],
+    px_vis_2: Union[float, numpy.ndarray],
+    py_vis_2: Union[float, numpy.ndarray],
+    px_miss: Union[float, numpy.ndarray],
+    py_miss: Union[float, numpy.ndarray],
+    m_invis_1: Union[float, numpy.ndarray],
+    m_invis_2: Union[float, numpy.ndarray],
+    desired_precision_on_mt2: Union[float, numpy.ndarray] = 0.0,
+    *,
+    out: Optional[numpy.ndarray] = None,
 ) -> Union[float, numpy.ndarray]:
     """
     Returns asymmetric mT2 (which is >=0), or a negative value if no solution exists.
@@ -84,6 +116,24 @@ def mt2(
 mt2_ufunc = mt2_tombs_ufunc
 
 
+@overload
+def mt2_arxiv(
+    m_vis_1: float,
+    px_vis_1: float,
+    py_vis_1: float,
+    m_vis_2: float,
+    px_vis_2: float,
+    py_vis_2: float,
+    px_miss: float,
+    py_miss: float,
+    m_invis_1: float,
+    m_invis_2: float,
+    desired_precision_on_mt2: float = 0.0,
+    use_deci_sections_initially: bool = True,
+    *,
+    out: None = None,
+) -> float: ...
+@overload
 def mt2_arxiv(
     m_vis_1: Union[float, numpy.ndarray],
     px_vis_1: Union[float, numpy.ndarray],
@@ -98,7 +148,23 @@ def mt2_arxiv(
     desired_precision_on_mt2: Union[float, numpy.ndarray] = 0.0,
     use_deci_sections_initially: Union[bool, numpy.ndarray] = True,
     *,
-    out: Optional[numpy.ndarray] = None
+    out: Optional[numpy.ndarray] = None,
+) -> Union[float, numpy.ndarray]: ...
+def mt2_arxiv(
+    m_vis_1: Union[float, numpy.ndarray],
+    px_vis_1: Union[float, numpy.ndarray],
+    py_vis_1: Union[float, numpy.ndarray],
+    m_vis_2: Union[float, numpy.ndarray],
+    px_vis_2: Union[float, numpy.ndarray],
+    py_vis_2: Union[float, numpy.ndarray],
+    px_miss: Union[float, numpy.ndarray],
+    py_miss: Union[float, numpy.ndarray],
+    m_invis_1: Union[float, numpy.ndarray],
+    m_invis_2: Union[float, numpy.ndarray],
+    desired_precision_on_mt2: Union[float, numpy.ndarray] = 0.0,
+    use_deci_sections_initially: Union[bool, numpy.ndarray] = True,
+    *,
+    out: Optional[numpy.ndarray] = None,
 ) -> Union[float, numpy.ndarray]:
     """
     Provide an interface to the mt2 implementation of arXiv:1411.4312v7.

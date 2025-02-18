@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Tuple, Union
+from typing import Tuple
 
 import numpy
 
@@ -42,7 +42,7 @@ class EllipseParams:
     @property
     def det_A33(self) -> float:
         """Determinant of A33."""
-        return self.c_xx * self.c_yy - self.c_xy ** 2
+        return self.c_xx * self.c_yy - self.c_xy**2
 
     @property
     def det_Aq(self) -> float:
@@ -94,10 +94,10 @@ def _make_ellipse_params(
     This is just a translated version of `Lester::helper` from `lester_mt2_bisect_v7.h`
     """
 
-    tx_sq = tx ** 2
-    ty_sq = ty ** 2
-    qx_sq = qx ** 2
-    qy_sq = qy ** 2
+    tx_sq = tx**2
+    ty_sq = ty**2
+    qx_sq = qx**2
+    qy_sq = qy**2
 
     c_xx = +4.0 * mt_sq + 4.0 * ty_sq
 
@@ -150,29 +150,29 @@ def _make_ellipse_params(
 
 def make_ellipses(
     proposed_mt2: float,
-    m_vis_1: Union[float, numpy.ndarray],
-    px_vis_1: Union[float, numpy.ndarray],
-    py_vis_1: Union[float, numpy.ndarray],
-    m_vis_2: Union[float, numpy.ndarray],
-    px_vis_2: Union[float, numpy.ndarray],
-    py_vis_2: Union[float, numpy.ndarray],
-    px_miss: Union[float, numpy.ndarray],
-    py_miss: Union[float, numpy.ndarray],
-    m_invis_1: Union[float, numpy.ndarray],
-    m_invis_2: Union[float, numpy.ndarray],
+    m_vis_1: float,
+    px_vis_1: float,
+    py_vis_1: float,
+    m_vis_2: float,
+    px_vis_2: float,
+    py_vis_2: float,
+    px_miss: float,
+    py_miss: float,
+    m_invis_1: float,
+    m_invis_2: float,
 ) -> Tuple[EllipseParams, EllipseParams]:
     """
     Make a pair of ellipses in p1x, p1y; the intersection is the feasible region.
     """
     ellipse_1 = _make_ellipse_params(
-        proposed_mt2 ** 2, m_vis_1 ** 2, -px_vis_1, -py_vis_1, m_invis_1 ** 2, 0, 0
+        proposed_mt2**2, m_vis_1**2, -px_vis_1, -py_vis_1, m_invis_1**2, 0, 0
     )
     ellipse_2 = _make_ellipse_params(
-        proposed_mt2 ** 2,
-        m_vis_2 ** 2,
+        proposed_mt2**2,
+        m_vis_2**2,
         px_vis_2,
         py_vis_2,
-        m_invis_2 ** 2,
+        m_invis_2**2,
         px_miss,
         py_miss,
     )

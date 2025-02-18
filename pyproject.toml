@@ -35,3 +35,15 @@ build-backend = "setuptools.build_meta"
 #   - https://github.com/astral-sh/uv/issues/9513
 #   - https://github.com/pypa/setuptools/issues/4759
 license-files = []
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29.5",
+    "matplotlib>=3.9.4",
+    "pyright==1.1.394",
+    "ruff==0.9.6",
+    "setuptools>=75.8.0",
+]
+
+[tool.ruff]
+output-format = "concise"

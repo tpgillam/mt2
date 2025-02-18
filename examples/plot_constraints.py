@@ -1,16 +1,19 @@
+import pathlib
 from matplotlib import pyplot
 
-from mt2 import mt2, mt2_lally
+from mt2 import mt2
+from mt2._mt2 import mt2_lally_ufunc
 from mt2.diagnostics import make_ellipses
 
 
-def plot_lester_v_lally(args):
+def plot_lester_v_lally(args: tuple[float, ...]) -> None:
     """Make a plot comparing Lester & Lally algorithms to MT2.
-    
+
     `args` should be a tuple of arguments that would be given to `mt2` or `mt2_lally`.
     """
     m_lester = mt2(*args)
-    m_lally = mt2_lally(*args)
+    desired_precision_on_mt2 = 0.0
+    m_lally = mt2_lally_ufunc(*args, desired_precision_on_mt2)
 
     params_1_lester, params_2_lester = make_ellipses(m_lester, *args)
     params_1_lally, params_2_lally = make_ellipses(m_lally, *args)
@@ -33,53 +36,59 @@ def plot_lester_v_lally(args):
     pyplot.figure(figsize=(8, 6))
     pyplot.title(f"MT2 Lester={m_lester:.3f};   Lally={m_lally:.3f}")
 
-    pyplot.plot(*params_1_lester.get_points(100).T, c=f"C0", label="Lester 1")
+    pyplot.plot(*params_1_lester.get_points(100).T, c="C0", label="Lester 1")
     pyplot.plot(
         *params_1_lesterpp.get_points(100).T,
-        c=f"C0",
+        c="C0",
         alpha=0.5,
         label=f"Lester 1 ({perturbation})",
     )
     pyplot.plot(
-        *params_1_lestermm.get_points(100).T, c=f"C0", alpha=0.5,
+        *params_1_lestermm.get_points(100).T,
+        c="C0",
+        alpha=0.5,
     )
-    pyplot.plot(*params_2_lester.get_points(100).T, c=f"C1", label="Lester 2")
+    pyplot.plot(*params_2_lester.get_points(100).T, c="C1", label="Lester 2")
     pyplot.plot(
         *params_2_lesterpp.get_points(100).T,
-        c=f"C1",
+        c="C1",
         alpha=0.5,
         label=f"Lester 2 ({perturbation})",
     )
     pyplot.plot(
-        *params_2_lestermm.get_points(100).T, c=f"C1", alpha=0.5,
+        *params_2_lestermm.get_points(100).T,
+        c="C1",
+        alpha=0.5,
     )
 
-    pyplot.plot(
-        *params_1_lally.get_points(100).T, c=f"C0", ls="dashed", label="Lally 1"
-    )
-    pyplot.plot(
-        *params_2_lally.get_points(100).T, c=f"C1", ls="dashed", label="Lally 2"
-    )
+    pyplot.plot(*params_1_lally.get_points(100).T, c="C0", ls="dashed", label="Lally 1")
+    pyplot.plot(*params_2_lally.get_points(100).T, c="C1", ls="dashed", label="Lally 2")
     pyplot.plot(
         *params_1_lallypp.get_points(100).T,
-        c=f"C0",
+        c="C0",
         alpha=0.5,
         ls="dashed",
         label=f"Lally 1 ({perturbation})",
     )
     pyplot.plot(
-        *params_1_lallymm.get_points(100).T, c=f"C0", alpha=0.5, ls="dashed",
+        *params_1_lallymm.get_points(100).T,
+        c="C0",
+        alpha=0.5,
+        ls="dashed",
     )
-    pyplot.plot(*params_2_lally.get_points(100).T, c=f"C1", label="Lally 2")
+    pyplot.plot(*params_2_lally.get_points(100).T, c="C1", label="Lally 2")
     pyplot.plot(
         *params_2_lallypp.get_points(100).T,
-        c=f"C1",
+        c="C1",
         alpha=0.5,
         ls="dashed",
         label=f"Lally 2 ({perturbation})",
     )
     pyplot.plot(
-        *params_2_lallymm.get_points(100).T, c=f"C1", alpha=0.5, ls="dashed",
+        *params_2_lallymm.get_points(100).T,
+        c="C1",
+        alpha=0.5,
+        ls="dashed",
     )
 
     pyplot.legend()
@@ -132,10 +141,16 @@ def main():
         100,
     )  # Invisible 1 mass, invisible 2 mass
 
+    output_dir = pathlib.Path.cwd() / "output" / "plot_constraints"
+    output_dir.mkdir(parents=True, exist_ok=True)
     plot_lester_v_lally(nice_args)
+    pyplot.savefig(output_dir / "nice.png")
     plot_lester_v_lally(bad_args)
+    pyplot.savefig(output_dir / "bad.png")
     # TODO This doesn't work yet, as we don't support degenerate ellipses.
-    #  plot_lester_v_lally(args_event_1)
+    if False:
+        plot_lester_v_lally(args_event_1)
+        pyplot.savefig(output_dir / "event_1.png")
     pyplot.show()
 
 

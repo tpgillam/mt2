@@ -1,10 +1,11 @@
+import pathlib
 import time
 
 import numpy
 
 from matplotlib import pyplot
 
-from _mt2 import mt2_lally_ufunc, mt2_lester_ufunc, mt2_tombs_ufunc
+from mt2._mt2 import mt2_lally_ufunc, mt2_lester_ufunc, mt2_tombs_ufunc
 
 
 def mt2_lester(
@@ -90,7 +91,7 @@ def _run_and_plot(args, shape):
     pyplot.legend()
 
 
-def make_plot():
+def make_plot(output_dir: pathlib.Path) -> None:
     shape = (100,)
 
     args = (numpy.full(shape, 100), 410, 20, 150, -210, -300, -200, 280, 200, 200)
@@ -98,13 +99,14 @@ def make_plot():
     _run_and_plot(args, shape)
     pyplot.title("Example 1")
     pyplot.tight_layout()
+    pyplot.savefig(output_dir / "example_1.png")
 
     args = (numpy.full(shape, 10), 20, 30, 10, -20, -30, -5, -5, 4, 7)
     pyplot.figure()
     _run_and_plot(args, shape)
     pyplot.title("Example 2")
     pyplot.tight_layout()
-    pyplot.show()
+    pyplot.savefig(output_dir / "example_2.png")
 
 
 def print_timing_example():
@@ -142,7 +144,9 @@ def print_timing_example():
 
 def main():
     # print_timing_example()
-    make_plot()
+    output_dir = pathlib.Path.cwd() / "output" / "benchmark_comparison"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    make_plot(output_dir)
 
 
 if __name__ == "__main__":
