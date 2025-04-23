@@ -2,7 +2,7 @@
 History
 =======
 
-1.3.0 (2025-XX-XX)
+1.3.0 (2025-04-23)
 ------------------
 * Support all-zero masses, and clip negative masses to zero in mt2_bisect
 
