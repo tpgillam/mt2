@@ -2,7 +2,6 @@
 /*                                                                                      */
 /*                  Finding Asymmetric MT2 by Characteristic Eq Cubic Discriminant    	*/
 /*        		                                                          				*/
-/*                  Copyright: Colin Lally                                              */
 /*                  December 28, 2015, ver2                                          	*/
 /*                                                                                    	*/
 /****************************************************************************************
