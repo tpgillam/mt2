@@ -130,7 +130,7 @@ Please cite:
 * http://arxiv.org/abs/hep-ph/9906349, if you use MT2 in an academic paper, and
 * http://arxiv.org/abs/1411.4312 if you use this particular calculator.
 
-All files other than ``src/lester_mt2_bisect_v7.h`` and ``src/mt2_Lallyver2.h`` are released under the MIT license.
+All files in this repository are released under the MIT license.
 
 
 Other implementations
