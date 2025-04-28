@@ -43,8 +43,7 @@ One can then compute MT2 as follows; here for the "symmetric" case, where both i
         100, 100)  # Invisible 1 mass, invisible 2 mass
     print("Expected mT2 = 412.628.  Computed mT2 = ", val)
 
-mt2 is also `available <https://anaconda.org/conda-forge/mt2>`__ in the Anaconda ecosystem. 
-This conda-forge package is maintained by `mt2-feedstock <https://github.com/conda-forge/mt2-feedstock>`__, which contains installation instructions for various frontends.
+mt2 is also `available on conda-forge <https://github.com/conda-forge/mt2-feedstock>`__. 
 
 Examples
 --------
