@@ -23,7 +23,7 @@ Related information may be found in papers relating to MT2 linked from `here <ht
 Getting started
 ---------------
 
-Install from pip:
+Install from `PyPI <https://pypi.org/project/mt2/>`__ with e.g. pip:
 
 .. code-block:: bash
 
@@ -42,6 +42,8 @@ One can then compute MT2 as follows; here for the "symmetric" case, where both i
         -200, 280,  # Missing transverse momentum: x, y
         100, 100)  # Invisible 1 mass, invisible 2 mass
     print("Expected mT2 = 412.628.  Computed mT2 = ", val)
+
+mt2 is also `available on conda-forge <https://github.com/conda-forge/mt2-feedstock>`__. 
 
 Examples
 --------
