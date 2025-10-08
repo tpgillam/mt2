@@ -12,7 +12,6 @@ class _CustomBuildExt(build_ext):
             assert len(extension.extra_compile_args) == 0
             if self.compiler.compiler_type == "msvc":
                 extension.extra_compile_args = [
-                    "/W4",
                     "/WX",
                 ]
             else:
