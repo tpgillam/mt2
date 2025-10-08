@@ -13,7 +13,7 @@ class _CustomBuildExt(build_ext):
             if self.compiler.compiler_type == "msvc":
                 extension.extra_compile_args = [
                     "/std:c++11",
-                    "/Wall",
+                    "/W4",
                     "/WX",
                 ]
             else:
