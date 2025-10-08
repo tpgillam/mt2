@@ -1,6 +1,6 @@
 [project]
 name = "mt2"
-version = "1.3.0"
+version = "1.3.1"
 description = "Stransverse mass computation as a numpy ufunc."
 authors = [
     { name = "Tom Gillam", email = "tpgillam@googlemail.com" },
@@ -20,6 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 keywords = ["mt2"]
 dependencies = ["numpy>=1.19.3"]
@@ -40,8 +41,8 @@ license-files = []
 dev = [
     "ipykernel>=6.29.5",
     "matplotlib>=3.9.4",
-    "pyright==1.1.394",
-    "ruff==0.9.6",
+    "pyright==1.1.406",
+    "ruff==0.14.0",
     "setuptools>=75.8.0",
 ]
 
