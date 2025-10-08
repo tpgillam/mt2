@@ -31,8 +31,5 @@ wheels/
 # virtualenv
 .venv
 
-# package manager lock file
-uv.lock
-
 # results from examples
 output/
