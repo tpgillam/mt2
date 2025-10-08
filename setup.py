@@ -10,18 +10,14 @@ class _CustomBuildExt(build_ext):
     def build_extensions(self) -> None:
         for extension in self.extensions:
             assert len(extension.extra_compile_args) == 0
-            if self.compiler.compiler_type == "msvc":
-                extension.extra_compile_args = [
-                    "/WX",
-                ]
-            else:
-                # Assume a unix-like compiler otherwise.
+            if self.compiler.compiler_type != "msvc":
+                # Specify additional flags from the default for unix-like compilers
+                # only. Whilst we could enable /WX for MSVC to get the equivalent of
+                # -Werror, this trips on a warning from within a numpy header file.
                 extension.extra_compile_args = [
                     "-std=c++11",
-                    "-Wall",
                     "-pedantic",
                     "-Werror",
-                    "-O3",
                 ]
         super().build_extensions()
 
