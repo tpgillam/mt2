@@ -12,7 +12,6 @@ class _CustomBuildExt(build_ext):
             assert len(extension.extra_compile_args) == 0
             if self.compiler.compiler_type == "msvc":
                 extension.extra_compile_args = [
-                    "/std:c++11",
                     "/W4",
                     "/WX",
                 ]
@@ -23,6 +22,7 @@ class _CustomBuildExt(build_ext):
                     "-Wall",
                     "-pedantic",
                     "-Werror",
+                    "-O3",
                 ]
         super().build_extensions()
 
