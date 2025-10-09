@@ -552,7 +552,6 @@ double NewDeltaFinder(double l_delta0, double l_delta, int bisectDivisor, int bi
                 {
                     //Need to transpose function candidate UB to check there is only one root below the candidate UB value and above the candidate LB (awkward check but couldn't think of more efficient way)
                     const double checkdeltasq = checkdelta * checkdelta;
-                    const double checkdeltasqsq = checkdeltasq * checkdeltasq;
                     const double transBdelta = (discPolynomial.Coeffs7 + 8 * checkdelta * discPolynomial.Coeffs8);
                     const double transCdelta = (discPolynomial.Coeffs6 + 28 * checkdeltasq * discPolynomial.Coeffs8 + 7 * checkdelta * discPolynomial.Coeffs7);
                     const double transDdelta = (discPolynomial.Coeffs5 + 56 * checkdeltasq * checkdelta * discPolynomial.Coeffs8 + 21 * checkdeltasq * discPolynomial.Coeffs7 + 6 * checkdelta * discPolynomial.Coeffs6);
@@ -580,7 +579,6 @@ double NewDeltaFinder(double l_delta0, double l_delta, int bisectDivisor, int bi
                         nscdelta++;
 
                     const double newdeltaLBsq = newdeltaLB * newdeltaLB;
-                    const double newdeltaLBsqsq = newdeltaLBsq * newdeltaLBsq;
                     const double transBLB = (discPolynomial.Coeffs7 + 8 * newdeltaLB * discPolynomial.Coeffs8);
                     const double transCLB = (discPolynomial.Coeffs6 + 28 * newdeltaLBsq * discPolynomial.Coeffs8 + 7 * newdeltaLB * discPolynomial.Coeffs7);
                     const double transDLB = (discPolynomial.Coeffs5 + 56 * newdeltaLBsq * newdeltaLB * discPolynomial.Coeffs8 + 21 * newdeltaLBsq * discPolynomial.Coeffs7 + 6 * newdeltaLB * discPolynomial.Coeffs6);

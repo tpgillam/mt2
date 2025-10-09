@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                python: [39, 310, 311, 312, 313, 313t]
+                python: [39, 310, 311, 312, 313, 313t, 314, 314t]
 
         steps:
             - uses: actions/checkout@v5
@@ -48,22 +48,14 @@ jobs:
             fail-fast: false
             matrix:
                 os: [windows-latest, ubuntu-latest, macos-latest]
-                python: [39, 310, 311, 312, 313, 313t]
-                arch: [auto64, auto32, universal2]
+                python: [39, 310, 311, 312, 313, 313t, 314, 314t]
+                arch: [auto64, universal2]
                 build: ["cp"]
                 exclude:
                     - os: ubuntu-latest
                       arch: universal2
                     - os: windows-latest
                       arch: universal2
-                    - os: macos-latest
-                      arch: auto32
-                    - os: ubuntu-latest
-                      python: 313
-                      arch: auto32
-                    - os: ubuntu-latest
-                      python: 313t
-                      arch: auto32
         steps:
             - uses: actions/checkout@v5
             - uses: astral-sh/setup-uv@v6

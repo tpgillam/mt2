@@ -1,8 +1,26 @@
 from setuptools import Extension, setup
+from setuptools.command.build_ext import build_ext
 
 import numpy
 
-__version__ = "1.3.0"
+__version__ = "1.3.1"
+
+
+class _CustomBuildExt(build_ext):
+    def build_extensions(self) -> None:
+        for extension in self.extensions:
+            assert len(extension.extra_compile_args) == 0
+            if self.compiler.compiler_type != "msvc":
+                # Specify additional flags from the default for unix-like compilers
+                # only. Whilst we could enable /WX for MSVC to get the equivalent of
+                # -Werror, this trips on a warning from within a numpy header file.
+                extension.extra_compile_args = [
+                    "-std=c++11",
+                    "-pedantic",
+                    "-Werror",
+                ]
+        super().build_extensions()
+
 
 setup(
     ext_modules=[
@@ -21,7 +39,7 @@ setup(
             ],
             include_dirs=[numpy.get_include()],
             language="c++",
-            extra_compile_args=["-std=c++11"],
         ),
     ],
+    cmdclass={"build_ext": _CustomBuildExt},
 )
