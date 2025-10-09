@@ -90,6 +90,15 @@ jobs:
       steps:
         - run: echo "All jobs passed"
 
+    merge:
+      name: Merge sdist and wheel artifacts
+      needs: [pass]
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/upload-artifact/merge@v4
+          with:
+            name: mt2
+
     upload_pypi:
         needs: [pass]
         runs-on: ubuntu-latest
