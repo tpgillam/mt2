@@ -1,2 +1,1 @@
-exclude examples/*
 include src/_mt2/*.h
