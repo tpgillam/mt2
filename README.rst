@@ -8,9 +8,6 @@ mt2
 .. image:: https://img.shields.io/pypi/pyversions/mt2.svg
         :target: https://pypi.python.org/pypi/mt2
 
-.. image:: https://github.com/tpgillam/mt2/workflows/Build/badge.svg?branch=master
-        :target: https://github.com/tpgillam/mt2/actions?query=workflow%3ABuild
-
 
 This package may be used to evaluate MT2 in all its variants.
 This includes both symmetric and asymmetric MT2.
