@@ -12,19 +12,18 @@ clean-build:
 	rm -rf dist/
 	rm -rf .eggs/
 	rm -rf src/*.egg-info/
-	find . -name '*.egg-info' -delete
-	find . -name '*.egg' -delete
-	find . -name '*.so' -delete
+	find . -path ./.venv -prune -o -name '*.egg-info' -exec rm -rf {} +
+	find . -path ./.venv -prune -o -name '*.egg' -exec rm -rf {} +
+	find . -path ./.venv -prune -o -name '*.so' -exec rm -rf {} +
 
 .PHONY: clean-pyc
 clean-pyc:
-	find . -name '*.pyc' -delete
-	find . -name '*.pyo' -delete
-	find . -name '__pycache__' -exec rm -fr {} +
+	find . -path ./.venv -prune -o -name '*.pyc' -exec rm -rf {} +
+	find . -path ./.venv -prune -o -name '*.pyo' -exec rm -rf {} +
+	find . -path ./.venv -prune -o -name '__pycache__' -exec rm -rf {} +
 
 .PHONY: clean-venv
 clean-venv:
-	rm -f uv.lock
 	rm -rf .venv
 
 .PHONY: test
