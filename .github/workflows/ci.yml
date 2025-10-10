@@ -58,6 +58,10 @@ jobs:
                       arch: universal2
                     - os: windows-11-arm
                       arch: universal2
+                    - os: windows-11-arm
+                      python: 39
+                    - os: windows-11-arm
+                      python: 310
         steps:
             - uses: actions/checkout@v5
             - uses: astral-sh/setup-uv@v6
