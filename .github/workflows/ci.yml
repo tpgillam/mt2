@@ -73,7 +73,7 @@ jobs:
                 CIBW_ARCHS: ${{ matrix.arch }}
                 CIBW_TEST_COMMAND: python -m unittest discover -t {project} -s {project}/tests
 
-            - uses: actions/upload-artifact@v4
+            - uses: actions/upload-artifact@v5
               with:
                   name: "artifact-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.python }}-${{ matrix.arch }}"
                   path: ./wheelhouse/*.whl
@@ -85,7 +85,7 @@ jobs:
             - uses: actions/checkout@v5
             - uses: astral-sh/setup-uv@v7
             - run: uv build --sdist
-            - uses: actions/upload-artifact@v4
+            - uses: actions/upload-artifact@v5
               with:
                   name: artifact-source
                   path: dist/*.tar.gz
@@ -101,7 +101,7 @@ jobs:
       needs: [pass]
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/upload-artifact/merge@v4
+        - uses: actions/upload-artifact/merge@v5
           with:
             name: mt2
 
