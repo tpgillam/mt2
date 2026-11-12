@@ -1,7 +1,6 @@
+import numpy
 from setuptools import Extension, setup
 from setuptools.command.build_ext import build_ext
-
-import numpy
 
 __version__ = "1.3.1"
 

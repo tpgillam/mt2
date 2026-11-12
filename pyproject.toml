@@ -44,9 +44,9 @@ dev = [
 [tool.ruff]
 output-format = "concise"
 
-[tool.ruff.lint]
-# Keep the rule set that was the default before ruff 0.17 expanded it.
-select = ["E4", "E7", "E9", "F"]
+[tool.ruff.lint.isort]
+# mt2._mt2 is a compiled extension with no source file for ruff to find.
+known-first-party = ["mt2"]
 
 [tool.ty.analysis]
 # The compiled extension module has no Python source or stubs.

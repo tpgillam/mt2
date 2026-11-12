@@ -37,7 +37,7 @@ def main():
         out=out,
     )
     t_end = time.time()
-    print("Elapsed time: {} seconds".format(t_end - t_start))
+    print(f"Elapsed time: {t_end - t_start} seconds")
 
 
 if __name__ == "__main__":

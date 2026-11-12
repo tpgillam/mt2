@@ -1,4 +1,6 @@
-from typing import Optional, Union, overload
+from __future__ import annotations
+
+from typing import overload
 
 import numpy
 
@@ -27,35 +29,35 @@ def mt2(
 ) -> float: ...
 @overload
 def mt2(
-    m_vis_1: Union[float, numpy.ndarray],
-    px_vis_1: Union[float, numpy.ndarray],
-    py_vis_1: Union[float, numpy.ndarray],
-    m_vis_2: Union[float, numpy.ndarray],
-    px_vis_2: Union[float, numpy.ndarray],
-    py_vis_2: Union[float, numpy.ndarray],
-    px_miss: Union[float, numpy.ndarray],
-    py_miss: Union[float, numpy.ndarray],
-    m_invis_1: Union[float, numpy.ndarray],
-    m_invis_2: Union[float, numpy.ndarray],
-    desired_precision_on_mt2: Union[float, numpy.ndarray] = 0.0,
+    m_vis_1: float | numpy.ndarray,
+    px_vis_1: float | numpy.ndarray,
+    py_vis_1: float | numpy.ndarray,
+    m_vis_2: float | numpy.ndarray,
+    px_vis_2: float | numpy.ndarray,
+    py_vis_2: float | numpy.ndarray,
+    px_miss: float | numpy.ndarray,
+    py_miss: float | numpy.ndarray,
+    m_invis_1: float | numpy.ndarray,
+    m_invis_2: float | numpy.ndarray,
+    desired_precision_on_mt2: float | numpy.ndarray = 0.0,
     *,
-    out: Optional[numpy.ndarray] = None,
-) -> Union[float, numpy.ndarray]: ...
+    out: numpy.ndarray | None = None,
+) -> float | numpy.ndarray: ...
 def mt2(
-    m_vis_1: Union[float, numpy.ndarray],
-    px_vis_1: Union[float, numpy.ndarray],
-    py_vis_1: Union[float, numpy.ndarray],
-    m_vis_2: Union[float, numpy.ndarray],
-    px_vis_2: Union[float, numpy.ndarray],
-    py_vis_2: Union[float, numpy.ndarray],
-    px_miss: Union[float, numpy.ndarray],
-    py_miss: Union[float, numpy.ndarray],
-    m_invis_1: Union[float, numpy.ndarray],
-    m_invis_2: Union[float, numpy.ndarray],
-    desired_precision_on_mt2: Union[float, numpy.ndarray] = 0.0,
+    m_vis_1: float | numpy.ndarray,
+    px_vis_1: float | numpy.ndarray,
+    py_vis_1: float | numpy.ndarray,
+    m_vis_2: float | numpy.ndarray,
+    px_vis_2: float | numpy.ndarray,
+    py_vis_2: float | numpy.ndarray,
+    px_miss: float | numpy.ndarray,
+    py_miss: float | numpy.ndarray,
+    m_invis_1: float | numpy.ndarray,
+    m_invis_2: float | numpy.ndarray,
+    desired_precision_on_mt2: float | numpy.ndarray = 0.0,
     *,
-    out: Optional[numpy.ndarray] = None,
-) -> Union[float, numpy.ndarray]:
+    out: numpy.ndarray | None = None,
+) -> float | numpy.ndarray:
     """
     Returns asymmetric mT2 (which is >=0), or a negative value if no solution exists.
 
@@ -135,37 +137,37 @@ def mt2_arxiv(
 ) -> float: ...
 @overload
 def mt2_arxiv(
-    m_vis_1: Union[float, numpy.ndarray],
-    px_vis_1: Union[float, numpy.ndarray],
-    py_vis_1: Union[float, numpy.ndarray],
-    m_vis_2: Union[float, numpy.ndarray],
-    px_vis_2: Union[float, numpy.ndarray],
-    py_vis_2: Union[float, numpy.ndarray],
-    px_miss: Union[float, numpy.ndarray],
-    py_miss: Union[float, numpy.ndarray],
-    m_invis_1: Union[float, numpy.ndarray],
-    m_invis_2: Union[float, numpy.ndarray],
-    desired_precision_on_mt2: Union[float, numpy.ndarray] = 0.0,
-    use_deci_sections_initially: Union[bool, numpy.ndarray] = True,
+    m_vis_1: float | numpy.ndarray,
+    px_vis_1: float | numpy.ndarray,
+    py_vis_1: float | numpy.ndarray,
+    m_vis_2: float | numpy.ndarray,
+    px_vis_2: float | numpy.ndarray,
+    py_vis_2: float | numpy.ndarray,
+    px_miss: float | numpy.ndarray,
+    py_miss: float | numpy.ndarray,
+    m_invis_1: float | numpy.ndarray,
+    m_invis_2: float | numpy.ndarray,
+    desired_precision_on_mt2: float | numpy.ndarray = 0.0,
+    use_deci_sections_initially: bool | numpy.ndarray = True,
     *,
-    out: Optional[numpy.ndarray] = None,
-) -> Union[float, numpy.ndarray]: ...
+    out: numpy.ndarray | None = None,
+) -> float | numpy.ndarray: ...
 def mt2_arxiv(
-    m_vis_1: Union[float, numpy.ndarray],
-    px_vis_1: Union[float, numpy.ndarray],
-    py_vis_1: Union[float, numpy.ndarray],
-    m_vis_2: Union[float, numpy.ndarray],
-    px_vis_2: Union[float, numpy.ndarray],
-    py_vis_2: Union[float, numpy.ndarray],
-    px_miss: Union[float, numpy.ndarray],
-    py_miss: Union[float, numpy.ndarray],
-    m_invis_1: Union[float, numpy.ndarray],
-    m_invis_2: Union[float, numpy.ndarray],
-    desired_precision_on_mt2: Union[float, numpy.ndarray] = 0.0,
-    use_deci_sections_initially: Union[bool, numpy.ndarray] = True,
+    m_vis_1: float | numpy.ndarray,
+    px_vis_1: float | numpy.ndarray,
+    py_vis_1: float | numpy.ndarray,
+    m_vis_2: float | numpy.ndarray,
+    px_vis_2: float | numpy.ndarray,
+    py_vis_2: float | numpy.ndarray,
+    px_miss: float | numpy.ndarray,
+    py_miss: float | numpy.ndarray,
+    m_invis_1: float | numpy.ndarray,
+    m_invis_2: float | numpy.ndarray,
+    desired_precision_on_mt2: float | numpy.ndarray = 0.0,
+    use_deci_sections_initially: bool | numpy.ndarray = True,
     *,
-    out: Optional[numpy.ndarray] = None,
-) -> Union[float, numpy.ndarray]:
+    out: numpy.ndarray | None = None,
+) -> float | numpy.ndarray:
     """
     Provide an interface to the mt2 implementation of arXiv:1411.4312v7.
 
