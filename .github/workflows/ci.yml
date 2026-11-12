@@ -38,7 +38,7 @@ jobs:
                   uv run ruff format --check
 
             - name: Static type check
-              run: uv run pyright
+              run: uv run ty check
 
     build_wheels:
         name: Build wheel for ${{ matrix.os }}-${{ matrix.build }}${{ matrix.python }}-${{ matrix.arch }}

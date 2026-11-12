@@ -2,7 +2,7 @@ from typing import Optional, Union, overload
 
 import numpy
 
-from mt2._mt2 import mt2_lester_ufunc, mt2_tombs_ufunc  # pyright: ignore [reportMissingImports]
+from mt2._mt2 import mt2_lester_ufunc, mt2_tombs_ufunc
 
 __version__ = "1.3.1"
 

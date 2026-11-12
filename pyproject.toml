@@ -36,9 +36,9 @@ build-backend = "setuptools.build_meta"
 dev = [
     "ipykernel>=6.29.5",
     "matplotlib>=3.9.4",
-    "pyright==1.1.406",
     "ruff==0.17.5",
     "setuptools>=75.8.0",
+    "ty==0.0.101",
 ]
 
 [tool.ruff]
@@ -47,3 +47,7 @@ output-format = "concise"
 [tool.ruff.lint]
 # Keep the rule set that was the default before ruff 0.17 expanded it.
 select = ["E4", "E7", "E9", "F"]
+
+[tool.ty.analysis]
+# The compiled extension module has no Python source or stubs.
+allowed-unresolved-imports = ["mt2._mt2"]
