@@ -37,7 +37,7 @@ lint: install
 
 .PHONY: typecheck
 typecheck: install
-	uv run --locked pyright
+	uv run --locked ty check
 
 .PHONY: test_wheel
 test_wheel: clean
