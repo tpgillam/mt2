@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Tuple
 
 import numpy
 
@@ -60,7 +59,7 @@ class EllipseParams:
         return factor < 0
 
     @property
-    def centre(self) -> Tuple[float, float]:
+    def centre(self) -> tuple[float, float]:
         """Get the co-ordinates of the centre of this conic section."""
         return (
             (self.c_xy * self.c_y - self.c_yy * self.c_x) / self.det_A33,
@@ -160,7 +159,7 @@ def make_ellipses(
     py_miss: float,
     m_invis_1: float,
     m_invis_2: float,
-) -> Tuple[EllipseParams, EllipseParams]:
+) -> tuple[EllipseParams, EllipseParams]:
     """
     Make a pair of ellipses in p1x, p1y; the intersection is the feasible region.
     """

@@ -2,7 +2,6 @@ import pathlib
 import time
 
 import numpy
-
 from matplotlib import pyplot
 
 from mt2._mt2 import mt2_lally_ufunc, mt2_lester_ufunc, mt2_tombs_ufunc
@@ -64,10 +63,10 @@ def _run_profile(args, shape):
 
 def _print_profile_results(results):
     t_lester, t_lester_no_ds, t_tombs = results
-    print("Elapsed time Lester        : {} seconds".format(t_lester))
-    print("Elapsed time Lester (no DS): {} seconds".format(t_lester_no_ds))
+    print(f"Elapsed time Lester        : {t_lester} seconds")
+    print(f"Elapsed time Lester (no DS): {t_lester_no_ds} seconds")
     # print("Elapsed time Lally         : {} seconds".format())
-    print("Elapsed time Tombs         : {} seconds".format(t_tombs))
+    print(f"Elapsed time Tombs         : {t_tombs} seconds")
 
 
 def _run_and_plot(args, shape):
