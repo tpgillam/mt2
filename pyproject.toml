@@ -45,7 +45,7 @@ dev = [
 output-format = "concise"
 
 [tool.ruff.lint.isort]
-# mt2._mt2 is a compiled extension with no source file for ruff to find.
+# Otherwise the compiled mt2._mt2 is sorted as a third-party import.
 known-first-party = ["mt2"]
 
 [tool.ty.analysis]
